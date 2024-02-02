@@ -1,0 +1,69 @@
+
+// 深紅實心按鈕
+.btn-solid-spec {
+  border: solid 1px $specialMainColor;
+  background-color: darken($specialMainColor, 5%);
+  color: $lightMainColor;
+  border-radius: 0;
+  &:hover{
+    background-color: $specialMainColor;
+    color: $whiteColor;
+  }
+}
+// 深紅普通按鈕
+.btn-normal-spec {
+  color: $deepGrayColor;
+  border-radius: 0;
+  &:hover{
+    background-color: $specialMainColor;
+    color: $whiteColor;
+  }
+}
+// 中灰外框按鈕
+.btn-outline-mdgray {
+  color: $deepGrayColor;
+  border: solid 1px $mediumGrayColor;
+  border-radius: 0;
+  &:hover{
+    background-color: $mediumGrayColor;
+    color: $deepGrayColor;
+  }
+}
+// 深灰實心按鈕
+.btn-solid-dpgray {
+  border: solid 1px $deepGrayColor;
+  background-color: darken($deepGrayColor, 5%);;
+  color: $lightMainColor;
+  border-radius: 0;
+  &:hover{
+    background-color: $deepGrayColor;
+    color: $lightMainColor;
+  }
+}
+// 深灰外框按鈕
+.btn-outline-dpgray {
+  border: solid 1px $deepGrayColor;
+  border-radius: 0;
+  &:hover{
+    background-color: $deepGrayColor;
+    color: $lightMainColor;
+  }
+}
+// 深灰普通按鈕
+.btn-normal-dpgray {
+  color: $deepGrayColor;
+  border-radius: 0;
+  &:hover{
+    background-color: $deepGrayColor;
+    color: $lightMainColor;
+  }
+}
+// 中主普通按鈕
+.btn-normal-medium {
+  color: $deepGrayColor;
+  border-radius: 0;
+  &:hover{
+    background-color: $mediumMainColor;
+    color: $deepGrayColor;
+  }
+}

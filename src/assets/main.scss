@@ -1,0 +1,29 @@
+// 引入googleFonts字體
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap');
+// 引入bootStrap的SCSS檔案
+@import 'bootstrap/scss/bootstrap';
+
+// 定義顏色
+@import './color.scss';
+// 定義字體大小
+@import './frontSize.scss';
+
+body {
+  background-color: $lightMainColor;
+  font-family: 'Noto Serif TC', serif;
+}
+// 文字顏色｜深灰
+.myTextColor {
+  color: $deepGrayColor;
+}
+.resetBorderRadius {
+  border-radius: 0;
+}
+
+
+// 輸入框設定
+@import './bs-reset.scss';
+// 按鈕設定
+@import './button.scss';
+// 客製設定（自定義scss）
+@import './custom.scss';

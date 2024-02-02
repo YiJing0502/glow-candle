@@ -1,0 +1,110 @@
+// bs-
+.form-control{
+  border-radius: 0;
+}
+.form-floating>.form-control, .form-floating>.form-control-plaintext, .form-floating>.form-select {
+  background-color: $mediumMainColor;
+}
+
+// bs-input 改動既有設定
+.form-control:focus{
+  border-color: $deepGrayColor;
+  box-shadow: 0 0 0 0.25rem $whiteColor;
+}
+.form-check-input[type=checkbox] {
+  border-radius: 0;
+}
+// bs-checkbox 改動既有設定
+.form-check-input:checked {
+  background-color: $specialMainColor;
+  border-color: $specialMainColor;
+}
+.form-check-input:focus {
+  border-color: $deepGrayColor;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem $whiteColor;
+}
+// taps
+.nav-link {
+  color: $specialMainColor;
+  &:hover{
+    color: $specialMainColor;
+  }
+}
+// bs-btn-close
+.btn-close {
+  --bs-btn-close-focus-shadow: 0 0 0 0.25rem $whiteColor;
+}
+.btn:disabled {
+  border: unset;
+}
+// bs-list-group
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: var(--bs-list-group-item-padding-y) var(--bs-list-group-item-padding-x);
+  color: var(--bs-list-group-color);
+  text-decoration: none;
+  background-color: $mediumMainColor;
+  border: unset;
+}
+.list-group-item.active {
+  z-index: 2;
+  color: $lightMainColor;
+  background-color: $deepGrayColor;
+  border-color: $deepGrayColor;
+}
+// bs-page-link
+.page-link {
+  color: $deepGrayColor;
+  &:hover{
+    color: $specialMainColor;
+  }
+  &:focus{
+    box-shadow: none;
+
+  }
+}
+.active>.page-link, .page-link.active {
+  z-index: 3;
+  color: $lightMainColor;
+  background-color: $specialMainColor;
+  border-color: $specialMainColor;
+  
+}
+
+.dropdown-toggle::after {
+  border-style: none;
+}
+.dropdown-item.active, .dropdown-item:active{
+  background-color: $specialMainColor;
+}
+.dropdown-menu {
+  border-color: $deepGrayColor;
+}
+// card
+.card {
+  background-color: unset;
+  border-width: 0;
+}
+
+// 手風琴
+.accordion-button {
+  background-color: $lightMainColor;
+  color: $deepGrayColor;
+}
+.accordion-button:not(.collapsed) {
+  color: $deepGrayColor;
+  background-color: $lightMainColor;
+  box-shadow: none;
+  border: none;
+}
+.accordion-button:focus {
+  z-index: 3;
+  border: none;
+  outline: 0;
+  box-shadow: none;
+}
+.accordion-body {
+  background-color: $lightMainColor;
+}
