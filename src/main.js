@@ -7,12 +7,12 @@ import router from './router'
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 // 載入 vue-loading-overlay
-import {LoadingPlugin} from 'vue-loading-overlay';
+import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
 const app = createApp(App)
-// 使用 vue-loading-overlay
-app.use(LoadingPlugin);
+// 註冊 vue-loading-overlay 元件
+app.component('vueLoading', Loading);
 
 app.use(createPinia())
 app.use(router)
