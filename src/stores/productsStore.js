@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { defineStore } from 'pinia';
 import stringStore from './stringStore.js';
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
@@ -18,7 +19,7 @@ export default defineStore('productsStore', {
     getProductsAll() {
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products/all`;
-      return this.$http.get(url)
+      return axios.get(url)
         .then(res => {
           this.productsData = res.data.products;
           this.isLoading = false;
@@ -42,7 +43,7 @@ export default defineStore('productsStore', {
       const productId = currentUrl.searchParams.get('id');
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/product/${productId}`;
-      this.$http.get(url)
+      axios.get(url)
         .then(res=>{
           this.showData = {...res.data.product};
           const { splitStringByNewline } = stringStore();

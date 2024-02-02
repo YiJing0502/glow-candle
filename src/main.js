@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+// 載入 pinia
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -12,8 +13,8 @@ import 'vue-loading-overlay/dist/css/index.css';
 
 const app = createApp(App)
 // 註冊 vue-loading-overlay 元件
-app.component('vueLoading', Loading);
-
+app.component('VueLoading', Loading);
+// 使用pinia
 app.use(createPinia())
 app.use(router)
 // 使用 vue-axios

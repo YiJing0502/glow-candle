@@ -2,7 +2,7 @@
   <div>
     <h1>This is an about page</h1>
     {{  data }}
-    <vueLoading :active="isLoading"/>
+    <VueLoading :active="isLoading"/>
   </div>
 </template>
 <script>

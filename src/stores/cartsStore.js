@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { defineStore } from 'pinia';
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default defineStore('cartsStore', {
@@ -23,7 +24,7 @@ export default defineStore('cartsStore', {
           this.isLoading = true; 
         };
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart`;
-        this.$http.get(url)
+        axios.get(url)
           .then(res=>{
             // 購物車資料
             this.cartsData = [...res.data.data.carts];
@@ -68,7 +69,7 @@ export default defineStore('cartsStore', {
             "qty": qty,
           }
         };
-        await this.$http.post(url, data);
+        await axios.post(url, data);
         this.isSmLoading = false;
         alert('加入購物車成功');
         // 更新畫面顯示目前購物車狀態
@@ -92,7 +93,7 @@ export default defineStore('cartsStore', {
       const cartsPutProduct = this.cartsData.find(item=> item.id === productCartId);
       cartsPutProduct.isSmLoading = true;
       try {
-        await this.$http.put(url, data);
+        await axios.put(url, data);
         await this.getCart(false);
         alert('修改購物車商品數量成功');
       }
@@ -104,7 +105,7 @@ export default defineStore('cartsStore', {
     async deleteCart(productCartId){
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart/${productCartId}`;
       try {
-        await this.$http.delete(url);
+        await axios.delete(url);
         await this.getCart(false);
         alert('刪除購物車商品成功');
       }
@@ -116,7 +117,7 @@ export default defineStore('cartsStore', {
     async deleteCarts(){
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/carts`;
       try {
-        await this.$http.delete(url);
+        await axios.delete(url);
         await this.getCart(false);
         alert('刪除所有購物車商品成功');
       }
@@ -133,7 +134,7 @@ export default defineStore('cartsStore', {
         }
       };
       try {
-        await this.$http.post(url, data);
+        await axios.post(url, data);
         await this.getCart(false);
         alert('使用優惠券成功');
       }

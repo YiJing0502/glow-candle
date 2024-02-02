@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { defineStore } from 'pinia';
 import stringStore from './stringStore.js';
 import timeStore from './timeStore.js';
@@ -20,7 +21,7 @@ export default defineStore('ordersStore', {
     // ajax, 送出訂單方法
     postOrder(data){
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order`;
-      this.$http.post(url, data)
+      axios.post(url, data)
       .then(res=>{
         this.changeToIdPage(res.data.orderId, 'payment.html');
         // 送出訂單時重新取得最新購物車狀態
@@ -47,7 +48,7 @@ export default defineStore('ordersStore', {
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order/${orderId}`;
       try {
-        const res = await this.$http.get(url);
+        const res = await axios.get(url);
         const { create_at, id, is_paid, message, paid_date, products, total, user } = res.data.order;
         this.showData = {
           create_at,
@@ -106,7 +107,7 @@ export default defineStore('ordersStore', {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/pay/${orderId}`;
       this.isLoading = true;
       try {
-        await this.$http.post(url);
+        await axios.post(url);
         await this.getOrder();
         this.isLoading = false;
         alert('您已付款成功');
