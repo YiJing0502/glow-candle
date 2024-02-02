@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { baseUrl } from '../views/config.js';
+import { VITE_BASE_URL } from '../views/config.js';
 
 export default defineStore('adminStore', {
   state: ()=>({
@@ -18,7 +18,7 @@ export default defineStore('adminStore', {
       this.$http.defaults.headers.common['Authorization'] = token;
     },
     postApiUserCheck() {
-      const url = `${baseUrl}/v2/api/user/check`;
+      const url = `${VITE_BASE_URL}/v2/api/user/check`;
       return this.$http.post(url)
         .then((res)=>{
           this.loginSuccess = res.data.success;

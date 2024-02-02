@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import stringStore from './stringStore.js';
-import { baseUrl, apiPath } from '../views/config.js';
+const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default defineStore('productsStore', {
   state: ()=>({
     // 所有產品資料
@@ -17,7 +17,7 @@ export default defineStore('productsStore', {
     // 取得所有產品
     getProductsAll() {
       this.isLoading = true;
-      const url = `${baseUrl}/v2/api/${apiPath}/products/all`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products/all`;
       return this.$http.get(url)
         .then(res => {
           this.productsData = res.data.products;
@@ -41,7 +41,7 @@ export default defineStore('productsStore', {
       // 從 URL 查詢參數中獲取商品 ID
       const productId = currentUrl.searchParams.get('id');
       this.isLoading = true;
-      const url = `${baseUrl}/v2/api/${apiPath}/product/${productId}`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/product/${productId}`;
       this.$http.get(url)
         .then(res=>{
           this.showData = {...res.data.product};

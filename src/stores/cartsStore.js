@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { baseUrl, apiPath } from '../views/config.js';
+const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default defineStore('cartsStore', {
   state: ()=>({
     // 購物車產品資料
@@ -22,7 +22,7 @@ export default defineStore('cartsStore', {
           // 顯示整頁的Loading
           this.isLoading = true; 
         };
-        const url = `${baseUrl}/v2/api/${apiPath}/cart`;
+        const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart`;
         this.$http.get(url)
           .then(res=>{
             // 購物車資料
@@ -61,7 +61,7 @@ export default defineStore('cartsStore', {
     async postCart(productId, qty) {
       this.isSmLoading = true;
       try {
-        const url = `${baseUrl}/v2/api/${apiPath}/cart`;
+        const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart`;
         const data = {
           "data": {
             "product_id": productId,
@@ -81,7 +81,7 @@ export default defineStore('cartsStore', {
     },
     // ajax, 修改購物車商品數量方法
     async putCart(productCartId, productId, qty) {
-      const url = `${baseUrl}/v2/api/${apiPath}/cart/${productCartId}`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart/${productCartId}`;
       const data = {
         "data": {
           "product_id": productId,
@@ -102,7 +102,7 @@ export default defineStore('cartsStore', {
     },
     // ajax, 刪除購物車商品方法
     async deleteCart(productCartId){
-      const url = `${baseUrl}/v2/api/${apiPath}/cart/${productCartId}`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart/${productCartId}`;
       try {
         await this.$http.delete(url);
         await this.getCart(false);
@@ -114,7 +114,7 @@ export default defineStore('cartsStore', {
     },
     // ajax, 刪除全部購物車方法
     async deleteCarts(){
-      const url = `${baseUrl}/v2/api/${apiPath}/carts`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/carts`;
       try {
         await this.$http.delete(url);
         await this.getCart(false);
@@ -126,7 +126,7 @@ export default defineStore('cartsStore', {
     },
     // ajax, 使用優惠券方法
     async postCoupon(code){
-      const url = `${baseUrl}/v2/api/${apiPath}/coupon`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/coupon`;
       const data = {
         "data": {
           "code": code,

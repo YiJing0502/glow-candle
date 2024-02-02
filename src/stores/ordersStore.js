@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import stringStore from './stringStore.js';
 import timeStore from './timeStore.js';
 import cartsStore from './cartsStore.js';
-import { baseUrl, apiPath } from '../views/config.js';
+const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default defineStore('ordersStore', {
   state: ()=>({
     // 是否為載入中
@@ -19,7 +19,7 @@ export default defineStore('ordersStore', {
   actions: {
     // ajax, 送出訂單方法
     postOrder(data){
-      const url = `${baseUrl}/v2/api/${apiPath}/order`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order`;
       this.$http.post(url, data)
       .then(res=>{
         this.changeToIdPage(res.data.orderId, 'payment.html');
@@ -45,7 +45,7 @@ export default defineStore('ordersStore', {
       // 從 URL 查詢參數中獲取商品 ID
       const orderId = currentUrl.searchParams.get('id');
       this.isLoading = true;
-      const url = `${baseUrl}/v2/api/${apiPath}/order/${orderId}`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order/${orderId}`;
       try {
         const res = await this.$http.get(url);
         const { create_at, id, is_paid, message, paid_date, products, total, user } = res.data.order;
@@ -103,7 +103,7 @@ export default defineStore('ordersStore', {
     },
     // ajax, 付款特定訂單
     async postPayOrder(orderId){
-      const url = `${baseUrl}/v2/api/${apiPath}/pay/${orderId}`;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/pay/${orderId}`;
       this.isLoading = true;
       try {
         await this.$http.post(url);
