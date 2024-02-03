@@ -4,6 +4,9 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+// Import all of Bootstrap's JS
+import * as bootstrap from 'bootstrap'
+window.bootstrap = bootstrap;
 // 載入 vue-axios
 import axios from 'axios';
 import VueAxios from 'vue-axios';

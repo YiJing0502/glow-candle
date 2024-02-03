@@ -1,5 +1,3 @@
-<style>
-</style>
 <template>
   <VueLoading v-if="isLoading" 
               :active="isLoading" 
@@ -122,3 +120,5 @@
     },
   };
 </script>
+<style>
+</style>
