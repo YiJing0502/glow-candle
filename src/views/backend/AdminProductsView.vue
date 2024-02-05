@@ -94,9 +94,6 @@
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
-  // pinia
-  import { mapActions } from 'pinia';
-  import adminStore from '@/stores/adminStore';
   // components
   import DeleteModal from '@/components/backend/DeleteModal.vue';
   import ResultModal from '@/components/ResultModal.vue';
@@ -398,10 +395,9 @@
         this.paginationData = newData;
         this.pagination(1);
       },
-      ...mapActions(adminStore, ['initializeAdmin', 'postApiUserCheck',],),
     },
     mounted(){
-
+      this.getAdminProductsAll();
     },
   };
 </script>
