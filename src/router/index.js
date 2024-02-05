@@ -24,6 +24,11 @@ const router = createRouter({
       component: () => import('../views/backend/BackLayoutView.vue'),
       children: [
         {
+          path: 'orders',
+          name: 'orders',
+          component: () => import('../views/backend/AdminOrdersView.vue'),
+        },
+        {
           path: 'products',
           name: 'products',
           component: () => import('../views/backend/AdminProductsView.vue'),

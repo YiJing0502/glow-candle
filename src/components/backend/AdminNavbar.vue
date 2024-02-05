@@ -7,6 +7,9 @@
     </div>
     <ul class="list-group">
       <li class="list-group-item">
+        <router-link class="list-group-item" :to="{name: 'orders'}">訂單管理</router-link>
+      </li>
+      <li class="list-group-item">
         <router-link class="list-group-item" :to="{name: 'products'}">產品管理</router-link>
       </li>
       <li class="list-group-item">
