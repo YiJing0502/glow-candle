@@ -24,14 +24,14 @@
                   <div class="col-10">
                     <div class="mb-3">
                       <label for="title" class="form-label">標題</label>
-                      <input type="text" class="form-control" id="title" placeholder="請輸入標題" v-model="updateShowData.title">
+                      <input type="text" class="form-control" id="title" placeholder="請輸入標題" v-model="updatedShowData.title">
                     </div>
                   </div>
                   <div class="col-2 d-flex align-items-center">
                     <div class="form-check mt-3">
-                      <input type="checkbox" class="form-check-input" id="is_enabled" :true-value="1" :false-value="0" v-model="updateShowData.is_enabled">
+                      <input type="checkbox" class="form-check-input" id="is_enabled" :true-value="1" :false-value="0" v-model="updatedShowData.is_enabled">
                       <label for="is_enabled" class="form-check-label">
-                        <span v-if="updateShowData.is_enabled === 1" class="text-main-spec fw-bold">啟用</span>
+                        <span v-if="updatedShowData.is_enabled === 1" class="text-main-spec fw-bold">啟用</span>
                         <span v-else class="text-deep-gray">未啟用</span>
                       </label>
                     </div>
@@ -41,35 +41,35 @@
                   <div class="mb-3 col">
                     <label for="category" class="form-label">分類</label>
                     <input type="text" class="form-control" id="category" placeholder="請輸入分類"
-                      v-model="updateShowData.category">
+                      v-model="updatedShowData.category">
                   </div>
                   <div class="mb-3 col">
                     <label for="unit" class="form-label">單位</label>
-                    <input type="text" class="form-control" id="unit" placeholder="請輸入單位" v-model="updateShowData.unit">
+                    <input type="text" class="form-control" id="unit" placeholder="請輸入單位" v-model="updatedShowData.unit">
                   </div>
                 </div>
                 <div class="row">
                   <div class="mb-3 col">
                     <label for="original_price" class="form-label">原價</label>
                     <input type="number" class="form-control" id="original_price" placeholder="請輸入原價"
-                      v-model.number="updateShowData.origin_price">
+                      v-model.number="updatedShowData.origin_price">
                   </div>
                   <div class="mb-3 col">
                     <label for="price" class="form-label">售價</label>
                     <input type="number" class="form-control" id="price" placeholder="請輸入售價"
-                      v-model.number="updateShowData.price">
+                      v-model.number="updatedShowData.price">
                   </div>
                 </div>
                 <div class="row">
                   <div class="mb-3 col">
                     <label for="cost_price" class="form-label">成本價</label>
                     <input type="number" class="form-control" id="cost_price" placeholder="請輸入成本價"
-                      v-model.number="updateShowData.cost_price">
+                      v-model.number="updatedShowData.cost_price">
                   </div>
                   <div class="mb-3 col">
                     <label for="inventory" class="form-label">庫存量</label>
                     <input type="number" class="form-control" id="inventory" placeholder="請輸入庫存量"
-                      v-model.number="updateShowData.inventory">
+                      v-model.number="updatedShowData.inventory">
                   </div>
                 </div>
                 <div class="row">
@@ -77,13 +77,13 @@
                     <div class="mb-3">
                       <label for="description" class="form-label">產品描述</label>
                       <textarea class="form-control" id="description" rows="3"
-                        v-model="updateShowData.description"></textarea>
+                        v-model="updatedShowData.description"></textarea>
                     </div>
                   </div>
                   <div class="col">
                     <div class="mb-3">
                       <label for="content" class="form-label">說明內容</label>
-                      <textarea class="form-control" id="content" rows="3" v-model="updateShowData.content"></textarea>
+                      <textarea class="form-control" id="content" rows="3" v-model="updatedShowData.content"></textarea>
                     </div>
                   </div>
                 </div>
@@ -95,19 +95,19 @@
                 <div class="col mb-3">
                   <div class="mb-3">
                     <label for="imageUrl" class="form-label">輸入主要圖片網址</label>
-                    <input type="text" class="form-control" placeholder="請輸入主要圖片連結" v-model="updateShowData.imageUrl">
+                    <input type="text" class="form-control" placeholder="請輸入主要圖片連結" v-model="updatedShowData.imageUrl">
                   </div>
-                  <img :src="updateShowData.imageUrl" :alt="updateShowData.title" class="img-fluid">
+                  <img :src="updatedShowData.imageUrl" :alt="updatedShowData.title" class="img-fluid">
                 </div>
-                <div class="col mb-3" v-for="(item,index) in updateShowData.imagesUrl" :key="index">
+                <div class="col mb-3" v-for="(item,index) in updatedShowData.imagesUrl" :key="index">
                   <div class="mb-3">
                     <label for="imageUrl" class="form-label">輸入其他圖片網址</label>
                     <button type="button" class="btn-close float-end" aria-label="Close" @click="deleteImage(index)">
                     </button>
                     <input type="text" class="form-control" placeholder="請輸入其他圖片連結"
-                      v-model="updateShowData.imagesUrl[index]">
+                      v-model="updatedShowData.imagesUrl[index]">
                   </div>
-                  <img v-if="updateShowData.imagesUrl[index]" :src="updateShowData.imagesUrl[index]" :alt="updateShowData.title+index"
+                  <img v-if="updatedShowData.imagesUrl[index]" :src="updatedShowData.imagesUrl[index]" :alt="updatedShowData.title+index"
                     class="img-fluid">
                 </div>
                 <div class="col mb-3">
@@ -142,14 +142,19 @@
     data(){
       return {
         modal: '',
-        updateShowData: {},
+        updatedShowData: {},
       }
     },
     mounted(){
       // 獲取 bsResultModal DOM
       // 建立 bootstrap modal 實體
       this.modal = new Modal(this.$refs.modal);
-      this.updateShowData = JSON.parse(JSON.stringify(this.showData));
+      this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
+    },
+    watch: {
+      showData(){
+        this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
+      },
     },
     methods: {
     openModal() {
