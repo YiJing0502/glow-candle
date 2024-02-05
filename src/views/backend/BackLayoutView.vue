@@ -56,7 +56,7 @@ export default {
         this.$refs.resultModal.openModal();
         if(!this.loginSuccess){
           // 只有在使用者未登入時才重新導向
-          alert('push到login')
+          this.$router.push({ name: 'login' })
         }
       });
   },
