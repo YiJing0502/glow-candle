@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import * as bootstrap from 'bootstrap'
+import { Modal } from 'bootstrap';
 
 export default {
   data(){
@@ -32,7 +32,7 @@ export default {
   mounted(){
     // 獲取 bsResultModal DOM
     // 建立 bootstrap modal 實體
-    this.modal = new bootstrap.Modal(this.$refs.modal);
+    this.modal = new Modal(this.$refs.modal);
   },
   methods: {
     openModal() {
