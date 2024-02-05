@@ -1,91 +1,89 @@
 <template>
-  <div class="container">
-    <VueLoading 
-    v-if="!getRemoteData" 
-    :active="!getRemoteData"
-    :background-color="'#FBFAF4'"
-    :color="'#52504B'"/>
-    <div v-else>
-      <div class="row mt-4">
-        <div class="col-8 d-flex">
-          <div class="btn-group me-3">
-            <button v-if="productsData" class="btn btn-normal-dpgray dropdown-toggle" type="button"
-              data-bs-toggle="dropdown" aria-expanded="false" @click="getCategory">
-              篩選類別
-            </button>
-            <ul class="dropdown-menu">
-              <li v-for="(item, index) in productsCategory" :key="index">
-                <button class="dropdown-item" href="#" @click="filterCategory(item)">
-                  {{ item }}
-                </button>
-              </li>
-            </ul>
-          </div>
-          <input class="form-control form-control-sm" id="exampleDataList" placeholder="輸入產品名稱搜尋"
-            v-model.trim="searchInputValue" @keyup.enter="searchProduct">
-          <button class="btn btn-normal-dpgray" @click="searchProduct">搜</button>
-        </div>
-        <div class="col-4 d-flex justify-content-end">
-          <button type="button" @click="scrollToBottom" class="btn">前往底部</button>
-          <button class="btn btn-solid-spec" @click="getAdminAddProductModal">
-            建立新的產品
+  <VueLoading 
+  v-if="!getRemoteData" 
+  :active="!getRemoteData"
+  :background-color="'#FBFAF4'"
+  :color="'#52504B'"/>
+  <div v-else class="container">
+    <div class="row mt-4">
+      <div class="col-8 d-flex">
+        <div class="btn-group me-3">
+          <button v-if="productsData" class="btn btn-normal-dpgray dropdown-toggle" type="button"
+            data-bs-toggle="dropdown" aria-expanded="false" @click="getCategory">
+            篩選類別
           </button>
+          <ul class="dropdown-menu">
+            <li v-for="(item, index) in productsCategory" :key="index">
+              <button class="dropdown-item" href="#" @click="filterCategory(item)">
+                {{ item }}
+              </button>
+            </li>
+          </ul>
         </div>
+        <input class="form-control form-control-sm" id="exampleDataList" placeholder="輸入產品名稱搜尋"
+          v-model.trim="searchInputValue" @keyup.enter="searchProduct">
+        <button class="btn btn-normal-dpgray" @click="searchProduct">搜</button>
       </div>
-      <status-message v-if="productsData.length === 0">{{'建立新的產品'}}</status-message>
-      <table class="table mt-4 align-middle" v-else>
-        <thead>
-          <tr>
-            <th scope="col">圖片</th>
-            <th scope="col">分類</th>
-            <th scope="col">產品名稱</th>
-            <th scope="col">原價</th>
-            <th scope="col">售價</th>
-            <th scope="col">是否啟用</th>
-            <th scope="col">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in infoData" :key="index">
-            <th scope="row"><img :src="item.imageUrl" :alt="item.title" class="img-fluid" width="50"></th>
-            <td>{{ item.category }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.origin_price}}</td>
-            <td>{{ item.price }}</td>
-            <td>
-              <span v-if="item.is_enabled === 1" class="text-main-spec fw-bold">啟用</span>
-              <span v-else class="text-deep-gray">未啟用</span>
-            </td>
-            <td>
-              <div class="d-flex justify-content-start align-items-center">
-                <button class="btn btn-sm btn-normal-medium block w-50" type="button"
-                  @click="getAdminDelProductModal(item.id)">
-                  刪除
-                </button>
-                <button class="btn btn-sm btn-normal-medium block w-50" type="button"
-                  @click="getAdminProductModal(item.id)">
-                  編輯
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-center mt-4" ref="scrollContainer">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination" id="pageid">
-              <PageBtn 
-              :prev-is-enabled="pageData.hasPrevPage"
-              @change-prev-page="pagination(pageData.currentPage - 1)"
-              :totalPage="pageData.totalPage"
-              :current-page="pageData.currentPage"
-              @change-page="pagination"
-              :next-is-enabled="pageData.hasNextPage"
-              @change-next-page="pagination(pageData.currentPage + 1)"
-              ></PageBtn>
-            </ul>
-          </nav>
+      <div class="col-4 d-flex justify-content-end">
+        <button type="button" @click="scrollToBottom" class="btn">前往底部</button>
+        <button class="btn btn-solid-spec" @click="getAdminAddProductModal">
+          建立新的產品
+        </button>
       </div>
+    </div>
+    <status-message v-if="productsData.length === 0">{{'建立新的產品'}}</status-message>
+    <table class="table mt-4 align-middle" v-else>
+      <thead>
+        <tr>
+          <th scope="col">圖片</th>
+          <th scope="col">分類</th>
+          <th scope="col">產品名稱</th>
+          <th scope="col">原價</th>
+          <th scope="col">售價</th>
+          <th scope="col">是否啟用</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in infoData" :key="index">
+          <th scope="row"><img :src="item.imageUrl" :alt="item.title" class="img-fluid" width="50"></th>
+          <td>{{ item.category }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.origin_price}}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <span v-if="item.is_enabled === 1" class="text-main-spec fw-bold">啟用</span>
+            <span v-else class="text-deep-gray">未啟用</span>
+          </td>
+          <td>
+            <div class="d-flex justify-content-start align-items-center">
+              <button class="btn btn-sm btn-normal-medium block w-50" type="button"
+                @click="getAdminDelProductModal(item.id)">
+                刪除
+              </button>
+              <button class="btn btn-sm btn-normal-medium block w-50" type="button"
+                @click="getAdminProductModal(item.id)">
+                編輯
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center mt-4" ref="scrollContainer">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination" id="pageid">
+            <PageBtn 
+            :prev-is-enabled="pageData.hasPrevPage"
+            @change-prev-page="pagination(pageData.currentPage - 1)"
+            :totalPage="pageData.totalPage"
+            :current-page="pageData.currentPage"
+            @change-page="pagination"
+            :next-is-enabled="pageData.hasNextPage"
+            @change-next-page="pagination(pageData.currentPage + 1)"
+            ></PageBtn>
+          </ul>
+        </nav>
     </div>
   </div>
   <!-- 產品Modal -->
