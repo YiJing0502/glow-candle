@@ -68,16 +68,19 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center mt-4" ref="scrollContainer">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination" id="pageid">
-            <prev-page-btn :is-enabled="pageData.hasPrevPage"
-              @change-page="pagination(pageData.currentPage - 1)"></prev-page-btn>
-            <page-btn v-for="item in pageData.totalPage" :key="item" :page="item" @change-page="pagination"
-              :current-page="pageData.currentPage"></page-btn>
-            <next-page-btn :is-enabled="pageData.hasNextPage"
-              @change-page="pagination(pageData.currentPage + 1)"></next-page-btn>
-          </ul>
-        </nav>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pageid">
+              <PageBtn 
+              :prev-is-enabled="pageData.hasPrevPage"
+              @change-prev-page="pagination(pageData.currentPage - 1)"
+              :totalPage="pageData.totalPage"
+              :current-page="pageData.currentPage"
+              @change-page="pagination"
+              :next-is-enabled="pageData.hasNextPage"
+              @change-next-page="pagination(pageData.currentPage + 1)"
+              ></PageBtn>
+            </ul>
+          </nav>
       </div>
     </div>
   </div>
@@ -91,12 +94,16 @@
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
+  // pinia
   import { mapActions } from 'pinia';
+  import adminStore from '@/stores/adminStore';
+  // components
   import DeleteModal from '@/components/backend/DeleteModal.vue';
   import ResultModal from '@/components/ResultModal.vue';
   import ProductModal from '@/components/backend/ProductModal.vue';
   import StatusMessage from '@/components/backend/StatusMessage.vue';
-  import adminStore from '@/stores/adminStore';
+  import PageBtn from '@/components/PageBtn.vue';
+  // 
   const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 
   export default {
@@ -122,6 +129,7 @@
       ResultModal,
       ProductModal,
       StatusMessage,
+      PageBtn,
     },
     methods: {
       // modal, 打開編輯產品modal
