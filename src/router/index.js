@@ -26,7 +26,12 @@ const router = createRouter({
         {
           path: 'products',
           name: 'products',
-          component: () => import(''),
+          component: () => import('../views/backend/AdminProductsView.vue'),
+        },
+        {
+          path: 'coupons',
+          name: 'coupons',
+          component: () => import('../views/backend/AdminCouponsView.vue'),
         },
       ],
     },
@@ -50,7 +55,8 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     }
-  ]
+  ],
+  linkActiveClass: 'active',
 })
 
 export default router

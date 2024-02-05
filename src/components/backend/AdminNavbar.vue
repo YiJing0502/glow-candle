@@ -6,8 +6,12 @@
         alt="" width="70">
     </div>
     <ul class="list-group">
-      <li class="list-group-item active" aria-current="true">An active item</li>
-      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">
+        <router-link class="list-group-item" :to="{name: 'products'}">產品管理</router-link>
+      </li>
+      <li class="list-group-item">
+        <router-link class="list-group-item" :to="{name: 'coupons'}">優惠券管理</router-link>
+      </li>
       <li class="list-group-item">A third item</li>
       <li class="list-group-item">A fourth item</li>
       <li class="list-group-item">And a fifth one</li>
