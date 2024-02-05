@@ -1,5 +1,10 @@
 <template>
-  <div class="d-flex">
+  <VueLoading 
+  v-if="!loginSuccess" 
+  :active="!loginSuccess"
+  :background-color="'#FBFAF4'"
+  :color="'#52504B'"/>
+  <div v-else class="d-flex">
     <AdminNavbar></AdminNavbar>
     <router-view></router-view>
   </div>
@@ -42,8 +47,7 @@ export default {
         if(this.loginSuccess){
           this.serverMessage.message = '登入成功';
           this.serverMessage.success = this.loginSuccess;
-          this.$refs.resultModal.openModal();
-          this.getAdminProductsAll();
+          this.$refs.resultModal.openModal(); 
         }
       })
       .catch((err)=>{

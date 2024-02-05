@@ -1,11 +1,10 @@
 <template>
-  <div class="container position-relative">
+  <div class="container">
     <VueLoading 
     v-if="!getRemoteData" 
     :active="!getRemoteData"
     :background-color="'#FBFAF4'"
-    :color="'#52504B'"
-    :is-full-page="false"/>
+    :color="'#52504B'"/>
     <div v-else>
       <div class="row mt-4">
         <div class="col-8 d-flex">
@@ -407,7 +406,7 @@
       },
     },
     mounted(){
-      if( this.loginSuccess ){
+      if(this.loginSuccess){
         this.getAdminProductsAll();
       };
     },
