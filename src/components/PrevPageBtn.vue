@@ -1,0 +1,10 @@
+<template>
+  <li class="page-item"><button type="button" class="page-link" :class="{disabled: !isEnabled,}" @click="$emit('change-page')">Previous</button></li>
+</template>
+
+<script>
+export default {
+  props: ['isEnabled',],
+  emits: ['change-page',],
+}
+</script>
