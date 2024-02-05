@@ -114,7 +114,7 @@
                   <div class="card">
                     <div class="card-body">
                       <label for="formFile" class="form-label">上傳圖片檔案</label>
-                      <input class="form-control" type="file" name="fileInput" @change="uploadImages"
+                      <input class="form-control" type="file" name="fileInput" @change="uploadImages" ref="uploadInput"
                       accept="image/jpeg, image/jpg, image/png" multiple>
                       <hr>
                       <button class="btn btn-solid-dpgray w-100" @click="addImage">手動新增圖片</button>
@@ -129,21 +129,31 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-normal-dpgray" data-bs-dismiss="modal">關閉</button>
           <button type="button" class="btn btn-solid-spec"
-            @click="inEditProductMode ? putAdminProduct(showData.id) : postAdminProduct()">{{inEditProductMode ? '更新'
+            @click="inEditProductMode ? putAdminProduct() : postAdminProduct()">{{inEditProductMode ? '更新'
             : '新增'}}</button>
         </div>
       </div>
     </div>
   </div>
+  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
+  import ResultModal from '../ResultModal.vue';
   import { Modal } from 'bootstrap';
+  const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
   export default {
     data(){
       return {
         modal: '',
         updatedShowData: {},
+        serverMessage: {
+          message: '',
+          success: true,
+        },
       }
+    },
+    components: {
+      ResultModal,
     },
     mounted(){
       // 獲取 bsResultModal DOM
@@ -162,22 +172,90 @@
     },
     hideModal() {
       this.modal.hide();
-    }, 
-    uploadImages(){
-      this.$emit('upload-images', event);
     },
-    addImage(){
-      this.$emit('add-image');
-    },
-    deleteImage(index){
-      this.$emit('delete-image', index)
-    },
-    putAdminProduct(id){
-      this.$emit('put-admin-product', id);
+    putAdminProduct(){
+      this.$emit('put-admin-product', this.updatedShowData);
     },
     postAdminProduct(){
-      this.$emit('post-admin-product');
-    }
+      this.$emit('post-admin-product', this.updatedShowData);
+    },
+    // fn, 刪除特定圖片
+    deleteImage(myIndex){
+      // 複製一份imagesUrl陣列，以免修改原陣列
+      let imagesUrlArray = [...this.updatedShowData.imagesUrl];
+      // 過濾掉符合條件的元素
+      imagesUrlArray = imagesUrlArray.filter((item, index) => index !== myIndex);
+      // 重新賦值給this.updatedShowData.imagesUrl
+      this.updatedShowData.imagesUrl = imagesUrlArray;
+    },
+    // fn, 新增特定圖片
+    addImage(){
+      if(this.updatedShowData.imagesUrl === undefined) {
+        this.updatedShowData.imagesUrl = ['',];
+      }else{
+        this.updatedShowData.imagesUrl.push('');
+      };
+    },
+    validateImages(multipleFilesArray){
+      // 驗證檔案大小、檔案類型
+      for (let index = 0; index < multipleFilesArray.length; index++) {
+        const element = multipleFilesArray[index];
+        const fileSizeInBytes = element.size;
+        const limitedFileSize = 3 * 1024 * 1024;
+        if(fileSizeInBytes > limitedFileSize) {
+          this.serverMessage.message = '圖片檔案不可超過3MB';
+          this.serverMessage.success = false;
+          this.$refs.resultModal.openModal();
+          return false;
+        };
+        if(element.type !== 'image/jpeg' && element.type !== 'image/jpg' && element.type !== 'image/png') {
+          this.serverMessage.message = '只接收「jpg」、「jpeg」、「png」類型的圖片檔案';
+          this.serverMessage.success = false;
+          this.$refs.resultModal.openModal();
+          return false;
+        };
+        return true;
+      };
+    },
+    // fn, 上傳多張圖片
+    uploadImages(event){
+      const multipleFilesArray = [...event.target.files];
+      if(this.validateImages(multipleFilesArray)){
+        // 上傳檔案
+        multipleFilesArray.forEach((item)=>{
+          // 產生一個新的上傳表單格式
+          const formData = new FormData();
+          // 夾帶欄位與要上傳的檔案
+          formData.append('file-to-upload', item);
+          // 上傳檔案
+          this.$http.post(`${VITE_BASE_URL}/api/${VITE_API_PATH}/admin/upload`, formData)
+            .then(res=>{
+              if(res.data.success){
+                if(this.updatedShowData.imagesUrl === undefined) {
+                  this.updatedShowData.imagesUrl = [];
+                  this.updatedShowData.imagesUrl.push(res.data.imageUrl);
+                }else{
+                  this.updatedShowData.imagesUrl.push(res.data.imageUrl);
+                };
+                this.serverMessage.message = res.data.success;
+                this.serverMessage.success = '上傳成功';
+                this.$refs.resultModal.openModal();
+              }else{
+                this.serverMessage.success = res.data.success;
+                this.serverMessage.message = '上傳成功';
+                this.$refs.resultModal.openModal();
+              };
+              this.$refs.uploadInput.value = '';
+            })
+            .catch(err=>{
+              this.serverMessage.message = err.response.data.message;
+              this.serverMessage.success = err.response.data.success;
+              this.$refs.resultModal.openModal();
+              this.$refs.uploadInput.value = '';
+            })
+        });
+      }
+    },
     },
     props: ['showData', 'inEditProductMode'],
     emits: ['upload-images','delete-image', 'add-image', 'put-admin-product', 'post-admin-product'],
