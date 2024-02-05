@@ -1,6 +1,11 @@
 <template>
-  <div class="container">
-    <VueLoading v-if="!getRemoteData" :active="!getRemoteData"/>
+  <div class="container position-relative">
+    <VueLoading 
+    v-if="!getRemoteData" 
+    :active="!getRemoteData"
+    :background-color="'#FBFAF4'"
+    :color="'#52504B'"
+    :is-full-page="false"/>
     <div v-else>
       <div class="row mt-4">
         <div class="col-8 d-flex">
@@ -94,6 +99,8 @@
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
+  import { mapState } from 'pinia';
+  import adminStore from '@/stores/adminStore';
   // components
   import DeleteModal from '@/components/backend/DeleteModal.vue';
   import ResultModal from '@/components/ResultModal.vue';
@@ -127,6 +134,9 @@
       ProductModal,
       StatusMessage,
       PageBtn,
+    },
+    computed: {
+      ...mapState(adminStore, ['loginSuccess'])
     },
     methods: {
       // modal, 打開編輯產品modal
@@ -397,7 +407,9 @@
       },
     },
     mounted(){
-      this.getAdminProductsAll();
+      if( this.loginSuccess ){
+        this.getAdminProductsAll();
+      };
     },
   };
 </script>
