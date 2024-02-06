@@ -10,6 +10,11 @@ This template should help get you started developing with Vue 3 in Vite.
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
+## About This Project 
+
+- Material design icons are created by [Google](https://github.com/google/material-design-icons#license).
+
+
 ## Project Setup
 
 ```sh

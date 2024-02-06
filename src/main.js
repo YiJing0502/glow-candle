@@ -1,3 +1,6 @@
+// 引入 material-icons 的 CSS檔案
+import 'material-icons/iconfont/material-icons.css';
+
 import { createApp } from 'vue'
 // 載入 pinia
 import { createPinia } from 'pinia'
