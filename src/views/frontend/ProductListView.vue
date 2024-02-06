@@ -4,7 +4,7 @@
               :background-color="'#EBEAE4'" 
               :is-full-page="true" 
               :color="'#52504B'" />
-  <div v-else class="container bg-main-medi rounded-10em mt-5 mb-5 px-5r py-7r">
+  <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
       <div class="row">
         <!-- sort title -->
         <div class="col-8">
