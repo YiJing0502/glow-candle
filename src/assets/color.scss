@@ -25,7 +25,4 @@ $focusBoxShadow: rgba(130, 130, 130, 0.25);
 .bg-main-medi {
   background-color: $mediumMainColor;
 }
-:focus {
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem $focusBoxShadow;
-}
+
