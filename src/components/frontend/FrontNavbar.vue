@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg bg-main-medi p-0">
     <div class="container">
       <router-link :to="{name: 'front'}" class="navbar-brand" ><img src="/glow-logo.png" alt="glow-logo" width="50"></router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,6 +9,9 @@
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item">
             <router-link :to="{name: 'front'}" class="nav-link" aria-current="page">首頁</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{name: 'products'}" class="nav-link" aria-current="page">全部產品</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,7 +44,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <router-link :to="{name: 'front'}" class="nav-link" aria-current="page">關於GLOW</router-link>
+            <router-link :to="{name: 'about'}" class="nav-link" aria-current="page">關於GLOW</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,13 +57,13 @@
             </ul>
           </li>
           <li class="nav-item">
-            <router-link :to="{name: 'front'}" class="nav-link" aria-current="page">
+            <router-link :to="{name: 'about'}" class="nav-link" aria-current="page">
               <span class="material-icons fs-4 mt-1">forum</span>
             </router-link>
           </li>
          
           <li class="nav-item">
-            <router-link :to="{name: 'front'}" class="nav-link" aria-current="page">
+            <router-link :to="{name: 'checkout'}" class="nav-link" aria-current="page">
               <span class="material-icons-outlined fs-3 mt-1">shopping_bag</span>
             </router-link>
           </li>

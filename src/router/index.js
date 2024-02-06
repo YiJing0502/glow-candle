@@ -11,10 +11,40 @@ const router = createRouter({
       component: () => import('../views/frontend/FrontLayoutView.vue'),
       children: [
         {
-          path: '/products',
+          path: 'products',
           name: 'products',
           component: () => import('../views/frontend/ProductListView.vue'),
-        }
+        },
+        {
+          path: 'product',
+          name: 'product',
+          component: () => import('../views/frontend/ProductDetailView.vue'),
+        },
+        {
+          path: 'checkout',
+          name: 'checkout',
+          component: () => import('../views/frontend/CheckoutView.vue'),
+        },
+        {
+          path: 'payment',
+          name: 'payment',
+          component: () => import('../views/frontend/PaymentView.vue'),
+        },
+        {
+          path: 'orders',
+          name: 'orders',
+          component: () => import('../views/frontend/OrderSearch.vue'),
+        },
+        {
+          path: 'order',
+          name: 'order',
+          component: () => import('../views/frontend/OrderDetail.vue'),
+        },
+        {
+          path: 'about',
+          name: 'about',
+          component: () => import('../views/frontend/AboutView.vue'),
+        },
       ],
     },
     // 後台 backend routes
@@ -25,17 +55,17 @@ const router = createRouter({
       children: [
         {
           path: 'orders',
-          name: 'orders',
+          name: 'adminOrders',
           component: () => import('../views/backend/AdminOrdersView.vue'),
         },
         {
           path: 'products',
-          name: 'products',
+          name: 'adminProducts',
           component: () => import('../views/backend/AdminProductsView.vue'),
         },
         {
           path: 'coupons',
-          name: 'coupons',
+          name: 'adminCoupons',
           component: () => import('../views/backend/AdminCouponsView.vue'),
         },
       ],
@@ -53,8 +83,8 @@ const router = createRouter({
       component: () => import('../views/NotFoundView.vue'),
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/about2',
+      name: 'about2',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.

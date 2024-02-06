@@ -7,13 +7,13 @@
     </div>
     <ul class="list-group">
       <li class="list-group-item">
-        <router-link class="list-group-item" :to="{name: 'orders'}">訂單管理</router-link>
+        <router-link class="list-group-item" :to="{name: 'adminOrders'}">訂單管理</router-link>
       </li>
       <li class="list-group-item">
-        <router-link class="list-group-item" :to="{name: 'products'}">產品管理</router-link>
+        <router-link class="list-group-item" :to="{name: 'adminProducts'}">產品管理</router-link>
       </li>
       <li class="list-group-item">
-        <router-link class="list-group-item" :to="{name: 'coupons'}">優惠券管理</router-link>
+        <router-link class="list-group-item" :to="{name: 'adminCoupons'}">優惠券管理</router-link>
       </li>
       <li class="list-group-item">A third item</li>
       <li class="list-group-item">A fourth item</li>
