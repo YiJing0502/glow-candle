@@ -16,6 +16,19 @@ import VueAxios from 'vue-axios';
 // 載入 vue-loading-overlay
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
+// 載入 vee-validation
+import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
+import { required, email, max } from '@vee-validate/rules';
+import { localize } from '@vee-validate/i18n';
+import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
+// Define the rule globally
+defineRule('required', required);
+defineRule('email', email);
+defineRule('max', max);
+configure({
+  generateMessage: localize({ zh_TW: zhTW }), // 載入繁體中文語系
+  validateOnInput: true, // 當輸入任何內容直接進行驗證
+});
 
 const app = createApp(App)
 // 將 Bootstrap 添加到全局 window 對象中
@@ -23,6 +36,11 @@ window.bootstrap = bootstrap;
 
 // 註冊 vue-loading-overlay 元件
 app.component('VueLoading', Loading);
+// 註冊 vee-validation 元件
+app.component('VeeForm', Form);
+app.component('VeeField', Field);
+app.component('VeeErrorMessage', ErrorMessage);
+
 // 使用pinia
 app.use(createPinia())
 app.use(router)
