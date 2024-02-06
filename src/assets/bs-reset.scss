@@ -26,13 +26,17 @@
 }
 // taps
 .nav-link {
-  color: $specialMainColor;
+  color: $deepGrayColor;
+  font-weight: 600;
   &:hover{
     color: $specialMainColor;
   }
   &:focus {
-    color: $specialMainColor;;
+    color: $specialMainColor;
   }
+}
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+  color: $specialMainColor;
 }
 .nav-link:focus-visible {
   outline: 0;

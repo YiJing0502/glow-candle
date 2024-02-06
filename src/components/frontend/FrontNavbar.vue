@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-main-medi p-0">
+  <nav class="navbar sticky-top navbar-expand-lg bg-main-medi p-0">
     <div class="container">
-      <router-link :to="{name: 'front'}" class="navbar-brand" ><img src="/glow-logo.png" alt="glow-logo" width="50"></router-link>
+      <router-link :to="{name: 'front'}" class="navbar-brand" ><img class="p-1" src="/glow-logo.png" alt="glow-logo" width="50"></router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
