@@ -1,6 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-
-
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,14 +9,20 @@ const router = createRouter({
       component: () => import('../views/frontend/FrontLayoutView.vue'),
       children: [
         {
+          path: '/:pathMatch(.*)*',
+          name: 'front404',
+          component: () => import('../views/NotFoundView.vue'),
+        },
+        {
           path: 'products',
           name: 'products',
           component: () => import('../views/frontend/ProductListView.vue'),
         },
         {
-          path: 'product',
+          path: 'product/:id',
           name: 'product',
           component: () => import('../views/frontend/ProductDetailView.vue'),
+          
         },
         {
           path: 'checkout',

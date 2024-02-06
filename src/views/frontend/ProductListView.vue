@@ -110,7 +110,14 @@
       }
     },
     methods: {
-      ...mapActions(productsStore, ['getProductsAll', 'getProduct', 'changeToProductPage']),
+      // 跳轉至產品頁面
+      changeToProductPage(id) {
+        this.$router.push({
+          name: 'product',
+          params: { id },
+        });
+      },
+      ...mapActions(productsStore, ['getProductsAll', 'getProduct',]),
     },
     computed: {
       ...mapState(productsStore, ['isLoading','productsData']),
