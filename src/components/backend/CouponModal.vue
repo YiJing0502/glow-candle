@@ -1,12 +1,15 @@
 <template>
   <!-- 優惠券modal -->
-  <div class="modal fade" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  <div class="modal fade" ref="modal" tabindex="-1"
+   aria-labelledby="exampleModalLabel" aria-hidden="true"
       data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{{inEditCouponMode ? '編輯優惠券' : '新增優惠券'}}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h1 class="modal-title fs-5"
+           id="exampleModalLabel">{{inEditCouponMode ? '編輯優惠券' : '新增優惠券'}}</h1>
+          <button type="button" class="btn-close"
+           data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -19,10 +22,12 @@
             </div>
             <div class="col-2 d-flex align-items-center">
               <div class="form-check mt-3">
-                <input type="checkbox" class="form-check-input" id="is_enabled" :true-value="1" :false-value="0"
+                <input type="checkbox" class="form-check-input"
+                 id="is_enabled" :true-value="1" :false-value="0"
                   v-model="updatedShowData.is_enabled">
                 <label for="is_enabled" class="form-check-label">
-                  <span v-if="updatedShowData.is_enabled === 1" class="text-main-spec fw-bold">啟用</span>
+                  <span v-if="updatedShowData.is_enabled === 1"
+                   class="text-main-spec fw-bold">啟用</span>
                   <span v-else class="text-deep-gray">未啟用</span>
                 </label>
               </div>
@@ -41,15 +46,17 @@
             </div>
             <div class="col mb-3">
               <label for="coupon_code" class="form-label">折扣代碼</label>
-              <input type="text" class="form-control" id="coupon_code" placeholder="請輸入折扣代碼" v-model="updatedShowData.code">
+              <input type="text" class="form-control"
+               id="coupon_code" placeholder="請輸入折扣代碼" v-model="updatedShowData.code">
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-normal-dpgray" data-bs-dismiss="modal">關閉</button>
           <button type="button" class="btn btn-solid-spec"
-            @click="inEditCouponMode ? putAdminCoupon() : postAdminCoupon()">{{inEditCouponMode ? '更新' :
-            '新增'}}</button>
+            @click="inEditCouponMode ? putAdminCoupon() : postAdminCoupon()">
+            {{inEditCouponMode ? '更新' : '新增'}}
+          </button>
         </div>
       </div>
     </div>
@@ -59,7 +66,7 @@
 // pinia
 import { mapState } from 'pinia';
 import { Modal } from 'bootstrap';
-import timeStore from '@/stores/timeStore';
+import timeStore from '../../stores/timeStore';
 // modal
 
 export default {
