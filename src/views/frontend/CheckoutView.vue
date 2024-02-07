@@ -218,7 +218,7 @@
             <div id="RecipientInformationDetails" class="accordion-collapse collapse show"
               aria-labelledby="RecipientInformationSection">
               <div class="accordion-body">
-                <vee-form @submit="postOrder(orderData)" v-slot="{ errors }">
+                <vee-form @submit="goToPostOrder" v-slot="{ errors }">
                   <!-- 收件人名稱 -->
                   <div class="mb-3">
                     <label for="category" class="form-label">收件人名稱</label>
@@ -380,6 +380,24 @@ export default {
         this.showStoreMessage();
       } catch {
         this.showStoreMessage();
+      }
+    },
+    async goToPostOrder() {
+      try {
+        const res = await this.postOrder(this.orderData);
+        // 送出訂單時重新取得最新購物車狀態
+        await this.goToGetCart(false);
+        this.serverMessage.message = res.data.message;
+        this.serverMessage.success = res.data.success;
+        this.$refs.resultModal.openModal();
+        this.$router.push({
+          name: 'payment',
+          params: { id: res.data.orderId },
+        });
+      } catch (err) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
       }
     },
     showStoreMessage() {

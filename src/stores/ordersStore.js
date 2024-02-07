@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { defineStore } from 'pinia';
-import stringStore from './stringStore.js';
-import timeStore from './timeStore.js';
-import cartsStore from './cartsStore.js';
+import stringStore from './stringStore';
+import timeStore from './timeStore';
+import cartsStore from './cartsStore';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default defineStore('ordersStore', {
@@ -14,6 +14,11 @@ export default defineStore('ordersStore', {
     userData: {},
     productData: [],
     couponData: {},
+    // store狀態通知
+    storeMessage: {
+      message: '',
+      success: true,
+    },
   }),
   getters: {
 
@@ -21,18 +26,16 @@ export default defineStore('ordersStore', {
   actions: {
     // ajax, 送出訂單方法
     postOrder(data) {
-      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order`;
-      axios.post(url, data)
-        .then((res) => {
-          this.changeToIdPage(res.data.orderId, 'payment.html');
-          // 送出訂單時重新取得最新購物車狀態
-          const { getCart } = cartsStore();
-          getCart(false);
-          alert('訂單已建立，請接續付款流程');
-        })
-        .catch(() => {
-          alert('訂單送出失敗，請稍後再試');
-        });
+      return new Promise((resolve, reject) => {
+        const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order`;
+        axios.post(url, data)
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
     },
     // fn, 跳轉至某個帶有id的頁面
     changeToIdPage(id, html) {
@@ -118,6 +121,11 @@ export default defineStore('ordersStore', {
       } catch {
         alert('很抱歉，付款失敗，請稍後再試');
       }
+    },
+    // fn, 更新storeMessage
+    updateStoreMessage(message = '', success = true) {
+      this.storeMessage.message = message;
+      this.storeMessage.success = success;
     },
   },
 });
