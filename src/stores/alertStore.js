@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
+
 export default defineStore('alertStore', {
-  state: ()=>({
+  state: () => ({
 
   }),
   getters: {
@@ -9,4 +10,4 @@ export default defineStore('alertStore', {
   actions: {
 
   },
-})
+});

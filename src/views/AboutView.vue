@@ -7,7 +7,6 @@
 </template>
 <script>
 
-
 export default {
   data() {
     return {
@@ -15,7 +14,7 @@ export default {
       isLoading: true,
     };
   },
-  components:{
+  components: {
 
   },
   mounted() {

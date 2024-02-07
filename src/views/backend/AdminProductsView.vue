@@ -1,6 +1,6 @@
 <template>
-  <VueLoading 
-  v-if="!getRemoteData" 
+  <VueLoading
+  v-if="!getRemoteData"
   :active="!getRemoteData"
   :background-color="'#FBFAF4'"
   :color="'#52504B'"/>
@@ -46,7 +46,8 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in infoData" :key="index">
-          <th scope="row"><img :src="item.imageUrl" :alt="item.title" class="img-fluid" width="50"></th>
+          <th scope="row"><img :src="item.imageUrl"
+            :alt="item.title" class="img-fluid" width="50"></th>
           <td>{{ item.category }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.origin_price}}</td>
@@ -73,7 +74,7 @@
     <div class="d-flex justify-content-center mt-4" ref="scrollContainer">
         <nav aria-label="Page navigation example">
           <ul class="pagination" id="pageid">
-            <PageBtn 
+            <PageBtn
             :prev-is-enabled="pageData.hasPrevPage"
             @change-prev-page="pagination(pageData.currentPage - 1)"
             :totalPage="pageData.totalPage"
@@ -87,252 +88,251 @@
     </div>
   </div>
   <!-- 產品Modal -->
-  <ProductModal  ref="productModal" 
-  :show-data="showData" 
+  <ProductModal  ref="productModal"
+  :show-data="showData"
   :in-edit-product-mode="inEditProductMode"
   @put-admin-product="putAdminProduct"
   @post-admin-product="postAdminProduct"></ProductModal>
   <!-- 刪除產品Modal -->
-  <DeleteModal ref="deleteModal" :show-data="showData" @delete-function="deleteAdminProduct"></DeleteModal>
+  <DeleteModal ref="deleteModal" :show-data="showData" @delete-function="deleteAdminProduct">
+  </DeleteModal>
   <!-- 結果modal -->
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
-  import { mapState } from 'pinia';
-  import adminStore from '@/stores/adminStore';
-  // components
-  import DeleteModal from '@/components/backend/DeleteModal.vue';
-  import ResultModal from '@/components/ResultModal.vue';
-  import ProductModal from '@/components/backend/ProductModal.vue';
-  import StatusMessage from '@/components/backend/StatusMessage.vue';
-  import PageBtn from '@/components/PageBtn.vue';
-  // 
-  const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
+import { mapState } from 'pinia';
+import adminStore from '../../stores/adminStore';
+// components
+import DeleteModal from '../../components/backend/DeleteModal.vue';
+import ResultModal from '../../components/ResultModal.vue';
+import ProductModal from '../../components/backend/ProductModal.vue';
+import StatusMessage from '../../components/backend/StatusMessage.vue';
+import PageBtn from '../../components/PageBtn.vue';
+//
+const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 
-  export default {
-    data() {
-      return {
-        getRemoteData: false,
-        productsData: [],
-        paginationData: [],
-        pageData: {},
-        infoData: [],
-        showData: {},
-        inEditProductMode: true,
-        serverMessage: {
-          message: '',
-          success: true,
-        },
-        productsCategory: [],
-        searchInputValue: '',
+export default {
+  data() {
+    return {
+      getRemoteData: false,
+      productsData: [],
+      paginationData: [],
+      pageData: {},
+      infoData: [],
+      showData: {},
+      inEditProductMode: true,
+      serverMessage: {
+        message: '',
+        success: true,
+      },
+      productsCategory: [],
+      searchInputValue: '',
+    };
+  },
+  components: {
+    DeleteModal,
+    ResultModal,
+    ProductModal,
+    StatusMessage,
+    PageBtn,
+  },
+  computed: {
+    ...mapState(adminStore, ['loginSuccess']),
+  },
+  methods: {
+    // modal, 打開編輯產品modal
+    getAdminProductModal(id) {
+      this.inEditProductMode = true;
+      this.showData = JSON.parse(JSON.stringify(this.productsData[id]));
+      this.$refs.productModal.openModal();
+    },
+    // modal, 打開新增產品 modal
+    getAdminAddProductModal() {
+      this.inEditProductMode = false;
+      this.showData = {
+        imagesUrl: [''],
       };
+      this.$refs.productModal.openModal();
     },
-    components: {
-      DeleteModal,
-      ResultModal,
-      ProductModal,
-      StatusMessage,
-      PageBtn,
+    // modal, 打開刪除產品modal
+    getAdminDelProductModal(id) {
+      this.showData = JSON.parse(JSON.stringify(this.productsData[id]));
+      this.$refs.deleteModal.openModal();
     },
-    computed: {
-      ...mapState(adminStore, ['loginSuccess'])
+    // ajax, 取得所有產品資料
+    getAdminProductsAll() {
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/products/all`;
+      this.$http.get(url)
+        .then((res) => {
+          if (res.data.success) {
+            this.getRemoteData = res.data.success;
+            this.productsData = res.data.products;
+            this.paginationData = res.data.products;
+            this.pagination(1);
+          }
+        })
+        .catch((err) => {
+          this.serverMessage.message = err.response.data.message;
+          this.serverMessage.success = err.response.data.success;
+          this.$refs.resultModal.openModal();
+        });
     },
-    methods: {
-      // modal, 打開編輯產品modal
-      getAdminProductModal(id) {
-        this.inEditProductMode = true;
-        this.showData = JSON.parse(JSON.stringify(this.productsData[id]));
-        this.$refs.productModal.openModal();
-        
-      },
-      // modal, 打開新增產品 modal
-      getAdminAddProductModal(){
-        this.inEditProductMode = false;
-        this.showData = {
-          imagesUrl: [''],
-        };
-        this.$refs.productModal.openModal();
-      },
-      // modal, 打開刪除產品modal
-      getAdminDelProductModal(id) {
-        this.showData = JSON.parse(JSON.stringify(this.productsData[id]));
-        this.$refs.deleteModal.openModal();
-        
-      },
-      // ajax, 取得所有產品資料
-      getAdminProductsAll() {
-        const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/products/all`;
-        this.$http.get(url)
-          .then((res)=>{
-            if(res.data.success){
-              this.getRemoteData = res.data.success;
-              this.productsData = res.data.products;
-              this.paginationData = res.data.products;
-              this.pagination(1);
-            }
-          })
-          .catch((err)=>{
-            this.serverMessage.message = err.response.data.message;
-            this.serverMessage.success = err.response.data.success;
-            this.$refs.resultModal.openModal();
-          })
-      },
-      // ajax, 新增特定產品資料
-      postAdminProduct(updatedData) {
-        const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/product`;
-        const data = {
-          data: updatedData,
-        };
-        this.$http.post(url, data)
-          .then(res=>{
+    // ajax, 新增特定產品資料
+    postAdminProduct(updatedData) {
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/product`;
+      const data = {
+        data: updatedData,
+      };
+      this.$http.post(url, data)
+        .then((res) => {
+          this.getAdminProductsAll();
+          this.serverMessage.message = res.data.message;
+          this.serverMessage.success = res.data.success;
+          this.$refs.productModal.hideModal();
+          this.$refs.resultModal.openModal();
+        })
+        .catch((err) => {
+          this.serverMessage.message = err.response.data.message;
+          this.serverMessage.success = err.response.data.success;
+          this.$refs.resultModal.openModal();
+        });
+    },
+    // // ajax, 更新特定產品資料
+    putAdminProduct(updatedData) {
+      const { id } = updatedData;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/product/${id}`;
+      const data = {
+        data: updatedData,
+      };
+      this.$http.put(url, data)
+        .then((res) => {
+          if (res.data.success) {
             this.getAdminProductsAll();
             this.serverMessage.message = res.data.message;
             this.serverMessage.success = res.data.success;
             this.$refs.productModal.hideModal();
             this.$refs.resultModal.openModal();
-          })
-          .catch(err=>{
-            this.serverMessage.message = err.response.data.message;
-            this.serverMessage.success = err.response.data.success;
-            this.$refs.resultModal.openModal();
-          });
-      },
-      // // ajax, 更新特定產品資料
-      putAdminProduct(updatedData){
-        const id = updatedData.id;
-        const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/product/${id}`;
-        const data = {
-          data: updatedData,
-        };
-        this.$http.put(url, data)
-          .then(res=>{
-            if(res.data.success){
-              this.getAdminProductsAll();
-              this.serverMessage.message = res.data.message;
-              this.serverMessage.success = res.data.success;
-              this.$refs.productModal.hideModal();
-              this.$refs.resultModal.openModal();
-            };
-          })
-          .catch(err=>{
-            this.serverMessage.message = err.response.data.message;
-            this.serverMessage.success = err.response.data.success;
-            this.$refs.resultModal.openModal();
-          });
-      },
-      // ajax, 刪除特定產品資料
-      deleteAdminProduct(){
-        const id = this.showData.id;
-        const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/product/${id}`;
-        this.$http.delete(url)
-          .then(res=>{
-            if(res.data.success){
-              this.$refs.deleteModal.hideModal();
-              this.getAdminProductsAll();
-              this.serverMessage.message = res.data.message;
-              this.serverMessage.success = res.data.success;
-              this.$refs.resultModal.openModal();
-            }
-          })
-          .catch(err=>{
-            this.$refs.deleteModal.hideModal();
-            this.serverMessage.message = err.response.data.message;
-            this.serverMessage.success = err.response.data.success;
-            this.$refs.resultModal.openModal();
-          })
-      },
-      // fn, 分頁
-      pagination(nowPage){
-        const data = this.paginationData;
-        // 取得全部資料長度
-        const dataLength = Object.keys(data).length;
-        // 設定每頁資料量
-        const perPage = 10;
-        // 取得總頁數，使用無條件進位
-        const totalPage = Math.ceil(dataLength/perPage);
-        // 設定當前頁數，變數
-        let currentPage = nowPage;
-        // 防呆：避免當前頁數比總頁數大
-        if(currentPage > totalPage){
-          currentPage = totalPage;
-        };
-        // 計算當前分頁顯示的資料範圍的最小值
-        const minPerPageData = ((currentPage * perPage) - perPage) + 1;
-        // 計算當前分頁顯示的資料範圍的最大值
-        const maxPerPageData = (currentPage * perPage);
-        // 建立新陣列，存放我們每頁的資料
-        const newData = [];
-        Object.keys(data).forEach((item,index)=>{
-          // 因為所有的索引都會被加一，所以其實不影響運作，只是方便我們計算，所以用num，帶替原本的 index
-          let num = index + 1;
-          if(num >= minPerPageData && num <= maxPerPageData){
-            newData.push(data[item]);
-          };
-        });
-        this.infoData = newData;
-        // 用物件方式來傳遞資料
-        const page = {
-          totalPage,
-          currentPage,
-          // 是否有上一頁
-          hasPrevPage: currentPage > 1,
-          // 是否有下一頁
-          hasNextPage: currentPage < totalPage,
-        };
-        this.pageData = page;
-      },
-      // fn, 至底部
-      scrollToBottom() {
-        // 獲取滾動元素的引用
-        const scrollContainer = this.$refs.scrollContainer;
-
-        // 使用scrollIntoView方法使元素滾動到可視區域的底部
-        scrollContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      },
-      // fn,取得最新 category
-      getCategory(){
-        // 使用 Set 來確保類別的唯一性
-        const uniqueCategories = new Set();
-        Object.keys(this.productsData).forEach((element)=>{
-          const category = this.productsData[element].category;
-          uniqueCategories.add(category);
-        });
-        // 轉換 Set 為陣列，然後將它設置到 data 中的 productsCategory
-        this.productsCategory = Array.from(uniqueCategories);
-      },
-      // fn,篩選 category
-      filterCategory(category){
-        this.paginationData = [];
-        Object.keys(this.productsData).forEach((element)=>{
-          const item = this.productsData[element];
-          if(item.category === category){
-            this.paginationData.push(item)
-          };
-        });
-        this.pagination(1);
-      },
-      //fn, 搜尋
-      searchProduct(){
-        const newData = [];
-        const lowerCaseData = this.searchInputValue.toLowerCase();
-        Object.keys(this.productsData).forEach(element => {
-          if(this.productsData[element].title.toLowerCase().match(lowerCaseData)){
-            newData.push(this.productsData[element]);
-          };
-        });
-        if(newData.length === 0){
-          this.serverMessage.message = '很抱歉，沒有符合搜尋條件的產品';
-          this.serverMessage.success = false;
+          }
+        })
+        .catch((err) => {
+          this.serverMessage.message = err.response.data.message;
+          this.serverMessage.success = err.response.data.success;
           this.$refs.resultModal.openModal();
+        });
+    },
+    // ajax, 刪除特定產品資料
+    deleteAdminProduct() {
+      const { id } = this.showData;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/product/${id}`;
+      this.$http.delete(url)
+        .then((res) => {
+          if (res.data.success) {
+            this.$refs.deleteModal.hideModal();
+            this.getAdminProductsAll();
+            this.serverMessage.message = res.data.message;
+            this.serverMessage.success = res.data.success;
+            this.$refs.resultModal.openModal();
+          }
+        })
+        .catch((err) => {
+          this.$refs.deleteModal.hideModal();
+          this.serverMessage.message = err.response.data.message;
+          this.serverMessage.success = err.response.data.success;
+          this.$refs.resultModal.openModal();
+        });
+    },
+    // fn, 分頁
+    pagination(nowPage) {
+      const data = this.paginationData;
+      // 取得全部資料長度
+      const dataLength = Object.keys(data).length;
+      // 設定每頁資料量
+      const perPage = 10;
+      // 取得總頁數，使用無條件進位
+      const totalPage = Math.ceil(dataLength / perPage);
+      // 設定當前頁數，變數
+      let currentPage = nowPage;
+      // 防呆：避免當前頁數比總頁數大
+      if (currentPage > totalPage) {
+        currentPage = totalPage;
+      }
+      // 計算當前分頁顯示的資料範圍的最小值
+      const minPerPageData = ((currentPage * perPage) - perPage) + 1;
+      // 計算當前分頁顯示的資料範圍的最大值
+      const maxPerPageData = (currentPage * perPage);
+      // 建立新陣列，存放我們每頁的資料
+      const newData = [];
+      Object.keys(data).forEach((item, index) => {
+        // 因為所有的索引都會被加一，所以其實不影響運作，只是方便我們計算，所以用num，帶替原本的 index
+        const num = index + 1;
+        if (num >= minPerPageData && num <= maxPerPageData) {
+          newData.push(data[item]);
         }
-        this.paginationData = newData;
-        this.pagination(1);
-      },
-    },
-    mounted(){
-      if(this.loginSuccess){
-        this.getAdminProductsAll();
+      });
+      this.infoData = newData;
+      // 用物件方式來傳遞資料
+      const page = {
+        totalPage,
+        currentPage,
+        // 是否有上一頁
+        hasPrevPage: currentPage > 1,
+        // 是否有下一頁
+        hasNextPage: currentPage < totalPage,
       };
+      this.pageData = page;
     },
-  };
+    // fn, 至底部
+    scrollToBottom() {
+      // 獲取滾動元素的引用
+      const { scrollContainer } = this.$refs;
+
+      // 使用scrollIntoView方法使元素滾動到可視區域的底部
+      scrollContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    },
+    // fn,取得最新 category
+    getCategory() {
+      // 使用 Set 來確保類別的唯一性
+      const uniqueCategories = new Set();
+      Object.keys(this.productsData).forEach((element) => {
+        const { category } = this.productsData[element];
+        uniqueCategories.add(category);
+      });
+      // 轉換 Set 為陣列，然後將它設置到 data 中的 productsCategory
+      this.productsCategory = Array.from(uniqueCategories);
+    },
+    // fn,篩選 category
+    filterCategory(category) {
+      this.paginationData = [];
+      Object.keys(this.productsData).forEach((element) => {
+        const item = this.productsData[element];
+        if (item.category === category) {
+          this.paginationData.push(item);
+        }
+      });
+      this.pagination(1);
+    },
+    // fn, 搜尋
+    searchProduct() {
+      const newData = [];
+      const lowerCaseData = this.searchInputValue.toLowerCase();
+      Object.keys(this.productsData).forEach((element) => {
+        if (this.productsData[element].title.toLowerCase().match(lowerCaseData)) {
+          newData.push(this.productsData[element]);
+        }
+      });
+      if (newData.length === 0) {
+        this.serverMessage.message = '很抱歉，沒有符合搜尋條件的產品';
+        this.serverMessage.success = false;
+        this.$refs.resultModal.openModal();
+      }
+      this.paginationData = newData;
+      this.pagination(1);
+    },
+  },
+  mounted() {
+    if (this.loginSuccess) {
+      this.getAdminProductsAll();
+    }
+  },
+};
 </script>

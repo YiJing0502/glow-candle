@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
+
 export default defineStore('stringStore', {
-  state: ()=>({
+  state: () => ({
 
   }),
   getters: {
@@ -8,7 +9,7 @@ export default defineStore('stringStore', {
   },
   actions: {
     // 按換行符拆分字串
-    splitStringByNewline(str){
+    splitStringByNewline(str) {
       return str.split('\n');
     },
   },

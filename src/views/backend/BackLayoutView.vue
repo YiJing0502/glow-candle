@@ -1,6 +1,6 @@
 <template>
-  <VueLoading 
-  v-if="!loginSuccess" 
+  <VueLoading
+  v-if="!loginSuccess"
   :active="!loginSuccess"
   :background-color="'#FBFAF4'"
   :color="'#52504B'"/>
@@ -13,52 +13,51 @@
 <script>
 // pinia
 import { mapState, mapActions } from 'pinia';
-import adminStore from '@/stores/adminStore';
+import adminStore from '../../stores/adminStore';
 // components
-import AdminNavbar from '@/components/backend/AdminNavbar.vue';
-import ResultModal from '@/components/ResultModal.vue';
-
+import AdminNavbar from '../../components/backend/AdminNavbar.vue';
+import ResultModal from '../../components/ResultModal.vue';
 
 export default {
-  data(){
+  data() {
     return {
       serverMessage: {
         message: '',
         success: true,
       },
-    }
+    };
   },
   components: {
     AdminNavbar,
     ResultModal,
   },
   computed: {
-    ...mapState(adminStore, ['loginSuccess'])
+    ...mapState(adminStore, ['loginSuccess']),
   },
   methods: {
-    ...mapActions(adminStore, ['initializeAdmin', 'postApiUserCheck'])
+    ...mapActions(adminStore, ['initializeAdmin', 'postApiUserCheck']),
   },
-  mounted(){
+  mounted() {
     // 取得先前儲存在 cookie 中 adminAccount 的值
     this.initializeAdmin();
     // 觸發確認是否登入的方法
     this.postApiUserCheck()
-      .then(()=>{
-        if(this.loginSuccess){
+      .then(() => {
+        if (this.loginSuccess) {
           this.serverMessage.message = '登入成功';
           this.serverMessage.success = this.loginSuccess;
-          this.$refs.resultModal.openModal(); 
+          this.$refs.resultModal.openModal();
         }
       })
-      .catch((err)=>{
+      .catch((err) => {
         this.serverMessage.message = err.response.data.message;
         this.serverMessage.success = err.response.data.success;
         this.$refs.resultModal.openModal();
-        if(!this.loginSuccess){
+        if (!this.loginSuccess) {
           // 只有在使用者未登入時才重新導向
-          this.$router.push({ name: 'login' })
+          this.$router.push({ name: 'login' });
         }
       });
   },
-}
+};
 </script>

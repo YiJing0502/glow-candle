@@ -56,47 +56,48 @@
   </div>
 </template>
 <script>
-  // pinia
-  import { mapState } from 'pinia';
-  import timeStore from '@/stores/timeStore';
-  // modal
-  import { Modal } from 'bootstrap';
-  export default {
-    data(){
-      return {
-        modal: '',
-        updatedShowData: {},
-      }
-    },
-    methods:{
-      openModal() {
+// pinia
+import { mapState } from 'pinia';
+import { Modal } from 'bootstrap';
+import timeStore from '@/stores/timeStore';
+// modal
+
+export default {
+  data() {
+    return {
+      modal: '',
+      updatedShowData: {},
+    };
+  },
+  methods: {
+    openModal() {
       this.modal.show();
-      },
-      hideModal() {
-        this.modal.hide();
-      },
-      putAdminCoupon() {
-        this.$emit('put-admin-coupon', this.updatedShowData);
-      },
-      postAdminCoupon() {
-        this.$emit('post-admin-coupon', this.updatedShowData);
-      },
     },
-    computed: {
-      ...mapState(timeStore, ['currentDate',]),
+    hideModal() {
+      this.modal.hide();
     },
-    watch:{
-      showData(){
-        this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
-      },
+    putAdminCoupon() {
+      this.$emit('put-admin-coupon', this.updatedShowData);
     },
-    props: ['inEditCouponMode', 'showData'],
-    emits: ['put-admin-coupon', 'post-admin-coupon'],
-    mounted() {
-      // 獲取 bsResultModal DOM
-      // 建立 bootstrap modal 實體
-      this.modal = new Modal(this.$refs.modal);
+    postAdminCoupon() {
+      this.$emit('post-admin-coupon', this.updatedShowData);
+    },
+  },
+  computed: {
+    ...mapState(timeStore, ['currentDate']),
+  },
+  watch: {
+    showData() {
       this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
     },
-  }
+  },
+  props: ['inEditCouponMode', 'showData'],
+  emits: ['put-admin-coupon', 'post-admin-coupon'],
+  mounted() {
+    // 獲取 bsResultModal DOM
+    // 建立 bootstrap modal 實體
+    this.modal = new Modal(this.$refs.modal);
+    this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
+  },
+};
 </script>

@@ -61,20 +61,20 @@
               <span class="material-icons fs-4 mt-1">forum</span>
             </router-link>
           </li>
-         
+
           <li class="nav-item">
             <router-link :to="{name: 'checkout'}" class="nav-link" aria-current="page">
               <span class="material-icons-outlined fs-3 mt-1">shopping_bag</span>
             </router-link>
           </li>
-          
+
         </ul>
       </div>
     </div>
   </nav>
 </template>
 <script>
-  export default {
-    
-  }
+export default {
+
+};
 </script>

@@ -1,14 +1,12 @@
 // 引入 material-icons 的 CSS檔案
 import 'material-icons/iconfont/material-icons.css';
 
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 // 載入 pinia
-import { createPinia } from 'pinia'
+import { createPinia } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
 // Import all of Bootstrap's JS
-import * as bootstrap from 'bootstrap'
+import * as bootstrap from 'bootstrap';
 
 // 載入 vue-axios
 import axios from 'axios';
@@ -17,10 +15,14 @@ import VueAxios from 'vue-axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 // 載入 vee-validation
-import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
+import {
+  Field, Form, ErrorMessage, defineRule, configure,
+} from 'vee-validate';
 import { required, email, max } from '@vee-validate/rules';
 import { localize } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
+import router from './router';
+import App from './App.vue';
 // Define the rule globally
 defineRule('required', required);
 defineRule('email', email);
@@ -30,7 +32,7 @@ configure({
   validateOnInput: true, // 當輸入任何內容直接進行驗證
 });
 
-const app = createApp(App)
+const app = createApp(App);
 // 將 Bootstrap 添加到全局 window 對象中
 window.bootstrap = bootstrap;
 
@@ -42,8 +44,8 @@ app.component('VeeField', Field);
 app.component('VeeErrorMessage', ErrorMessage);
 
 // 使用pinia
-app.use(createPinia())
-app.use(router)
+app.use(createPinia());
+app.use(router);
 // 使用 vue-axios
 app.use(VueAxios, axios);
-app.mount('#app')
+app.mount('#app');

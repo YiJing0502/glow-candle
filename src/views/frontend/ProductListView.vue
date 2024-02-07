@@ -1,8 +1,8 @@
 <template>
-  <VueLoading v-if="isLoading" 
-              :active="isLoading" 
-              :background-color="'#EBEAE4'" 
-              :is-full-page="true" 
+  <VueLoading v-if="isLoading"
+              :active="isLoading"
+              :background-color="'#EBEAE4'"
+              :is-full-page="true"
               :color="'#52504B'" />
   <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
       <div class="row">
@@ -12,7 +12,8 @@
         </div>
         <div class="col-4">
           <!-- search product -->
-          <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="搜尋產品...">
+          <input class="form-control" list="datalistOptions"
+          id="exampleDataList" placeholder="搜尋產品...">
         </div>
       </div>
       <!-- dropDown/sort -->
@@ -20,7 +21,8 @@
         <div class="border-start border-dark border-2">
           <!-- 類別 -->
           <div class="btn-group ms-3">
-            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
               類別
             </button>
             <ul class="dropdown-menu">
@@ -35,7 +37,8 @@
           </div>
           <!-- 系列 -->
           <div class="btn-group">
-            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
               系列
             </button>
             <ul class="dropdown-menu">
@@ -50,7 +53,8 @@
           </div>
           <!-- 調性 -->
           <div class="btn-group">
-            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
               調性
             </button>
             <ul class="dropdown-menu">
@@ -65,7 +69,8 @@
           </div>
           <!-- 容量 -->
           <div class="btn-group">
-            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
               容量
             </button>
             <ul class="dropdown-menu">
@@ -101,31 +106,32 @@
   </div>
 </template>
 <script>
-  import { mapState, mapActions } from 'pinia';
-  import productsStore from '../../stores/productsStore.js';
-  export default {
-    data() {
-      return {
+import { mapState, mapActions } from 'pinia';
+import productsStore from '../../stores/productsStore';
 
-      }
+export default {
+  data() {
+    return {
+
+    };
+  },
+  methods: {
+    // 跳轉至產品頁面
+    changeToProductPage(id) {
+      this.$router.push({
+        name: 'product',
+        params: { id },
+      });
     },
-    methods: {
-      // 跳轉至產品頁面
-      changeToProductPage(id) {
-        this.$router.push({
-          name: 'product',
-          params: { id },
-        });
-      },
-      ...mapActions(productsStore, ['getProductsAll', 'getProduct',]),
-    },
-    computed: {
-      ...mapState(productsStore, ['isLoading','productsData']),
-    },
-    mounted() {
-      this.getProductsAll();
-    },
-  };
+    ...mapActions(productsStore, ['getProductsAll', 'getProduct']),
+  },
+  computed: {
+    ...mapState(productsStore, ['isLoading', 'productsData']),
+  },
+  mounted() {
+    this.getProductsAll();
+  },
+};
 </script>
 <style>
 </style>

@@ -23,13 +23,13 @@
 import { Modal } from 'bootstrap';
 
 export default {
-  data(){
+  data() {
     return {
       modal: '',
-    }
+    };
   },
-  props: ['serverMessage',],
-  mounted(){
+  props: ['serverMessage'],
+  mounted() {
     // 獲取 bsResultModal DOM
     // 建立 bootstrap modal 實體
     this.modal = new Modal(this.$refs.modal);
@@ -40,7 +40,7 @@ export default {
     },
     hideModal() {
       this.modal.hide();
-    },  
+    },
   },
-}
+};
 </script>

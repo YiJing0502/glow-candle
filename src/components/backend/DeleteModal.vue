@@ -21,31 +21,31 @@
   </div>
 </template>
 <script>
-  import { Modal } from 'bootstrap';
+import { Modal } from 'bootstrap';
 
-  export default {
-    data(){
-      return {
-        modal: '',
-      }
+export default {
+  data() {
+    return {
+      modal: '',
+    };
+  },
+  methods: {
+    deleteCheck() {
+      this.$emit('delete-function');
     },
-    methods:{
-      deleteCheck(){
-        this.$emit('delete-function');
-      },
-      openModal() {
+    openModal() {
       this.modal.show();
-      },
-      hideModal() {
-        this.modal.hide();
-      },  
     },
-    props: ['showData',],
-    emits: ['delete-function',],
-    mounted() {
-      // 獲取 bsResultModal DOM
-      // 建立 bootstrap modal 實體
-      this.modal = new Modal(this.$refs.modal);
+    hideModal() {
+      this.modal.hide();
     },
-  }
+  },
+  props: ['showData'],
+  emits: ['delete-function'],
+  mounted() {
+    // 獲取 bsResultModal DOM
+    // 建立 bootstrap modal 實體
+    this.modal = new Modal(this.$refs.modal);
+  },
+};
 </script>

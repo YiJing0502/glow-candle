@@ -1,8 +1,8 @@
 <template>
-  <VueLoading v-if="isLoading" 
-              :active="isLoading" 
-              :background-color="'#EBEAE4'" 
-              :is-full-page="true" 
+  <VueLoading v-if="isLoading"
+              :active="isLoading"
+              :background-color="'#EBEAE4'"
+              :is-full-page="true"
               :color="'#52504B'" />
   <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
     <!-- 大標題 -->
@@ -263,59 +263,59 @@
   </div>
 </template>
 <script>
-  import { mapActions, mapState } from 'pinia';
-  import ordersStore from '@/stores/ordersStore';
-  import cartsStore from '@/stores/cartsStore';
-  // component
-  import QuantityControlButtons from '@/components/QuantityControlButtons.vue';
+import { mapActions, mapState } from 'pinia';
+import ordersStore from '../../stores/ordersStore';
+import cartsStore from '../../stores/cartsStore';
+// component
+import QuantityControlButtons from '../../components/QuantityControlButtons.vue';
 
-  export default {
-    data() {
-      return {
-        // 用來控制使用優惠券與否的切換
-        useCoupon: false,
-        // 優惠券代碼
-        couponCode: '',
-        // 是否觀看送出訂單前的事項
-        checkOrderInfo: false,
-        // 送出訂單資料
-        orderData: {
-          "data": {
-            "user": {
-              "name": null,
-              "email": null,
-              "tel": null,
-              "address": null,
-            },
-            "message": null,
-          }
+export default {
+  data() {
+    return {
+      // 用來控制使用優惠券與否的切換
+      useCoupon: false,
+      // 優惠券代碼
+      couponCode: '',
+      // 是否觀看送出訂單前的事項
+      checkOrderInfo: false,
+      // 送出訂單資料
+      orderData: {
+        data: {
+          user: {
+            name: null,
+            email: null,
+            tel: null,
+            address: null,
+          },
+          message: null,
         },
-      }
-    },
-    components: {
-      QuantityControlButtons,
-    },
-    methods: {
-      isPhone(value) {
-        const phoneNumber = /^(09)[0-9]{8}$/
-        return phoneNumber.test(value) ? true : '請輸入正確的行動電話號碼'
       },
-      goToPutCart(productCartId,productId,qty){
-        this.putCart(productCartId,productId,qty)
-      },
-      goToPostCoupon(){
-        this.postCoupon(this.couponCode);
-      },
-      ...mapActions(cartsStore, ['getCart', 'putCart', 'deleteCart', 'deleteCarts', 'postCoupon',]),
-      ...mapActions(ordersStore, ['postOrder',]),
+    };
+  },
+  components: {
+    QuantityControlButtons,
+  },
+  methods: {
+    isPhone(value) {
+      const phoneNumber = /^(09)[0-9]{8}$/;
+      return phoneNumber.test(value) ? true : '請輸入正確的行動電話號碼';
     },
-    computed: {
-      ...mapState(cartsStore, ['isLoading', 'cartsData', 'allCartsData']),
+    goToPutCart(productCartId, productId, qty) {
+      this.putCart(productCartId, productId, qty);
     },
-    mounted() {
-      this.getCart();
+    goToPostCoupon() {
+      this.postCoupon(this.couponCode);
     },
-  };
+    ...mapActions(cartsStore, ['getCart', 'putCart', 'deleteCart', 'deleteCarts', 'postCoupon']),
+    ...mapActions(ordersStore, ['postOrder']),
+  },
+  computed: {
+    ...mapState(cartsStore, ['isLoading', 'cartsData', 'allCartsData']),
+  },
+  mounted() {
+    this.getCart();
+  },
+};
 </script>
 
 <style>

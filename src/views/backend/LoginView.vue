@@ -38,61 +38,63 @@
         </form>
       </div>
   </div>
-  <ResultModal ref="modal" :server-message="serverMessage"></ResultModal>
+  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
-  import ResultModal from '../../components/ResultModal.vue';
-  const { VITE_BASE_URL } = import.meta.env;
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        serverMessage: {
-          message: '',
-          success: true,
-        },
-      };
-    },
-    components: {
-      ResultModal
-    },
-    methods: {
-      postAdminSignin() {
-        if(this.email === '' && this.password === '') {
-          alert('Enter email and password is required');
-          return
-        };
-        const obj = {
-          "username": this.email,
-          "password": this.password,
-        };
-        this.$http.post(`${VITE_BASE_URL}/v2/admin/signin`, obj)
-          .then((res)=>{
-            this.serverMessage.message = res.data.message;
-            this.serverMessage.success = res.data.success;
-            this.$refs.modal.openModal();
-            if(res.data.success){
-              const { expired, token } = res.data;
-              // 寫入 cookie 的 記錄 token
-              // 使用expired 設定 token 有效時間
-              document.cookie = `adminAccount=${token}; expires=${new Date(expired)}`;
-              // 清空輸入框
-              this.email = '';
-              this.password = '';
-              window.location = 'product.html';
-            }
-          })
-          .catch((err)=>{
-            this.serverMessage.message = err.response.data.message;
-            this.serverMessage.success = err.response.data.success;
-            this.$refs.modal.openModal();
-            return;
-          })
-      }
-    },
-    mounted(){
+import ResultModal from '../../components/ResultModal.vue';
 
+const { VITE_BASE_URL } = import.meta.env;
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      serverMessage: {
+        message: '',
+        success: true,
+      },
+    };
+  },
+  components: {
+    ResultModal,
+  },
+  methods: {
+    postAdminSignin() {
+      if (this.email === '' && this.password === '') {
+        this.serverMessage.message = '信箱與密碼是必須的';
+        this.serverMessage.success = false;
+        this.$refs.resultModal.openModal();
+        return;
+      }
+      const obj = {
+        username: this.email,
+        password: this.password,
+      };
+      this.$http.post(`${VITE_BASE_URL}/v2/admin/signin`, obj)
+        .then((res) => {
+          this.serverMessage.message = res.data.message;
+          this.serverMessage.success = res.data.success;
+          this.$refs.resultModal.openModal();
+          if (res.data.success) {
+            const { expired, token } = res.data;
+            // 寫入 cookie 的 記錄 token
+            // 使用expired 設定 token 有效時間
+            document.cookie = `adminAccount=${token}; expires=${new Date(expired)}`;
+            // 清空輸入框
+            this.email = '';
+            this.password = '';
+            window.location = 'product.html';
+          }
+        })
+        .catch((err) => {
+          this.serverMessage.message = err.response.data.message;
+          this.serverMessage.success = err.response.data.success;
+          this.$refs.resultModal.openModal();
+        });
     },
-  }
+  },
+  mounted() {
+
+  },
+};
 </script>

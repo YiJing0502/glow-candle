@@ -11,5 +11,5 @@
 export default {
   props: ['totalPage', 'currentPage', 'nextIsEnabled', 'prevIsEnabled'],
   emits: ['change-page', 'change-prev-page', 'change-next-page'],
-}
+};
 </script>
