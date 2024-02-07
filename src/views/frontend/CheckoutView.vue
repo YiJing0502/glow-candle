@@ -18,8 +18,10 @@
           <div class="accordion-item">
             <!-- ShoppingCartSection -->
             <h2 class="accordion-header" id="ShoppingCartSection">
-              <button class="accordion-button fs-5 fw-semibold text-deep-gray" type="button" data-bs-toggle="collapse"
-                data-bs-target="#ShoppingCartDetails" aria-expanded="true" aria-controls="ShoppingCartDetails">
+              <button class="accordion-button fs-5 fw-semibold text-deep-gray" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#ShoppingCartDetails"
+              aria-expanded="true" aria-controls="ShoppingCartDetails">
                 購物車
               </button>
             </h2>
@@ -32,8 +34,9 @@
                 </div>
                 <div v-else class="">
                   <div class="row mb-3 position-relative" v-for="item in cartsData" :key="item.id">
-                    <loading :active="item.isSmLoading" :is-full-page="false" :color="'#52504B'">
-                    </loading>
+                    <VueLoading :active="item.product.id === isSmLoading || item.id === isSmLoading"
+                    :is-full-page="false" :color="'#52504B'">
+                    </VueLoading>
                     <div class="col-3 d-flex align-items-center">
                       <img :src="item.product.imageUrl" :alt="item.product.title" class="img-fluid">
                     </div>
@@ -41,19 +44,30 @@
                       <div class="d-flex">
                         <h6>{{item.product.title}}</h6>
                         <button type="button" class="btn-close" aria-label="Close"
-                          @click="deleteCart(item.id)"></button>
+                          @click="goToDeleteCart(item.id)"></button>
                       </div>
-                      <p>單價NT$ {{ parseInt(item.product.price) }} / 小計NT$ {{ parseInt(item.total) }} <span
-                          v-if="item.final_total !== item.total">/ 優惠價NT$ {{ parseInt(item.final_total) }} </span>
+                      <p>
+                        單價NT$ {{ parseInt(item.product.price) }}
+                        / 小計NT$ {{ parseInt(item.total) }}
+                        <span
+                          v-if="item.final_total !== item.total">
+                          /優惠價NT$ {{ parseInt(item.final_total) }}
+                        </span>
                       </p>
 
-                      <QuantityControlButtons :inventory="item.product.inventory" :id="item.product_id" :qty="item.qty"
-                        :product-cart-id="item.id" @put-num="putCart"></QuantityControlButtons>
+                      <QuantityControlButtons
+                      :inventory="item.product.inventory"
+                      :id="item.product_id"
+                      :qty="item.qty"
+                      :product-cart-id="item.id"
+                      @put-num="goToPutCart">
+                      </QuantityControlButtons>
                     </div>
                   </div>
                   <!-- 清空購物車按鈕 -->
                   <div class="d-flex mb-3" v-if="cartsData.length > 1">
-                    <button type="button" class="btn btn-outline-mdgray w-100" @click="deleteCarts">清空購物車</button>
+                    <button type="button"
+                    class="btn btn-outline-mdgray w-100" @click="goToDeleteCarts">清空購物車</button>
                   </div>
                 </div>
               </div>
@@ -63,7 +77,8 @@
           <div class="accordion-item" v-if="cartsData.length !== 0">
             <!-- OrderConfirmationSection -->
             <h2 class="accordion-header" id="OrderConfirmationSection">
-              <button class="accordion-button fs-5 fw-semibold collapsed" type="button" data-bs-toggle="collapse"
+              <button class="accordion-button fs-5 fw-semibold collapsed"
+              type="button" data-bs-toggle="collapse"
                 data-bs-target="#OrderConfirmationDetails" aria-expanded="false"
                 aria-controls="OrderConfirmationDetails">
                 訂單確認
@@ -87,7 +102,8 @@
                   <!-- 使用優惠代碼1 -->
                   <div class="d-flex justify-content-between" v-if="!useCoupon">
                     <p>優惠代碼</p>
-                    <button type="button" class="btn btn-outline-dpgray" @click="useCoupon = true">使用優惠代碼</button>
+                    <button type="button" class="btn btn-outline-dpgray"
+                    @click="useCoupon = true">使用優惠代碼</button>
                   </div>
                   <!-- 使用優惠代碼2 -->
                   <div class="mb-3" v-else-if="useCoupon">
@@ -105,7 +121,9 @@
                 <!-- 使用優惠代碼3 -->
                 <div class="d-flex justify-content-between" v-if="allCartsData.useCoupon">
                   <p>使用優惠券</p>
-                  <p>優惠 NT$ {{ parseInt(allCartsData.total) - parseInt(allCartsData.final_total) }}</p>
+                  <p>優惠 NT$
+                    {{ parseInt(allCartsData.total, 10) - parseInt(allCartsData.final_total, 10) }}
+                  </p>
                 </div>
                 <hr>
                 <!-- 總付款金額 -->
@@ -117,7 +135,9 @@
                 <div class="" v-else-if="allCartsData.useCoupon">
                   <div class="d-flex justify-content-between">
                     <p>總付款金額</p>
-                    <h5 class="text-decoration-line-through">NT$ {{ parseInt(allCartsData.total) }}</h5>
+                    <h5 class="text-decoration-line-through">
+                      NT$ {{ parseInt(allCartsData.total) }}
+                    </h5>
                   </div>
                   <h4 class="text-end">NT$ {{ parseInt(allCartsData.final_total) }}</h4>
                 </div>
@@ -133,13 +153,16 @@
           <div class="accordion-item" v-if="cartsData.length === 0">
             <!-- ContactUsSection -->
             <h2 class="accordion-header" id="ContactUsSection">
-              <button class="accordion-button collapsed fs-5 fw-semibold" type="button" data-bs-toggle="collapse"
-                data-bs-target="#ContactUsDetails" aria-expanded="false" aria-controls="ContactUsDetails">
+              <button class="accordion-button collapsed fs-5 fw-semibold"
+              type="button" data-bs-toggle="collapse"
+              data-bs-target="#ContactUsDetails" aria-expanded="false"
+              aria-controls="ContactUsDetails">
                 聯絡我們
               </button>
             </h2>
             <!-- ContactUsDetails -->
-            <div id="ContactUsDetails" class="accordion-collapse collapse show" aria-labelledby="ContactUsSection">
+            <div id="ContactUsDetails" class="accordion-collapse collapse show"
+            aria-labelledby="ContactUsSection">
               <div class="accordion-body">
                 <!-- 聯絡信箱 -->
                 <div class="d-flex justify-content-between">
@@ -184,7 +207,8 @@
           <div class="accordion-item" v-if="cartsData.length !== 0">
             <!-- RecipientInformationSection -->
             <h2 class="accordion-header" id="RecipientInformationSection">
-              <button class="accordion-button fs-5 fw-semibold" type="button" data-bs-toggle="collapse"
+              <button class="accordion-button fs-5 fw-semibold"
+              type="button" data-bs-toggle="collapse"
                 data-bs-target="#RecipientInformationDetails" aria-expanded="true"
                 aria-controls="RecipientInformationDetails">
                 收件資料
@@ -198,7 +222,8 @@
                   <!-- 收件人名稱 -->
                   <div class="mb-3">
                     <label for="category" class="form-label">收件人名稱</label>
-                    <vee-field type="text" name="收件人" class="form-control" :class="{ 'is-invalid': errors['收件人'] }"
+                    <vee-field type="text" name="收件人" class="form-control"
+                    :class="{ 'is-invalid': errors['收件人'] }"
                       rules="required|max:15" id="category" placeholder="請填入收件人真實姓名，以確保順利收件"
                       v-model="orderData.data.user.name"></vee-field>
                     <vee-error-message class="invalid-feedback" name="收件人"></vee-error-message>
@@ -206,8 +231,10 @@
                   <!-- 電子信箱 -->
                   <div class="mb-3">
                     <label for="email" class="form-label">電子信箱</label>
-                    <vee-field type="email" class="form-control" :class="{ 'is-invalid': errors['電子信箱'] }" id="email"
-                      rules="email|required" name="電子信箱" placeholder="請填入訂單通知Email (訂單資訊將以此E-mail通知您)"
+                    <vee-field type="email" class="form-control"
+                    :class="{ 'is-invalid': errors['電子信箱'] }" id="email"
+                      rules="email|required" name="電子信箱"
+                      placeholder="請填入訂單通知Email (訂單資訊將以此E-mail通知您)"
                       v-model="orderData.data.user.email"></vee-field>
                     <vee-error-message class="invalid-feedback" name="電子信箱"></vee-error-message>
                   </div>
@@ -215,14 +242,16 @@
                   <div class="mb-3">
                     <label for="phone" class="form-label">行動電話號碼</label>
                     <vee-field type="text" name="行動電話" :rules="isPhone" class="form-control"
-                      :class="{ 'is-invalid': errors['行動電話'] }" id="phone" placeholder="請填入收件人行動電話號碼 (供配送人員聯絡)"
+                      :class="{ 'is-invalid': errors['行動電話'] }"
+                      id="phone" placeholder="請填入收件人行動電話號碼 (供配送人員聯絡)"
                       v-model="orderData.data.user.tel"></vee-field>
                     <vee-error-message class="invalid-feedback" name="行動電話"></vee-error-message>
                   </div>
                   <!-- 收件地址 -->
                   <div class="mb-3">
                     <label for="address" class="form-label">收件地址</label>
-                    <vee-field type="text" name="收件地址" class="form-control" :class="{ 'is-invalid': errors['收件地址'] }"
+                    <vee-field type="text" name="收件地址"
+                     class="form-control" :class="{ 'is-invalid': errors['收件地址'] }"
                       id="address" rules="required|max:50" placeholder="送貨地點目前僅提供：台灣、台灣外島宅配"
                       v-model="orderData.data.user.address"></vee-field>
                     <vee-error-message class="invalid-feedback" name="收件地址"></vee-error-message>
@@ -232,12 +261,14 @@
                     <p>訂單備註</p>
                     <vee-field as="textarea" name="訂單備註" class="w-100 form-control"
                       :class="{ 'is-invalid': errors['訂單備註'] }" id="orderMessage" rows="5"
-                      placeholder="管理室代收/電話聯絡時間..." rules="max:800" v-model="orderData.data.message"></vee-field>
+                      placeholder="管理室代收/電話聯絡時間..."
+                      rules="max:800" v-model="orderData.data.message"></vee-field>
                     <vee-error-message class="invalid-feedback" name="訂單備註"></vee-error-message>
                   </div>
                   <!-- 注意事項 -->
                   <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="is_enabled" v-model="checkOrderInfo">
+                    <input type="checkbox" class="form-check-input"
+                    id="is_enabled" v-model="checkOrderInfo">
                     <label for="is_enabled" class="form-check-label">
                       <span class="text-main-spec fw-bold">我已確認以下內容：</span>
                       <span><br>提醒您，送出訂單後，將無法修改訂單內容，並前往付款流程，請您確定無誤後再送出😄</span>
@@ -261,6 +292,7 @@
       </div>
     </div>
   </div>
+  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
@@ -268,6 +300,7 @@ import ordersStore from '../../stores/ordersStore';
 import cartsStore from '../../stores/cartsStore';
 // component
 import QuantityControlButtons from '../../components/QuantityControlButtons.vue';
+import ResultModal from '../../components/ResultModal.vue';
 
 export default {
   data() {
@@ -290,30 +323,77 @@ export default {
           message: null,
         },
       },
+      // result model
+      serverMessage: {
+        message: '',
+        success: true,
+      },
     };
   },
   components: {
     QuantityControlButtons,
+    ResultModal,
   },
   methods: {
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
       return phoneNumber.test(value) ? true : '請輸入正確的行動電話號碼';
     },
-    goToPutCart(productCartId, productId, qty) {
-      this.putCart(productCartId, productId, qty);
+    async goToPutCart(productCartId, productId, qty) {
+      try {
+        await this.putCart(productCartId, productId, qty);
+        await this.goToGetCart(false);
+        this.showStoreMessage();
+      } catch {
+        this.showStoreMessage();
+      }
     },
-    goToPostCoupon() {
-      this.postCoupon(this.couponCode);
+    async goToGetCart(boolean = true) {
+      try {
+        await this.getCart(boolean);
+      } catch {
+        this.showStoreMessage();
+      }
+    },
+    async goToDeleteCart(productCartId) {
+      try {
+        await this.deleteCart(productCartId);
+        await this.goToGetCart(false);
+        this.showStoreMessage();
+      } catch {
+        this.showStoreMessage();
+      }
+    },
+    async goToDeleteCarts() {
+      try {
+        await this.deleteCarts();
+        await this.goToGetCart();
+        this.showStoreMessage();
+      } catch {
+        this.showStoreMessage();
+      }
+    },
+    async goToPostCoupon() {
+      try {
+        await this.postCoupon(this.couponCode);
+        await this.goToGetCart(false);
+        this.showStoreMessage();
+      } catch {
+        this.showStoreMessage();
+      }
+    },
+    showStoreMessage() {
+      this.serverMessage = this.storeMessage;
+      this.$refs.resultModal.openModal();
     },
     ...mapActions(cartsStore, ['getCart', 'putCart', 'deleteCart', 'deleteCarts', 'postCoupon']),
     ...mapActions(ordersStore, ['postOrder']),
   },
   computed: {
-    ...mapState(cartsStore, ['isLoading', 'cartsData', 'allCartsData']),
+    ...mapState(cartsStore, ['isLoading', 'isSmLoading', 'cartsData', 'allCartsData', 'storeMessage']),
   },
   mounted() {
-    this.getCart();
+    this.goToGetCart();
   },
 };
 </script>
@@ -329,5 +409,6 @@ export default {
   /* Firefox */
   input[type=number] {
     -moz-appearance: textfield;
+    appearance: textfield;
   }
 </style>

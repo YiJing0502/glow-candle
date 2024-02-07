@@ -11,7 +11,12 @@ export default defineStore('cartsStore', {
     // 是否為載入中（全頁）
     isLoading: false,
     // 是否為載入中(加入購物車的狀態, productDetail)
-    isSmLoading: false,
+    isSmLoading: '',
+    // store狀態通知
+    storeMessage: {
+      message: '',
+      success: true,
+    },
   }),
   getters: {
 
@@ -39,10 +44,6 @@ export default defineStore('cartsStore', {
               // 關閉整頁的Loading
               this.isLoading = false;
             }
-            // 為每一個個別產品加上關閉的loading屬性
-            this.cartsData.forEach((item) => {
-              item.isSmLoading = false;
-            });
             resolve(); // 完成 Promise
           })
           .catch((err) => {
@@ -50,18 +51,15 @@ export default defineStore('cartsStore', {
               // 關閉整頁的Loading
               this.isLoading = false;
             }
-            // 個別產品loading 調整為關閉
-            this.cartsData.forEach((item) => {
-              item.isSmLoading = false;
-            });
-            alert('取得購物車資訊失敗，請稍後再試');
+            // 儲存伺服器訊息
+            this.updateStoreMessage(err.response.data.message, err.response.data.success);
             reject(err); // 拒絕 Promise，傳遞錯誤
           });
       });
     },
     // ajax, 加入購物車商品方法
     async postCart(productId, qty) {
-      this.isSmLoading = true;
+      this.isSmLoading = productId;
       try {
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart`;
         const data = {
@@ -70,18 +68,21 @@ export default defineStore('cartsStore', {
             qty,
           },
         };
-        await axios.post(url, data);
-        this.isSmLoading = false;
-        alert('加入購物車成功');
+        const res = await axios.post(url, data);
+        this.isSmLoading = '';
+        // 儲存伺服器訊息
+        this.updateStoreMessage(res.data.message, res.data.success);
         // 更新畫面顯示目前購物車狀態
         await this.getCart(false);
-      } catch {
-        this.isSmLoading = false;
-        alert('加入購物車失敗，請稍後再試');
+      } catch (err) {
+        // 儲存伺服器訊息
+        this.updateStoreMessage(err.response.data.message, err.response.data.success);
+        this.isSmLoading = '';
       }
     },
     // ajax, 修改購物車商品數量方法
     async putCart(productCartId, productId, qty) {
+      this.isSmLoading = productId;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart/${productCartId}`;
       const data = {
         data: {
@@ -89,37 +90,42 @@ export default defineStore('cartsStore', {
           qty,
         },
       };
-      // 將購物車中要修改數量的產品，loading狀態改為true;
-      const cartsPutProduct = this.cartsData.find((item) => item.id === productCartId);
-      cartsPutProduct.isSmLoading = true;
       try {
-        await axios.put(url, data);
-        await this.getCart(false);
-        alert('修改購物車商品數量成功');
-      } catch {
-        alert('修改購物車商品數量失敗，請稍後再試');
+        const res = await axios.put(url, data);
+        // 儲存伺服器訊息
+        this.updateStoreMessage(res.data.message, res.data.success);
+        this.isSmLoading = '';
+      } catch (err) {
+        // 儲存伺服器訊息
+        this.updateStoreMessage(err.response.data.message, err.response.data.success);
+        this.isSmLoading = '';
       }
     },
     // ajax, 刪除購物車商品方法
     async deleteCart(productCartId) {
+      this.isSmLoading = productCartId;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart/${productCartId}`;
       try {
-        await axios.delete(url);
-        await this.getCart(false);
-        alert('刪除購物車商品成功');
-      } catch {
-        alert('刪除購物車商品失敗，請稍後再試');
+        const res = await axios.delete(url);
+        // 儲存伺服器訊息
+        this.updateStoreMessage(res.data.message, res.data.success);
+        this.isSmLoading = '';
+      } catch (err) {
+        // 儲存伺服器訊息
+        this.updateStoreMessage(err.response.data.message, err.response.data.success);
+        this.isSmLoading = '';
       }
     },
     // ajax, 刪除全部購物車方法
     async deleteCarts() {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/carts`;
       try {
-        await axios.delete(url);
-        await this.getCart(false);
-        alert('刪除所有購物車商品成功');
-      } catch {
-        alert('刪除所有購物車商品失敗，請稍後再試');
+        const res = await axios.delete(url);
+        // 儲存伺服器訊息
+        this.updateStoreMessage(res.data.message, res.data.success);
+      } catch (err) {
+        // 儲存伺服器訊息
+        this.updateStoreMessage(err.response.data.message, err.response.data.success);
       }
     },
     // ajax, 使用優惠券方法
@@ -131,12 +137,18 @@ export default defineStore('cartsStore', {
         },
       };
       try {
-        await axios.post(url, data);
-        await this.getCart(false);
-        alert('使用優惠券成功');
-      } catch {
-        alert('使用優惠券失敗，請稍後再試');
+        const res = await axios.post(url, data);
+        // 儲存伺服器訊息
+        this.updateStoreMessage(res.data.message, res.data.success);
+      } catch (err) {
+        // 儲存伺服器訊息
+        this.updateStoreMessage(err.response.data.message, err.response.data.success);
       }
+    },
+    // fn, 更新storeMessage
+    updateStoreMessage(message = '', success = true) {
+      this.storeMessage.message = message;
+      this.storeMessage.success = success;
     },
   },
 });

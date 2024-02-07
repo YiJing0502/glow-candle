@@ -19,7 +19,7 @@ import {
   Field, Form, ErrorMessage, defineRule, configure,
 } from 'vee-validate';
 import { required, email, max } from '@vee-validate/rules';
-import { localize } from '@vee-validate/i18n';
+import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import router from './router';
 import App from './App.vue';
@@ -31,6 +31,8 @@ configure({
   generateMessage: localize({ zh_TW: zhTW }), // 載入繁體中文語系
   validateOnInput: true, // 當輸入任何內容直接進行驗證
 });
+// 設定預設語系
+setLocale('zh_TW');
 
 const app = createApp(App);
 // 將 Bootstrap 添加到全局 window 對象中

@@ -38,8 +38,8 @@
           <p class="d-flex align-items-end ms-3">目前庫存：{{ showData.inventory }}</p>
         </div>
         <!-- 加入購物車 -->
-        <div v-if="isSmLoading" class="d-flex mb-3 position-relative">
-          <VueLoading :active="isSmLoading" :is-full-page="false" :color="'#52504B'"
+        <div v-if="isSmLoading === showData.id" class="d-flex mb-3 position-relative">
+          <VueLoading :active="isSmLoading === showData.id" :is-full-page="false" :color="'#52504B'"
           :width="30" :height="30">
           </VueLoading>
           <button type="button" class="btn btn-solid-spec w-100 btn-lg">正在加入購物車</button>
@@ -76,7 +76,7 @@
       </div>
     </div>
   </div>
-  <ResultModal  ref="resultModal" :server-message="serverMessage"></ResultModal>
+  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
@@ -104,7 +104,7 @@ export default {
     ResultModal,
   },
   computed: {
-    ...mapState(cartsStore, ['cartsData', 'isSmLoading']),
+    ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),
   },
   methods: {
     // 增加數量
@@ -192,11 +192,12 @@ export default {
         await this.getCart(false);
         if (this.validateQuantity(currentNum, inventory)
         && this.validateCartQuantity(productId, currentNum, inventory)) {
-          this.postCart(productId, parseInt(currentNum, 10));
+          await this.postCart(productId, parseInt(currentNum, 10));
+          this.serverMessage = this.storeMessage;
+          this.$refs.resultModal.openModal();
         }
-      } catch (err) {
-        this.serverMessage.message = '取得購物車資訊失敗，請稍後再試';
-        this.serverMessage.success = false;
+      } catch {
+        this.serverMessage = this.storeMessage;
         this.$refs.resultModal.openModal();
       }
     },
@@ -237,3 +238,17 @@ export default {
   },
 };
 </script>
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+</style>

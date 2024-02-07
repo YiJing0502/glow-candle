@@ -7,13 +7,15 @@
           <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
             {{ serverMessage.success ? '成功' : '失敗'}}
           </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close"
+           data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           {{ serverMessage.message }}
         </div>
         <div class="modal-footer">
-          <button class="btn btn-normal-dpgray" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">關閉</button>
+          <button class="btn btn-normal-dpgray"
+           data-bs-target="#exampleModalToggle" data-bs-toggle="modal">關閉</button>
         </div>
       </div>
     </div>

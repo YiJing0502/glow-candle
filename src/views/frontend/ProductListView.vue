@@ -89,7 +89,7 @@
         </div>
       </div>
       <!-- product card -->
-      <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mt-3 mb-3">
+      <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mt-3 mb-3" role="button">
         <div class="col mb-3" v-for="item in productsData" :key="item.id">
           <div class="card" @click="changeToProductPage(item.id)">
             <img :src="item.imageUrl" class="card-img-top" alt="...">
