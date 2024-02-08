@@ -340,47 +340,43 @@ export default {
       const phoneNumber = /^(09)[0-9]{8}$/;
       return phoneNumber.test(value) ? true : '請輸入正確的行動電話號碼';
     },
+    async goToGetCart(boolean = true) {
+      try {
+        await this.getCart(boolean);
+      } catch (err) {
+        this.showErrMessage(err);
+      }
+    },
     async goToPutCart(productCartId, productId, qty) {
       try {
         await this.putCart(productCartId, productId, qty);
         await this.goToGetCart(false);
-        this.showStoreMessage();
-      } catch {
-        this.showStoreMessage();
-      }
-    },
-    async goToGetCart(boolean = true) {
-      try {
-        await this.getCart(boolean);
-      } catch {
-        this.showStoreMessage();
+      } catch (err) {
+        this.showErrMessage(err);
       }
     },
     async goToDeleteCart(productCartId) {
       try {
         await this.deleteCart(productCartId);
         await this.goToGetCart(false);
-        this.showStoreMessage();
-      } catch {
-        this.showStoreMessage();
+      } catch (err) {
+        this.showErrMessage(err);
       }
     },
     async goToDeleteCarts() {
       try {
         await this.deleteCarts();
         await this.goToGetCart();
-        this.showStoreMessage();
-      } catch {
-        this.showStoreMessage();
+      } catch (err) {
+        this.showErrMessage(err);
       }
     },
     async goToPostCoupon() {
       try {
         await this.postCoupon(this.couponCode);
         await this.goToGetCart(false);
-        this.showStoreMessage();
-      } catch {
-        this.showStoreMessage();
+      } catch (err) {
+        this.showErrMessage(err);
       }
     },
     async goToPostOrder() {
@@ -393,20 +389,25 @@ export default {
           params: { id: res.data.orderId },
         });
       } catch (err) {
+        this.showErrMessage(err);
+      }
+    },
+    showErrMessage(err) {
+      if (err && err.response && err.response.data !== undefined) {
         this.serverMessage.message = err.response.data.message;
         this.serverMessage.success = err.response.data.success;
         this.$refs.resultModal.openModal();
+      } else {
+        this.serverMessage.message = '未被定義的錯誤';
+        this.serverMessage.success = false;
+        this.$refs.resultModal.openModal();
       }
-    },
-    showStoreMessage() {
-      this.serverMessage = this.storeMessage;
-      this.$refs.resultModal.openModal();
     },
     ...mapActions(cartsStore, ['getCart', 'putCart', 'deleteCart', 'deleteCarts', 'postCoupon']),
     ...mapActions(ordersStore, ['postOrder']),
   },
   computed: {
-    ...mapState(cartsStore, ['isLoading', 'isSmLoading', 'cartsData', 'allCartsData', 'storeMessage']),
+    ...mapState(cartsStore, ['isLoading', 'isSmLoading', 'cartsData', 'allCartsData']),
   },
   mounted() {
     this.goToGetCart();

@@ -184,16 +184,18 @@ export default {
     },
     async goToPostCart(productId, currentNum, inventory) {
       try {
-        await this.getCart(false);
+        // 取得最新購物車結果，最新數量
+        await this.goToGetCart(false);
         if (this.validateQuantity(currentNum, inventory)
         && this.validateCartQuantity(productId, currentNum, inventory)) {
-          await this.postCart(productId, parseInt(currentNum, 10));
-          this.serverMessage = this.storeMessage;
-          this.$refs.resultModal.openModal();
+          const res = await this.postCart(productId, parseInt(currentNum, 10));
+          // 顯示成功的加入結果
+          console.log(res);
+          // 更新畫面顯示目前購物車狀態
+          await this.goToGetCart(false);
         }
-      } catch {
-        this.serverMessage = this.storeMessage;
-        this.$refs.resultModal.openModal();
+      } catch (err) {
+        this.showErrMessage(err);
       }
     },
     // 取得特定產品
@@ -219,6 +221,18 @@ export default {
             hash: this.$route.hash,
           });
         });
+    },
+    async goToGetCart(boolean = true) {
+      try {
+        await this.getCart(boolean);
+      } catch (err) {
+        this.showErrMessage(err);
+      }
+    },
+    showErrMessage(err) {
+      this.serverMessage.message = err.response.data.message;
+      this.serverMessage.success = err.response.data.success;
+      this.$refs.resultModal.openModal();
     },
     ...mapActions(cartsStore, ['getCart', 'postCart']),
   },
