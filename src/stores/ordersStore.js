@@ -39,12 +39,15 @@ export default defineStore('ordersStore', {
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order/${orderId}`;
         axios.get(url)
           .then((res) => {
-            this.processOrderData(res.data.order);
-            this.isLoading = false;
+            if (res.data.order !== null) {
+              this.processOrderData(res.data.order);
+              this.isLoading = false;
+            }
             resolve(res);
           })
           .catch((err) => {
             reject(err);
+            this.isLoading = false;
           });
       });
     },

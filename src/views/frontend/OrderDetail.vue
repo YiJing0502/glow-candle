@@ -194,6 +194,14 @@ export default {
     async goToGetOrder() {
       try {
         const res = await this.getOrder(this.$route.params.id);
+        if (res.data.order === null) {
+          this.$router.push({
+            name: 'front404',
+            params: { pathMatch: this.$route.path.split('/').slice(1) },
+            query: this.$route.query,
+            hash: this.$route.hash,
+          });
+        }
         if (!res.data.order.is_paid) {
           this.serverMessage.message = '訂單已建立，請點擊付款按鈕付款';
           this.serverMessage.success = res.data.success;
