@@ -14,7 +14,18 @@ export default defineStore('cartsStore', {
     isSmLoading: '',
   }),
   getters: {
-
+    cartProductQuantity: ({ cartsData }) => {
+      let totalQty = 0;
+      if (cartsData.length !== 0) {
+        cartsData.forEach((cartProduct) => {
+          totalQty += cartProduct.qty;
+        });
+      }
+      if (totalQty > 9) {
+        totalQty = '9+';
+      }
+      return totalQty;
+    },
   },
   actions: {
     // ajax, 取得所有購物車資訊

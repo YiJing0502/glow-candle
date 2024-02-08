@@ -73,8 +73,14 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{name: 'checkout'}" class="nav-link" aria-current="page">
+            <router-link :to="{name: 'checkout'}"
+            class="nav-link position-relative" aria-current="page">
               <span class="material-icons-outlined fs-3 mt-1">shopping_bag</span>
+              <span v-if="cartProductQuantity!==0"
+              class="badge rounded-pill bg-main-spec
+               position-absolute top-50 start-50 fw-bold">
+               {{ cartProductQuantity }}
+              </span>
             </router-link>
           </li>
         </ul>
@@ -83,7 +89,12 @@
   </nav>
 </template>
 <script>
-export default {
+import { mapState } from 'pinia';
+import cartsStore from '../../stores/cartsStore';
 
+export default {
+  computed: {
+    ...mapState(cartsStore, ['cartProductQuantity']),
+  },
 };
 </script>
