@@ -23,6 +23,7 @@ import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import router from './router';
 import App from './App.vue';
+import ResultModal from './components/ResultModal.vue';
 // Define the rule globally
 defineRule('required', required);
 defineRule('email', email);
@@ -44,7 +45,8 @@ app.component('VueLoading', Loading);
 app.component('VeeForm', Form);
 app.component('VeeField', Field);
 app.component('VeeErrorMessage', ErrorMessage);
-
+// 註冊全域元件
+app.component('ResultModal', ResultModal);
 // 使用pinia
 app.use(createPinia());
 app.use(router);

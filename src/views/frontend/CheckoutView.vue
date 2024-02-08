@@ -387,9 +387,6 @@ export default {
         const res = await this.postOrder(this.orderData);
         // 送出訂單時重新取得最新購物車狀態
         await this.goToGetCart(false);
-        this.serverMessage.message = res.data.message;
-        this.serverMessage.success = res.data.success;
-        this.$refs.resultModal.openModal();
         this.$router.push({
           name: 'payment',
           params: { id: res.data.orderId },
