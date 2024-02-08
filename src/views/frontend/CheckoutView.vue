@@ -300,7 +300,6 @@ import ordersStore from '../../stores/ordersStore';
 import cartsStore from '../../stores/cartsStore';
 // component
 import QuantityControlButtons from '../../components/QuantityControlButtons.vue';
-import ResultModal from '../../components/ResultModal.vue';
 
 export default {
   data() {
@@ -332,7 +331,6 @@ export default {
   },
   components: {
     QuantityControlButtons,
-    ResultModal,
   },
   methods: {
     isPhone(value) {

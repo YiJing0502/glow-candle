@@ -16,7 +16,6 @@ import { mapState, mapActions } from 'pinia';
 import adminStore from '../../stores/adminStore';
 // components
 import AdminNavbar from '../../components/backend/AdminNavbar.vue';
-import ResultModal from '../../components/ResultModal.vue';
 
 export default {
   data() {
@@ -29,7 +28,6 @@ export default {
   },
   components: {
     AdminNavbar,
-    ResultModal,
   },
   computed: {
     ...mapState(adminStore, ['loginSuccess']),

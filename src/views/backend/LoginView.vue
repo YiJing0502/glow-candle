@@ -41,8 +41,6 @@
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
-import ResultModal from '../../components/ResultModal.vue';
-
 const { VITE_BASE_URL } = import.meta.env;
 export default {
   data() {
@@ -54,9 +52,6 @@ export default {
         success: true,
       },
     };
-  },
-  components: {
-    ResultModal,
   },
   methods: {
     postAdminSignin() {

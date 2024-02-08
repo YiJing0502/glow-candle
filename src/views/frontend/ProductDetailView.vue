@@ -82,8 +82,6 @@
 import { mapActions, mapState } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import stringStore from '../../stores/stringStore';
-// components
-import ResultModal from '../../components/ResultModal.vue';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -99,9 +97,6 @@ export default {
         success: true,
       },
     };
-  },
-  components: {
-    ResultModal,
   },
   computed: {
     ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),

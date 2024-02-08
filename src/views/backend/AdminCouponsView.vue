@@ -63,7 +63,6 @@ import timeStore from '../../stores/timeStore';
 import adminStore from '../../stores/adminStore';
 // components
 import StatusMessage from '../../components/backend/StatusMessage.vue';
-import ResultModal from '../../components/ResultModal.vue';
 import DeleteModal from '../../components/backend/DeleteModal.vue';
 import CouponModal from '../../components/backend/CouponModal.vue';
 
@@ -84,7 +83,6 @@ export default {
   },
   components: {
     StatusMessage,
-    ResultModal,
     DeleteModal,
     CouponModal,
   },

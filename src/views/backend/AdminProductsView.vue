@@ -104,7 +104,6 @@ import { mapState } from 'pinia';
 import adminStore from '../../stores/adminStore';
 // components
 import DeleteModal from '../../components/backend/DeleteModal.vue';
-import ResultModal from '../../components/ResultModal.vue';
 import ProductModal from '../../components/backend/ProductModal.vue';
 import StatusMessage from '../../components/backend/StatusMessage.vue';
 import PageBtn from '../../components/PageBtn.vue';
@@ -131,7 +130,6 @@ export default {
   },
   components: {
     DeleteModal,
-    ResultModal,
     ProductModal,
     StatusMessage,
     PageBtn,
