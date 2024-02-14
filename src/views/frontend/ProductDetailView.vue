@@ -188,11 +188,8 @@ export default {
         await this.goToGetCart(false);
         if (this.validateQuantity(currentNum, inventory)
         && this.validateCartQuantity(productId, currentNum, inventory)) {
-          const res = await this.postCart(productId, parseInt(currentNum, 10));
+          await this.postCart(productId, parseInt(currentNum, 10));
           // 顯示成功的加入結果
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
-          this.$refs.resultModal.openModal();
           // 更新畫面顯示目前購物車狀態
           await this.goToGetCart(false);
         }
