@@ -48,12 +48,12 @@ export default {
         }
       })
       .catch((err) => {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
         if (!this.loginSuccess) {
           // 只有在使用者未登入時才重新導向
           this.$router.push({ name: 'login' });
+          this.serverMessage.message = err.response.data.message;
+          this.serverMessage.success = err.response.data.success;
+          this.$refs.resultModal.openModal();
         }
       });
   },
