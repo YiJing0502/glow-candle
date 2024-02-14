@@ -13,7 +13,8 @@ export default defineStore('adminStore', {
       // 取得先前儲存在 cookie 中 adminAccount 的值
       // eslint-disable-next-line no-useless-escape
       const token = document.cookie.replace(
-        /(?:(?:^|.*;\s*)adminAccount\s*\s*([^;]*).*$)|^.*$/,
+        // eslint-disable-next-line no-useless-escape
+        /(?:(?:^|.*;\s*)adminAccount\s*\=\s*([^;]*).*$)|^.*$/,
         '$1',
       );
       // 將token夾帶在HTTP的Header中的Authorization
