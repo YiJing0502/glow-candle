@@ -1,17 +1,19 @@
 // bs-
-.form-control{
+.form-control {
   border-radius: 0;
 }
-.form-floating>.form-control, .form-floating>.form-control-plaintext, .form-floating>.form-select {
+.form-floating > .form-control,
+.form-floating > .form-control-plaintext,
+.form-floating > .form-select {
   background-color: $mediumMainColor;
 }
 
 // bs-input 改動既有設定
-.form-control:focus{
+.form-control:focus {
   border-color: $deepGrayColor;
   box-shadow: 0 0 0 0.25rem $whiteColor;
 }
-.form-check-input[type=checkbox] {
+.form-check-input[type='checkbox'] {
   border-radius: 0;
 }
 // bs-checkbox 改動既有設定
@@ -28,14 +30,15 @@
 .nav-link {
   color: $deepGrayColor;
   font-weight: 600;
-  &:hover{
+  &:hover {
     color: $specialMainColor;
   }
   &:focus {
     color: $specialMainColor;
   }
 }
-.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
   color: $specialMainColor;
 }
 .nav-link:focus-visible {
@@ -72,26 +75,26 @@
 // bs-page-link
 .page-link {
   color: $deepGrayColor;
-  &:hover{
+  &:hover {
     color: $specialMainColor;
   }
-  &:focus{
+  &:focus {
     box-shadow: none;
-
   }
 }
-.active>.page-link, .page-link.active {
+.active > .page-link,
+.page-link.active {
   z-index: 3;
   color: $lightMainColor;
   background-color: $specialMainColor;
   border-color: $specialMainColor;
-  
 }
 
 .dropdown-toggle::after {
   border-style: none;
 }
-.dropdown-item.active, .dropdown-item:active{
+.dropdown-item.active,
+.dropdown-item:active {
   background-color: $specialMainColor;
 }
 .dropdown-menu {

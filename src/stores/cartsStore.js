@@ -36,7 +36,8 @@ export default defineStore('cartsStore', {
           this.isLoading = true;
         }
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart`;
-        axios.get(url)
+        axios
+          .get(url)
           .then((res) => {
             // 購物車資料
             this.cartsData = [...res.data.data.carts];
@@ -72,7 +73,8 @@ export default defineStore('cartsStore', {
             qty,
           },
         };
-        axios.post(url, data)
+        axios
+          .post(url, data)
           .then((res) => {
             resolve(res);
             this.isSmLoading = '';
@@ -94,7 +96,8 @@ export default defineStore('cartsStore', {
             qty,
           },
         };
-        axios.put(url, data)
+        axios
+          .put(url, data)
           .then((res) => {
             resolve(res);
             this.isSmLoading = '';
@@ -110,7 +113,8 @@ export default defineStore('cartsStore', {
       return new Promise((resolve, reject) => {
         this.isSmLoading = productCartId;
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/cart/${productCartId}`;
-        axios.delete(url)
+        axios
+          .delete(url)
           .then((res) => {
             resolve(res);
             this.isSmLoading = '';
@@ -125,7 +129,8 @@ export default defineStore('cartsStore', {
     deleteCarts() {
       return new Promise((resolve, reject) => {
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/carts`;
-        axios.delete(url)
+        axios
+          .delete(url)
           .then((res) => {
             resolve(res);
           })
@@ -143,7 +148,8 @@ export default defineStore('cartsStore', {
             code,
           },
         };
-        axios.post(url, data)
+        axios
+          .post(url, data)
           .then((res) => {
             resolve(res);
           })

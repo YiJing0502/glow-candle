@@ -1,15 +1,22 @@
 <template>
   <VueLoading
-  v-if="!getRemoteData"
-  :active="!getRemoteData"
-  :background-color="'#FBFAF4'"
-  :color="'#52504B'"/>
+    v-if="!getRemoteData"
+    :active="!getRemoteData"
+    :background-color="'#FBFAF4'"
+    :color="'#52504B'"
+  />
   <div v-else class="container">
     <div class="row mt-4">
       <div class="col-8 d-flex">
         <div class="btn-group me-3">
-          <button v-if="productsData" class="btn btn-normal-dpgray dropdown-toggle" type="button"
-            data-bs-toggle="dropdown" aria-expanded="false" @click="getCategory">
+          <button
+            v-if="productsData"
+            class="btn btn-normal-dpgray dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            @click="getCategory"
+          >
             篩選類別
           </button>
           <ul class="dropdown-menu">
@@ -20,18 +27,21 @@
             </li>
           </ul>
         </div>
-        <input class="form-control form-control-sm" id="exampleDataList" placeholder="輸入產品名稱搜尋"
-          v-model.trim="searchInputValue" @keyup.enter="searchProduct">
+        <input
+          class="form-control form-control-sm"
+          id="exampleDataList"
+          placeholder="輸入產品名稱搜尋"
+          v-model.trim="searchInputValue"
+          @keyup.enter="searchProduct"
+        />
         <button class="btn btn-normal-dpgray" @click="searchProduct">搜</button>
       </div>
       <div class="col-4 d-flex justify-content-end">
         <button type="button" @click="scrollToBottom" class="btn">前往底部</button>
-        <button class="btn btn-solid-spec" @click="getAdminAddProductModal">
-          建立新的產品
-        </button>
+        <button class="btn btn-solid-spec" @click="getAdminAddProductModal">建立新的產品</button>
       </div>
     </div>
-    <status-message v-if="productsData.length === 0">{{'建立新的產品'}}</status-message>
+    <status-message v-if="productsData.length === 0">{{ '建立新的產品' }}</status-message>
     <table class="table mt-4 align-middle" v-else>
       <thead>
         <tr>
@@ -46,11 +56,12 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in infoData" :key="index">
-          <th scope="row"><img :src="item.imageUrl"
-            :alt="item.title" class="img-fluid" width="50"></th>
+          <th scope="row">
+            <img :src="item.imageUrl" :alt="item.title" class="img-fluid" width="50" />
+          </th>
           <td>{{ item.category }}</td>
           <td>{{ item.title }}</td>
-          <td>{{ item.origin_price}}</td>
+          <td>{{ item.origin_price }}</td>
           <td>{{ item.price }}</td>
           <td>
             <span v-if="item.is_enabled === 1" class="text-main-spec fw-bold">啟用</span>
@@ -58,12 +69,18 @@
           </td>
           <td>
             <div class="d-flex justify-content-start align-items-center">
-              <button class="btn btn-sm btn-normal-medium block w-50" type="button"
-                @click="getAdminDelProductModal(item.id)">
+              <button
+                class="btn btn-sm btn-normal-medium block w-50"
+                type="button"
+                @click="getAdminDelProductModal(item.id)"
+              >
                 刪除
               </button>
-              <button class="btn btn-sm btn-normal-medium block w-50" type="button"
-                @click="getAdminProductModal(item.id)">
+              <button
+                class="btn btn-sm btn-normal-medium block w-50"
+                type="button"
+                @click="getAdminProductModal(item.id)"
+              >
                 編輯
               </button>
             </div>
@@ -72,9 +89,9 @@
       </tbody>
     </table>
     <div class="d-flex justify-content-center mt-4" ref="scrollContainer">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination" id="pageid">
-            <PageBtn
+      <nav aria-label="Page navigation example">
+        <ul class="pagination" id="pageid">
+          <PageBtn
             :prev-is-enabled="pageData.hasPrevPage"
             @change-prev-page="pagination(pageData.currentPage - 1)"
             :totalPage="pageData.totalPage"
@@ -82,17 +99,19 @@
             @change-page="pagination"
             :next-is-enabled="pageData.hasNextPage"
             @change-next-page="pagination(pageData.currentPage + 1)"
-            ></PageBtn>
-          </ul>
-        </nav>
+          ></PageBtn>
+        </ul>
+      </nav>
     </div>
   </div>
   <!-- 產品Modal -->
-  <ProductModal  ref="productModal"
-  :show-data="showData"
-  :in-edit-product-mode="inEditProductMode"
-  @put-admin-product="putAdminProduct"
-  @post-admin-product="postAdminProduct"></ProductModal>
+  <ProductModal
+    ref="productModal"
+    :show-data="showData"
+    :in-edit-product-mode="inEditProductMode"
+    @put-admin-product="putAdminProduct"
+    @post-admin-product="postAdminProduct"
+  ></ProductModal>
   <!-- 刪除產品Modal -->
   <DeleteModal ref="deleteModal" :show-data="showData" @delete-function="deleteAdminProduct">
   </DeleteModal>
@@ -160,7 +179,8 @@ export default {
     // ajax, 取得所有產品資料
     getAdminProductsAll() {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/products/all`;
-      this.$http.get(url)
+      this.$http
+        .get(url)
         .then((res) => {
           if (res.data.success) {
             this.getRemoteData = res.data.success;
@@ -181,7 +201,8 @@ export default {
       const data = {
         data: updatedData,
       };
-      this.$http.post(url, data)
+      this.$http
+        .post(url, data)
         .then((res) => {
           this.getAdminProductsAll();
           this.serverMessage.message = res.data.message;
@@ -202,7 +223,8 @@ export default {
       const data = {
         data: updatedData,
       };
-      this.$http.put(url, data)
+      this.$http
+        .put(url, data)
         .then((res) => {
           if (res.data.success) {
             this.getAdminProductsAll();
@@ -222,7 +244,8 @@ export default {
     deleteAdminProduct() {
       const { id } = this.showData;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/product/${id}`;
-      this.$http.delete(url)
+      this.$http
+        .delete(url)
         .then((res) => {
           if (res.data.success) {
             this.$refs.deleteModal.hideModal();
@@ -255,9 +278,9 @@ export default {
         currentPage = totalPage;
       }
       // 計算當前分頁顯示的資料範圍的最小值
-      const minPerPageData = ((currentPage * perPage) - perPage) + 1;
+      const minPerPageData = currentPage * perPage - perPage + 1;
       // 計算當前分頁顯示的資料範圍的最大值
-      const maxPerPageData = (currentPage * perPage);
+      const maxPerPageData = currentPage * perPage;
       // 建立新陣列，存放我們每頁的資料
       const newData = [];
       Object.keys(data).forEach((item, index) => {

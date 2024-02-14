@@ -1,12 +1,11 @@
 <template>
   <div>
     <h1>This is an about page</h1>
-    {{  data }}
-    <VueLoading :active="isLoading"/>
+    {{ data }}
+    <VueLoading :active="isLoading" />
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -14,9 +13,7 @@ export default {
       isLoading: true,
     };
   },
-  components: {
-
-  },
+  components: {},
   mounted() {
     this.$http.get('https://randomuser.me/api/').then((res) => {
       [this.data] = res.data.results;

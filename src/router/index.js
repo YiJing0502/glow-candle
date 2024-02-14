@@ -23,7 +23,6 @@ const router = createRouter({
           path: 'product/:id',
           name: 'product',
           component: () => import('../views/frontend/ProductDetailView.vue'),
-
         },
         {
           path: 'checkout',

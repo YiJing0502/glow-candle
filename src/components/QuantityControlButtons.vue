@@ -1,12 +1,23 @@
 <template>
   <div class="d-flex">
     <div class="bg-white d-flex w-50 mb-3 gap-3 border">
-      <button :disabled="currentNum===1" type="button"
-       class="btn btn-lg" @click="minusNum">-</button>
-      <input type="number" class="form-control border-white shadow-none text-center"
-       v-model.number="currentNum" @blur="blurNum">
-      <button :disabled="currentNum===inventory"
-       type="button" class="btn btn-lg" @click="plusNum">+</button>
+      <button :disabled="currentNum === 1" type="button" class="btn btn-lg" @click="minusNum">
+        -
+      </button>
+      <input
+        type="number"
+        class="form-control border-white shadow-none text-center"
+        v-model.number="currentNum"
+        @blur="blurNum"
+      />
+      <button
+        :disabled="currentNum === inventory"
+        type="button"
+        class="btn btn-lg"
+        @click="plusNum"
+      >
+        +
+      </button>
     </div>
     <p class="d-flex align-items-end ms-3">目前庫存：{{ inventory }}</p>
   </div>
@@ -60,14 +71,17 @@ export default {
         this.$emit('putNum', this.productCartId, this.id, this.currentNum);
         this.showErrMessage('很抱歉，不能超出此庫存量');
         return;
-      } if (this.currentNum <= 0) {
+      }
+      if (this.currentNum <= 0) {
         this.currentNum = 1;
         this.$emit('putNum', this.productCartId, this.id, this.currentNum);
         this.showErrMessage('很抱歉，最低數量為1');
         return;
-      } if (this.currentNum === this.currentQty) {
+      }
+      if (this.currentNum === this.currentQty) {
         return;
-      } if (Number.isNaN(this.currentNum)) {
+      }
+      if (Number.isNaN(this.currentNum)) {
         this.showErrMessage('請輸入有效的數字');
         this.currentNum = this.currentQty;
         return;

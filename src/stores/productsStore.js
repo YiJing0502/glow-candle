@@ -9,16 +9,15 @@ export default defineStore('productsStore', {
     // 是否正在載入
     isLoading: false,
   }),
-  getters: {
-
-  },
+  getters: {},
   actions: {
     // 取得所有產品
     getProductsAll() {
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products/all`;
       return new Promise((resolve, reject) => {
-        axios.get(url)
+        axios
+          .get(url)
           .then((res) => {
             this.productsData = res.data.products;
             resolve(res);

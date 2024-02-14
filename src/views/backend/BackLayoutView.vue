@@ -1,9 +1,10 @@
 <template>
   <VueLoading
-  v-if="!loginSuccess"
-  :active="!loginSuccess"
-  :background-color="'#FBFAF4'"
-  :color="'#52504B'"/>
+    v-if="!loginSuccess"
+    :active="!loginSuccess"
+    :background-color="'#FBFAF4'"
+    :color="'#52504B'"
+  />
   <div v-else class="d-flex">
     <AdminNavbar></AdminNavbar>
     <router-view></router-view>

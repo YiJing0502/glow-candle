@@ -1,17 +1,19 @@
 <template>
   <VueLoading
-  v-if="!getRemoteData"
-  :active="!getRemoteData"
-  :background-color="'#FBFAF4'"
-  :color="'#52504B'"/>
+    v-if="!getRemoteData"
+    :active="!getRemoteData"
+    :background-color="'#FBFAF4'"
+    :color="'#52504B'"
+  />
   <div v-else class="container">
     <div class="row mt-4">
       <div class="col d-flex justify-content-end">
-        <button type="button" class="btn btn-solid-spec"
-        @click="getAdminAddCouponModal">建立新的優惠券</button>
+        <button type="button" class="btn btn-solid-spec" @click="getAdminAddCouponModal">
+          建立新的優惠券
+        </button>
       </div>
     </div>
-    <status-message v-if="couponsData.length === 0">{{'建立新的優惠券'}}</status-message>
+    <status-message v-if="couponsData.length === 0">{{ '建立新的優惠券' }}</status-message>
     <table class="table mt-4 align-middle" v-else>
       <thead>
         <tr>
@@ -34,10 +36,20 @@
             <span v-else class="text-deep-gray">未啟用</span>
           </td>
           <td>
-            <button type="button" class="btn btn-sm btn-normal-medium block w-50"
-              @click="getAdminDeleCouponModal(index)">刪除</button>
-            <button type="button" class="btn btn-sm btn-normal-medium block w-50"
-              @click="getAdminCouponModal(index)">編輯</button>
+            <button
+              type="button"
+              class="btn btn-sm btn-normal-medium block w-50"
+              @click="getAdminDeleCouponModal(index)"
+            >
+              刪除
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-normal-medium block w-50"
+              @click="getAdminCouponModal(index)"
+            >
+              編輯
+            </button>
           </td>
         </tr>
       </tbody>
@@ -45,14 +57,18 @@
   </div>
   <!-- 優惠券modal -->
   <CouponModal
-  ref="couponModal"
-  :in-edit-coupon-mode="inEditCouponMode"
-  :show-data="showData"
-  @post-admin-coupon="postAdminCoupon"
-  @put-admin-coupon="putAdminCoupon"></CouponModal>
+    ref="couponModal"
+    :in-edit-coupon-mode="inEditCouponMode"
+    :show-data="showData"
+    @post-admin-coupon="postAdminCoupon"
+    @put-admin-coupon="putAdminCoupon"
+  ></CouponModal>
   <!-- 刪除產品Modal -->
-  <DeleteModal ref="deleteModal" :show-data="showData"
-   @delete-function="deleteAdminCoupon"></DeleteModal>
+  <DeleteModal
+    ref="deleteModal"
+    :show-data="showData"
+    @delete-function="deleteAdminCoupon"
+  ></DeleteModal>
   <!-- 結果modal -->
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
@@ -107,7 +123,8 @@ export default {
     },
     getAdminCoupons() {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/coupons`;
-      this.$http.get(url)
+      this.$http
+        .get(url)
         .then((res) => {
           this.getRemoteData = res.data.success;
           this.couponsData = res.data.coupons;
@@ -124,7 +141,8 @@ export default {
         data: updatedData,
       };
       data.data.due_date = this.dayToTimestamp10Code(updatedData.due_date);
-      this.$http.post(url, data)
+      this.$http
+        .post(url, data)
         .then((res) => {
           this.getAdminCoupons();
           this.serverMessage.message = res.data.message;
@@ -145,7 +163,8 @@ export default {
         data: updatedData,
       };
       data.data.due_date = this.dayToTimestamp10Code(updatedData.due_date);
-      this.$http.put(url, data)
+      this.$http
+        .put(url, data)
         .then((res) => {
           this.getAdminCoupons();
           this.serverMessage.message = res.data.message;
@@ -162,7 +181,8 @@ export default {
     deleteAdminCoupon() {
       const { id } = this.showData;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/coupon/${id}`;
-      this.$http.delete(url)
+      this.$http
+        .delete(url)
         .then((res) => {
           this.getAdminCoupons();
           this.serverMessage.message = res.data.message;

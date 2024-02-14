@@ -1,11 +1,10 @@
-
 // 深紅實心按鈕
 .btn-solid-spec {
   border: solid 1px $specialMainColor;
   background-color: darken($specialMainColor, 5%);
   color: $lightMainColor;
   border-radius: 0;
-  &:hover{
+  &:hover {
     background-color: $specialMainColor;
     color: $whiteColor;
   }
@@ -14,7 +13,7 @@
 .btn-normal-spec {
   color: $deepGrayColor;
   border-radius: 0;
-  &:hover{
+  &:hover {
     background-color: $specialMainColor;
     color: $whiteColor;
   }
@@ -24,7 +23,7 @@
   color: $deepGrayColor;
   border: solid 1px $mediumGrayColor;
   border-radius: 0;
-  &:hover{
+  &:hover {
     background-color: $mediumGrayColor;
     color: $deepGrayColor;
   }
@@ -32,10 +31,10 @@
 // 深灰實心按鈕
 .btn-solid-dpgray {
   border: solid 1px $deepGrayColor;
-  background-color: darken($deepGrayColor, 5%);;
+  background-color: darken($deepGrayColor, 5%);
   color: $lightMainColor;
   border-radius: 0;
-  &:hover{
+  &:hover {
     background-color: $deepGrayColor;
     color: $lightMainColor;
   }
@@ -44,7 +43,7 @@
 .btn-outline-dpgray {
   border: solid 1px $deepGrayColor;
   border-radius: 0;
-  &:hover{
+  &:hover {
     background-color: $deepGrayColor;
     color: $lightMainColor;
   }
@@ -53,7 +52,7 @@
 .btn-normal-dpgray {
   color: $deepGrayColor;
   border-radius: 0;
-  &:hover{
+  &:hover {
     background-color: $deepGrayColor;
     color: $lightMainColor;
   }
@@ -62,7 +61,7 @@
 .btn-normal-medium {
   color: $deepGrayColor;
   border-radius: 0;
-  &:hover{
+  &:hover {
     background-color: $mediumMainColor;
     color: $deepGrayColor;
   }

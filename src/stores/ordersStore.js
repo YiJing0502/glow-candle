@@ -15,15 +15,14 @@ export default defineStore('ordersStore', {
     productData: [],
     couponData: {},
   }),
-  getters: {
-
-  },
+  getters: {},
   actions: {
     // ajax, 送出訂單方法
     postOrder(data) {
       return new Promise((resolve, reject) => {
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order`;
-        axios.post(url, data)
+        axios
+          .post(url, data)
           .then((res) => {
             resolve(res);
           })
@@ -37,7 +36,8 @@ export default defineStore('ordersStore', {
       return new Promise((resolve, reject) => {
         this.isLoading = true;
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/order/${orderId}`;
-        axios.get(url)
+        axios
+          .get(url)
           .then((res) => {
             if (res.data.order !== null) {
               this.processOrderData(res.data.order);
@@ -56,7 +56,8 @@ export default defineStore('ordersStore', {
       return new Promise((resolve, reject) => {
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/pay/${orderId}`;
         this.isLoading = true;
-        axios.post(url)
+        axios
+          .post(url)
           .then((res) => {
             resolve(res);
             this.isLoading = false;
@@ -110,12 +111,7 @@ export default defineStore('ordersStore', {
       if (products && typeof products === 'object') {
         Object.keys(products).forEach((item) => {
           const {
-            final_total,
-            id,
-            product,
-            product_id,
-            qty,
-            total,
+            final_total, id, product, product_id, qty, total,
           } = products[item];
           const newProductData = {
             final_total,

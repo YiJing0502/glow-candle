@@ -1,42 +1,44 @@
 <template>
-  <div class="container d-flex  justify-content-center align-items-center vh-100 back">
-      <div class="col-8">
-        <div class="d-flex justify-content-center  mb-2">
-          <img
-            src="/glow-logo.png"
-            alt="" class="img-fluid" width="100">
-        </div>
-
-        <h3 class="mb-3 text-center myTextColor">
-          請先登入
-        </h3>
-        <form id="form" class="form-signin" @submit.prevent="postAdminSignin">
-          <div class="form-floating mb-3">
-            <input v-model="email" type="email" class="form-control myTextColor" id="username"
-              placeholder="name@example.com" required autofocus>
-            <label for="username" class="myTextColor">
-              輸入您的電子郵件
-            </label>
-          </div>
-          <div class="form-floating mb-3">
-            <input v-model="password" type="password" class="form-control myTextColor" id="password"
-              placeholder="password" required>
-            <label for="password" class="myTextColor">
-              輸入您的密碼
-            </label>
-          </div>
-          <div class="d-flex">
-            <button type="button" class="btn  btn-lg btn-solid-dpgray w-100 mt-3 resetBorderRadius">
-              回首頁
-            </button>
-            <button class="btn btn-lg w-100 mt-3 resetBorderRadius btn-solid-spec" type="submit">
-              登入
-            </button>
-
-          </div>
-
-        </form>
+  <div class="container d-flex justify-content-center align-items-center vh-100 back">
+    <div class="col-8">
+      <div class="d-flex justify-content-center mb-2">
+        <img src="/glow-logo.png" alt="" class="img-fluid" width="100" />
       </div>
+      <h3 class="mb-3 text-center myTextColor">請先登入</h3>
+      <form id="form" class="form-signin" @submit.prevent="postAdminSignin">
+        <div class="form-floating mb-3">
+          <input
+            v-model="email"
+            type="email"
+            class="form-control myTextColor"
+            id="username"
+            placeholder="name@example.com"
+            required
+            autofocus
+          />
+          <label for="username" class="myTextColor"> 輸入您的電子郵件 </label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            v-model="password"
+            type="password"
+            class="form-control myTextColor"
+            id="password"
+            placeholder="password"
+            required
+          />
+          <label for="password" class="myTextColor"> 輸入您的密碼 </label>
+        </div>
+        <div class="d-flex">
+          <button type="button" class="btn btn-lg btn-solid-dpgray w-100 mt-3 resetBorderRadius">
+            回首頁
+          </button>
+          <button class="btn btn-lg w-100 mt-3 resetBorderRadius btn-solid-spec" type="submit">
+            登入
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
@@ -65,7 +67,8 @@ export default {
         username: this.email,
         password: this.password,
       };
-      this.$http.post(`${VITE_BASE_URL}/v2/admin/signin`, obj)
+      this.$http
+        .post(`${VITE_BASE_URL}/v2/admin/signin`, obj)
         .then((res) => {
           if (res.data.success) {
             const { expired, token } = res.data;
@@ -85,8 +88,6 @@ export default {
         });
     },
   },
-  mounted() {
-
-  },
+  mounted() {},
 };
 </script>
