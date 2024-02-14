@@ -103,8 +103,10 @@ export default defineStore('ordersStore', {
     },
     // fn, 處理訂單資料
     processProductData(products) {
+      // Clear the existing productData array before processing new data
+      this.productData = [];
       // 重新整理產品格式為陣列
-      // 添加检查，确保 products 不是 undefined 或 null
+      // 新增檢查，確保 products 不是 undefined 或 null
       if (products && typeof products === 'object') {
         Object.keys(products).forEach((item) => {
           const {
