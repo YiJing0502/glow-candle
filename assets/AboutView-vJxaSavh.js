@@ -1,1 +1,0 @@
-import{_ as e,c as o,o as t,b as s}from"./index-5K09qu-D.js";const c={},n=s("h2",null,"about",-1),a=[n];function r(_,d,i,l,p,u){return t(),o("div",null,a)}const h=e(c,[["render",r]]);export{h as default};
