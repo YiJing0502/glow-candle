@@ -251,13 +251,13 @@ export default {
           this.isLoading = false;
         })
         .catch((err) => {
-          this.showErrMessage(err);
           this.$router.push({
             name: 'front404',
             params: { pathMatch: this.$route.path.split('/').slice(1) },
             query: this.$route.query,
             hash: this.$route.hash,
           });
+          this.showErrMessage(err);
         });
     },
     async goToGetCart(boolean = true) {
