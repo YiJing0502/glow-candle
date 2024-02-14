@@ -1,9 +1,11 @@
 <template>
   <div class="col-2 bg-main-medium vh-100 px-3">
     <div class="d-flex justify-content-center my-3">
-      <img
-        src="/glow-logo.png"
-        alt="" width="70">
+      <router-link :to="{name: 'front'}">
+        <img
+          src="/glow-logo.png"
+          alt="" width="70">
+      </router-link>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
