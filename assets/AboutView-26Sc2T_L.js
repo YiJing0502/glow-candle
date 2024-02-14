@@ -1,0 +1,1 @@
+import{_ as e,c as o,o as t,a as s}from"./index-zAkwafHT.js";const c={},a=s("h2",null,"about",-1),n=[a];function r(_,d,i,l,p,u){return t(),o("div",null,n)}const h=e(c,[["render",r]]);export{h as default};
