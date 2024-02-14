@@ -87,14 +87,39 @@
       </div>
     </div>
   </nav>
+  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 
 export default {
+  data() {
+    return {
+      // result model
+      serverMessage: {
+        message: '',
+        success: true,
+      },
+    };
+  },
   computed: {
     ...mapState(cartsStore, ['cartProductQuantity']),
+  },
+  methods: {
+    async goToGetCart(boolean = true) {
+      try {
+        await this.getCart(boolean);
+      } catch (err) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
+      }
+    },
+    ...mapActions(cartsStore, ['getCart']),
+  },
+  mounted() {
+    this.goToGetCart(false);
   },
 };
 </script>
