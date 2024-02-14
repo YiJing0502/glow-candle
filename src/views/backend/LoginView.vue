@@ -67,9 +67,6 @@ export default {
       };
       this.$http.post(`${VITE_BASE_URL}/v2/admin/signin`, obj)
         .then((res) => {
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
-          this.$refs.resultModal.openModal();
           if (res.data.success) {
             const { expired, token } = res.data;
             // 寫入 cookie 的 記錄 token
@@ -78,7 +75,7 @@ export default {
             // 清空輸入框
             this.email = '';
             this.password = '';
-            window.location = 'product.html';
+            this.$router.push({ name: 'back' });
           }
         })
         .catch((err) => {
