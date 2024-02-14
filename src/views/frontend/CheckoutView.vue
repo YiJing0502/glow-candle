@@ -284,7 +284,7 @@
                   </div>
                   <!-- 結帳按鈕 -->
                   <div class="d-flex mb-3">
-                    <button type="submit" class="btn btn-solid-spec w-100 btn-lg"
+                    <button type="submit" class="border btn btn-solid-spec w-100 btn-lg"
                       :disabled="!checkOrderInfo">結帳</button>
                   </div>
                 </vee-form>
