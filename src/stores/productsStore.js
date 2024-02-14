@@ -17,14 +17,17 @@ export default defineStore('productsStore', {
     getProductsAll() {
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products/all`;
-      return axios.get(url)
-        .then((res) => {
-          this.productsData = res.data.products;
-          this.isLoading = false;
-        })
-        .catch(() => {
-          alert('很抱歉，載入所有商品失敗，請稍後再試');
-        });
+      return new Promise((resolve, reject) => {
+        axios.get(url)
+          .then((res) => {
+            this.productsData = res.data.products;
+            resolve(res);
+            this.isLoading = false;
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
     },
   },
 });

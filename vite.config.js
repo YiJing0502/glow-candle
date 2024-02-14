@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
@@ -8,6 +9,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  base: '/glow-candle',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

@@ -100,10 +100,9 @@
             </div>
           </div>
         </div>
-
       </div>
-
   </div>
+  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
@@ -112,7 +111,11 @@ import productsStore from '../../stores/productsStore';
 export default {
   data() {
     return {
-
+      // result model
+      serverMessage: {
+        message: '',
+        success: true,
+      },
     };
   },
   methods: {
@@ -123,13 +126,22 @@ export default {
         params: { id },
       });
     },
+    async goToGetProductsAll() {
+      try {
+        await this.getProductsAll();
+      } catch (err) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
+      }
+    },
     ...mapActions(productsStore, ['getProductsAll', 'getProduct']),
   },
   computed: {
     ...mapState(productsStore, ['isLoading', 'productsData']),
   },
   mounted() {
-    this.getProductsAll();
+    this.goToGetProductsAll();
   },
 };
 </script>

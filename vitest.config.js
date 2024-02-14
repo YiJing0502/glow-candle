@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'node:url';
-import { mergeConfig, defineConfig, configDefaults } from 'vitest/config';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { mergeConfig, defineConfig, configDefaults } from 'vitest/dist/config';
 import viteConfig from './vite.config';
 
 export default mergeConfig(
