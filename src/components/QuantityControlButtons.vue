@@ -26,7 +26,7 @@ export default {
     };
   },
   props: ['inventory', 'id', 'qty', 'productCartId'],
-  emit: ['putNum'],
+  emits: ['putNum'],
   methods: {
     // 按鈕, 增加數量
     plusNum() {
