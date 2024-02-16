@@ -16,5 +16,40 @@
         <router-link class="list-group-item" :to="{ name: 'adminCoupons' }">優惠券管理</router-link>
       </li>
     </ul>
+    <div class="m-3 d-flex justify-content-center align-items-center">
+      <button type="button" class="btn btn-outline-spec" @click="adminLogout">您已登入，點我登出</button>
+    </div>
   </div>
+  <!-- 結果modal -->
+  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
+<script>
+const { VITE_BASE_URL } = import.meta.env;
+export default {
+  data() {
+    return {
+      serverMessage: {
+        message: '',
+        success: true,
+      },
+    };
+  },
+  methods: {
+    adminLogout() {
+      const url = `${VITE_BASE_URL}/v2/logout`;
+      this.$http.post(url)
+        .then((res) => {
+          this.$router.push({ name: 'login' });
+          this.serverMessage.message = res.data.message;
+          this.serverMessage.success = res.data.success;
+          this.$refs.resultModal.openModal();
+        })
+        .catch((err) => {
+          this.serverMessage.message = err.response.data.message;
+          this.serverMessage.success = err.response.data.success;
+          this.$refs.resultModal.openModal();
+        });
+    },
+  },
+};
+</script>
