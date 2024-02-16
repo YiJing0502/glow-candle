@@ -268,7 +268,7 @@ export default {
       // 取得全部資料長度
       const dataLength = Object.keys(data).length;
       // 設定每頁資料量
-      const perPage = 10;
+      const perPage = 7;
       // 取得總頁數，使用無條件進位
       const totalPage = Math.ceil(dataLength / perPage);
       // 設定當前頁數，變數
