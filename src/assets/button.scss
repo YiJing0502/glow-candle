@@ -18,6 +18,16 @@
     color: $whiteColor;
   }
 }
+// 深紅外框按鈕
+.btn-outline-spec {
+  border: solid 1px $specialMainColor;
+  color: $specialMainColor;
+  border-radius: 0;
+  &:hover {
+    background-color: $specialMainColor;
+    color: $whiteColor;
+  }
+}
 // 中灰外框按鈕
 .btn-outline-mdgray {
   color: $deepGrayColor;
