@@ -1,5 +1,3 @@
-// 引入googleFonts字體
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap');
 // 引入bootStrap的SCSS檔案
 @import 'bootstrap/scss/bootstrap';
 
@@ -7,7 +5,8 @@
 @import './color.scss';
 // 定義字體大小
 @import './frontSize.scss';
-
+// 字體引入
+@import './front.scss';
 body {
   background-color: $lightMainColor;
   font-family: 'Noto Serif TC', serif;
