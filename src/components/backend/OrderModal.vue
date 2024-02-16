@@ -17,12 +17,7 @@
             訂單編號｜{{ updatedShowData.id }}
           </h1>
           <div class="">
-            <button
-              v-if="!inEditOrderMode"
-              type="button"
-              class="btn"
-              @click="editOrder"
-            >
+            <button v-if="!inEditOrderMode" type="button" class="btn" @click="editOrder">
               編輯訂單
             </button>
             <button v-if="inEditOrderMode" disabled type="button" class="btn">編輯訂單中</button>
@@ -199,7 +194,9 @@
                         <strong>{{ item?.qty }}</strong>
                       </td>
                       <td>{{ item.total }}</td>
-                      <td><strong>{{ item?.final_total }}</strong></td>
+                      <td>
+                        <strong>{{ item?.final_total }}</strong>
+                      </td>
                       <td>
                         <div v-if="item.coupon">
                           <p>
@@ -369,11 +366,15 @@ export default {
       // 更新一份可被更改的data
       this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
       this.showCreateAt = this.timestamp10CodeToDay(this.updatedShowData.create_at);
-      this.showPaidDate = this.updatedShowData.is_paid ? this.timestamp10CodeToDay(this.updatedShowData.paid_date) : '';
+      this.showPaidDate = this.updatedShowData.is_paid
+        ? this.timestamp10CodeToDay(this.updatedShowData.paid_date)
+        : '';
       this.showOrderMessage = this.updatedShowData.message
-        ? this.splitStringByNewline(this.updatedShowData.message) : [];
+        ? this.splitStringByNewline(this.updatedShowData.message)
+        : [];
       this.showProductsArray = this.updatedShowData.products
-        ? Object.values(this.updatedShowData.products) : [];
+        ? Object.values(this.updatedShowData.products)
+        : [];
       this.inEditOrderMode = false;
     },
   },

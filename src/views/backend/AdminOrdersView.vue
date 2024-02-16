@@ -6,14 +6,15 @@
     :color="'#52504B'"
   />
   <div v-else class="container">
-    <StatusMessage
-    class="mt-4"
-    v-if="adminOrdersData.orders?.length === 0">{{ '需等待訂單進入。' }}</StatusMessage>
-    <div class="row mt-4"
-    v-if="(adminOrdersData.orders?.length * adminOrdersData.pagination?.total_pages) > 1">
+    <StatusMessage class="mt-4" v-if="adminOrdersData.orders?.length === 0">{{
+      '需等待訂單進入。'
+    }}</StatusMessage>
+    <div
+      class="row mt-4"
+      v-if="adminOrdersData.orders?.length * adminOrdersData.pagination?.total_pages > 1"
+    >
       <div class="col d-flex justify-content-end">
-        <button
-        type="button" class="btn btn-solid-spec" @click="getAdminDelOrdersModal">
+        <button type="button" class="btn btn-solid-spec" @click="getAdminDelOrdersModal">
           刪除所有訂單
         </button>
       </div>
@@ -87,9 +88,9 @@
   <OrderModal ref="orderModal" :show-data="showData" @order-updated="getAdminOrders"></OrderModal>
   <!-- 刪除「單筆」訂單Modal -->
   <DeleteModal
-  ref="deleteOrderModal"
-  :show-data="showData"
-  @delete-function="deleteAdminOrder"
+    ref="deleteOrderModal"
+    :show-data="showData"
+    @delete-function="deleteAdminOrder"
   ></DeleteModal>
   <!-- 刪除「所有」訂單Modal -->
   <DeleteModal ref="deleteOrdersModal" :show-data="showData" @delete-function="deleteAdminOrders">
@@ -153,7 +154,8 @@ export default {
     // ajax, 刪除所有訂單
     deleteAdminOrders() {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/orders/all`;
-      this.$http.delete(url)
+      this.$http
+        .delete(url)
         .then((res) => {
           this.getAdminOrders();
           this.$refs.deleteOrdersModal.hideModal();
@@ -172,7 +174,8 @@ export default {
     deleteAdminOrder() {
       const { id } = this.showData;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/order/${id}`;
-      this.$http.delete(url)
+      this.$http
+        .delete(url)
         .then((res) => {
           this.getAdminOrders();
           this.$refs.deleteOrderModal.hideModal();
@@ -196,7 +199,6 @@ export default {
         .then((res) => {
           this.adminOrdersData = res.data;
           this.isLoading = false;
-          console.log(res.data);
         })
         .catch((err) => {
           this.showErrMessage(err);

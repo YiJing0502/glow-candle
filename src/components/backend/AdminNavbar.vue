@@ -17,7 +17,9 @@
       </li>
     </ul>
     <div class="m-3 d-flex justify-content-center align-items-center">
-      <button type="button" class="btn btn-outline-spec" @click="adminLogout">您已登入，點我登出</button>
+      <button type="button" class="btn btn-outline-spec" @click="adminLogout">
+        您已登入，點我登出
+      </button>
     </div>
   </div>
   <!-- 結果modal -->
@@ -37,7 +39,8 @@ export default {
   methods: {
     adminLogout() {
       const url = `${VITE_BASE_URL}/v2/logout`;
-      this.$http.post(url)
+      this.$http
+        .post(url)
         .then((res) => {
           this.$router.push({ name: 'login' });
           this.serverMessage.message = res.data.message;
