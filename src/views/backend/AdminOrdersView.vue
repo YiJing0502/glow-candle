@@ -6,7 +6,19 @@
     :color="'#52504B'"
   />
   <div v-else class="container">
-    <table class="table mt-4">
+    <StatusMessage
+    class="mt-4"
+    v-if="adminOrdersData.orders?.length === 0">{{ '需等待訂單進入。' }}</StatusMessage>
+    <div class="row mt-4"
+    v-if="(adminOrdersData.orders?.length * adminOrdersData.pagination?.total_pages) > 1">
+      <div class="col d-flex justify-content-end">
+        <button
+        type="button" class="btn btn-solid-spec" @click="getAdminDelOrdersModal">
+          刪除所有訂單
+        </button>
+      </div>
+    </div>
+    <table v-if="adminOrdersData.orders?.length !== 0" class="table mt-4">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -53,7 +65,7 @@
       </tbody>
     </table>
     <div
-      v-if="adminOrdersData && adminOrdersData.pagination"
+      v-if="adminOrdersData && adminOrdersData.pagination && adminOrdersData.orders?.length !== 0"
       class="d-flex justify-content-center mt-4"
     >
       <nav aria-label="Page navigation example">
@@ -72,7 +84,16 @@
     </div>
   </div>
   <!-- 訂單modal -->
-  <OrderModal ref="orderModal" :show-data="showData" @order-updated="getAdminOrders()"></OrderModal>
+  <OrderModal ref="orderModal" :show-data="showData" @order-updated="getAdminOrders"></OrderModal>
+  <!-- 刪除「單筆」訂單Modal -->
+  <DeleteModal
+  ref="deleteOrderModal"
+  :show-data="showData"
+  @delete-function="deleteAdminOrder"
+  ></DeleteModal>
+  <!-- 刪除「所有」訂單Modal -->
+  <DeleteModal ref="deleteOrdersModal" :show-data="showData" @delete-function="deleteAdminOrders">
+  </DeleteModal>
   <!-- 結果modal -->
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
@@ -82,6 +103,8 @@ import { mapActions } from 'pinia';
 import timeStore from '../../stores/timeStore';
 import PageBtn from '../../components/PageBtn.vue';
 import OrderModal from '../../components/backend/OrderModal.vue';
+import DeleteModal from '../../components/backend/DeleteModal.vue';
+import StatusMessage from '../../components/backend/StatusMessage.vue';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 
@@ -103,20 +126,63 @@ export default {
   components: {
     PageBtn,
     OrderModal,
+    DeleteModal,
+    StatusMessage,
   },
   computed: {},
   methods: {
+    // fn, 尋找特定一筆訂單
     getOrderData(id) {
       const orderData = this.adminOrdersData.orders.find((item) => item.id === id);
       this.showData = orderData;
     },
+    // fn, 打開查看訂單的Modal
     getAdminOrderModal(id) {
       this.getOrderData(id);
       this.$refs.orderModal.openModal();
     },
+    // fn, 切換頁數
     goToChangePage(page) {
       this.getAdminOrders(page);
     },
+    // fn, 打開刪除「所有」訂單的Modal
+    getAdminDelOrdersModal() {
+      this.showData = { title: '所有訂單' };
+      this.$refs.deleteOrdersModal.openModal();
+    },
+    // ajax, 刪除所有訂單
+    deleteAdminOrders() {
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/orders/all`;
+      this.$http.delete(url)
+        .then((res) => {
+          this.getAdminOrders();
+          this.$refs.deleteOrdersModal.hideModal();
+          this.showResMessage(res);
+        })
+        .catch((err) => {
+          this.showErrMessage(err);
+        });
+    },
+    // fn, 打開刪除「單一筆」訂單的Modal
+    getAdminDelOrderModal(id) {
+      this.getOrderData(id);
+      this.$refs.deleteOrderModal.openModal();
+    },
+    // ajax, 刪除單一筆訂單
+    deleteAdminOrder() {
+      const { id } = this.showData;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/order/${id}`;
+      this.$http.delete(url)
+        .then((res) => {
+          this.getAdminOrders();
+          this.$refs.deleteOrderModal.hideModal();
+          this.showResMessage(res);
+        })
+        .catch((err) => {
+          this.showErrMessage(err);
+        });
+    },
+    // ajax, 取得訂單
     getAdminOrders(page = 1) {
       const strPage = page.toString();
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/orders`;
@@ -130,12 +196,35 @@ export default {
         .then((res) => {
           this.adminOrdersData = res.data;
           this.isLoading = false;
+          console.log(res.data);
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showErrMessage(err);
         });
+    },
+    // fn, 顯示 ajax 成功內容
+    showResMessage(res) {
+      if (res && res.data !== undefined) {
+        this.serverMessage.message = res.data.message;
+        this.serverMessage.success = res.data.success;
+        this.$refs.resultModal.openModal();
+      } else {
+        this.serverMessage.message = '未被定義的回應';
+        this.serverMessage.success = true;
+        this.$refs.resultModal.openModal();
+      }
+    },
+    // fn, 顯示 ajax 錯誤內容
+    showErrMessage(err) {
+      if (err && err.response && err.response.data !== undefined) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
+      } else {
+        this.serverMessage.message = '未被定義的錯誤';
+        this.serverMessage.success = false;
+        this.$refs.resultModal.openModal();
+      }
     },
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
   },
