@@ -41,7 +41,7 @@
         <button class="btn btn-solid-spec" @click="getAdminAddProductModal">建立新的產品</button>
       </div>
     </div>
-    <status-message v-if="productsData.length === 0">{{ '建立新的產品' }}</status-message>
+    <status-message v-if="productsData.length === 0">{{ '請點擊「建立新的產品」新增資料' }}</status-message>
     <table class="table mt-4 align-middle" v-else>
       <thead>
         <tr>

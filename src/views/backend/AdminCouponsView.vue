@@ -13,7 +13,7 @@
         </button>
       </div>
     </div>
-    <status-message v-if="couponsData.length === 0">{{ '建立新的優惠券' }}</status-message>
+    <status-message v-if="couponsData.length === 0">{{ '請點擊「建立新的優惠券」新增資料' }}</status-message>
     <table class="table mt-4 align-middle" v-else>
       <thead>
         <tr>
