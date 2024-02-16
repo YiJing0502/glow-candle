@@ -17,8 +17,11 @@
       </li>
     </ul>
     <div class="m-3 d-flex justify-content-center align-items-center">
-      <button type="button" class="btn btn-outline-spec" @click="adminLogout">
-        您已登入，點我登出
+      <button type="button"
+      class="btn btn-outline-spec  d-flex justify-content-center align-items-center"
+      @click="adminLogout">
+        <span class="material-icons">logout</span>
+        <span>登出</span>
       </button>
     </div>
   </div>
