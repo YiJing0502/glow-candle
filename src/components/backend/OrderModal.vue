@@ -21,7 +21,7 @@
               v-if="!inEditOrderMode"
               type="button"
               class="btn"
-              @click="inEditOrderMode = true"
+              @click="editOrder"
             >
               編輯訂單
             </button>
@@ -199,7 +199,7 @@
                         <strong>{{ item?.qty }}</strong>
                       </td>
                       <td>{{ item.total }}</td>
-                      <td>{{ item?.final_total }}</td>
+                      <td><strong>{{ item?.final_total }}</strong></td>
                       <td>
                         <div v-if="item.coupon">
                           <p>
@@ -253,7 +253,7 @@
             v-if="inEditOrderMode"
             type="button"
             class="btn btn-normal-dpgray"
-            @click="inEditOrderMode = false"
+            @click="cancelChangeOrder"
           >
             取消
           </button>
@@ -294,6 +294,7 @@ export default {
         message: '',
         success: true,
       },
+      originalShowData: {},
     };
   },
   props: ['showData'],
@@ -344,6 +345,16 @@ export default {
           this.$refs.resultModal.openModal();
         });
     },
+    // fn, 編輯訂單
+    editOrder() {
+      this.originalShowData = JSON.parse(JSON.stringify(this.updatedShowData));
+      this.inEditOrderMode = true;
+    },
+    // fn, 取消編輯訂單
+    cancelChangeOrder() {
+      this.updatedShowData = this.originalShowData;
+      this.inEditOrderMode = false;
+    },
     openModal() {
       this.modal.show();
     },
@@ -358,20 +369,11 @@ export default {
       // 更新一份可被更改的data
       this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
       this.showCreateAt = this.timestamp10CodeToDay(this.updatedShowData.create_at);
-      if (this.updatedShowData.is_paid) {
-        this.showPaidDate = this.timestamp10CodeToDay(this.updatedShowData.paid_date);
-      }
-      if (this.updatedShowData.products) {
-        const newAry = [];
-        const keys = Object.keys(this.updatedShowData.products);
-        keys.forEach((key) => {
-          newAry.push(this.updatedShowData.products[key]);
-        });
-        this.showProductsArray = newAry;
-      }
-      if (this.updatedShowData.message) {
-        this.showOrderMessage = this.splitStringByNewline(this.updatedShowData.message);
-      }
+      this.showPaidDate = this.updatedShowData.is_paid ? this.timestamp10CodeToDay(this.updatedShowData.paid_date) : '';
+      this.showOrderMessage = this.updatedShowData.message
+        ? this.splitStringByNewline(this.updatedShowData.message) : [];
+      this.showProductsArray = this.updatedShowData.products
+        ? Object.values(this.updatedShowData.products) : [];
       this.inEditOrderMode = false;
     },
   },
