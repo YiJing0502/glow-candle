@@ -133,9 +133,7 @@ export default {
           this.couponsData = res.data.coupons;
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showErrMessage(err);
         });
     },
     // ajax, 新增coupon
@@ -152,15 +150,11 @@ export default {
         .post(url, data)
         .then((res) => {
           this.getAdminCoupons();
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
           this.$refs.couponModal.hideModal();
-          this.$refs.resultModal.openModal();
+          this.showResMessage(res);
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showErrMessage(err);
         });
     },
     // ajax, 修改coupon
@@ -175,15 +169,11 @@ export default {
         .put(url, data)
         .then((res) => {
           this.getAdminCoupons();
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
           this.$refs.couponModal.hideModal();
-          this.$refs.resultModal.openModal();
+          this.showResMessage(res);
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showErrMessage(err);
         });
     },
     // ajax, 刪除coupon
@@ -194,16 +184,36 @@ export default {
         .delete(url)
         .then((res) => {
           this.getAdminCoupons();
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
           this.$refs.deleteModal.hideModal();
-          this.$refs.resultModal.openModal();
+          this.showResMessage(res);
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showErrMessage(err);
         });
+    },
+    // fn, 顯示 ajax 成功內容
+    showResMessage(res) {
+      if (res && res.data !== undefined) {
+        this.serverMessage.message = res.data.message;
+        this.serverMessage.success = res.data.success;
+        this.$refs.resultModal.openModal();
+      } else {
+        this.serverMessage.message = '未被定義的回應';
+        this.serverMessage.success = true;
+        this.$refs.resultModal.openModal();
+      }
+    },
+    // fn, 顯示 ajax 錯誤內容
+    showErrMessage(err) {
+      if (err && err.response && err.response.data !== undefined) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
+      } else {
+        this.serverMessage.message = '未被定義的錯誤';
+        this.serverMessage.success = false;
+        this.$refs.resultModal.openModal();
+      }
     },
     // fn, 處理coupon到期日的顯示狀態
     couponsDueDateMessage(dueDate) {
