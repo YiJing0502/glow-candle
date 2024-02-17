@@ -281,7 +281,8 @@
                 <vee-form @submit="goToPostOrder" v-slot="{ errors }">
                   <!-- 收件人名稱 -->
                   <div class="mb-3">
-                    <label for="category" class="form-label">收件人名稱
+                    <label for="category" class="form-label"
+                      >收件人名稱
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
                     <vee-field
@@ -298,7 +299,8 @@
                   </div>
                   <!-- 電子信箱 -->
                   <div class="mb-3">
-                    <label for="email" class="form-label">電子信箱
+                    <label for="email" class="form-label"
+                      >電子信箱
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
                     <vee-field
@@ -315,7 +317,8 @@
                   </div>
                   <!-- 行動電話號碼 -->
                   <div class="mb-3">
-                    <label for="phone" class="form-label">行動電話號碼
+                    <label for="phone" class="form-label"
+                      >行動電話號碼
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
                     <vee-field
@@ -332,7 +335,8 @@
                   </div>
                   <!-- 收件地址 -->
                   <div class="mb-3">
-                    <label for="address" class="form-label">收件地址
+                    <label for="address" class="form-label"
+                      >收件地址
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
                     <vee-field
