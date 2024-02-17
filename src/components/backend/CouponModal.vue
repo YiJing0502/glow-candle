@@ -26,7 +26,7 @@
           <div class="row">
             <div class="col-10">
               <div class="mb-3">
-                <label for="coupon_title" class="form-label">標題</label>
+                <label for="coupon_title" class="form-label">標題*</label>
                 <input
                   type="text"
                   class="form-control"
@@ -57,7 +57,7 @@
           </div>
           <div class="row">
             <div class="col mb-3">
-              <label for="coupon_due_date" class="form-label">到期日</label>
+              <label for="coupon_due_date" class="form-label">到期日*</label>
               <input
                 type="date"
                 class="form-control"
@@ -68,7 +68,7 @@
               />
             </div>
             <div class="col mb-3">
-              <label for="coupon_percent" class="form-label">折扣</label>
+              <label for="coupon_percent" class="form-label">折扣*</label>
               <input
                 type="number"
                 class="form-control"
@@ -78,7 +78,7 @@
               />
             </div>
             <div class="col mb-3">
-              <label for="coupon_code" class="form-label">折扣代碼</label>
+              <label for="coupon_code" class="form-label">折扣代碼*</label>
               <input
                 type="text"
                 class="form-control"
