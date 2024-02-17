@@ -17,9 +17,11 @@
       </li>
     </ul>
     <div class="m-3 d-flex justify-content-center align-items-center">
-      <button type="button"
-      class="btn btn-outline-spec  d-flex justify-content-center align-items-center"
-      @click="adminLogout">
+      <button
+        type="button"
+        class="btn btn-outline-spec d-flex justify-content-center align-items-center"
+        @click="adminLogout"
+      >
         <span class="material-icons">logout</span>
         <span>登出</span>
       </button>
