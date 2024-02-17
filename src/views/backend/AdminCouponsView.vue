@@ -19,6 +19,7 @@
     <table class="table mt-4 align-middle" v-else>
       <thead>
         <tr>
+          <th scope="col">#</th>
           <th scope="col">優惠券名稱</th>
           <th scope="col">折扣</th>
           <th scope="col">到期日</th>
@@ -29,6 +30,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in couponsData" :key="item.id">
+          <th>{{ item.num }}</th>
           <th>{{ item.title }}</th>
           <td>{{ item.percent }}</td>
           <td>{{ couponsDueDateMessage(item.due_date) }}</td>
@@ -56,6 +58,21 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="pagination && pagination.current_page" class="d-flex justify-content-center mt-4">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination" id="pageid">
+          <PageBtn
+            :prev-is-enabled="pagination.has_pre"
+            :next-is-enabled="pagination.has_next"
+            :totalPage="pagination.total_pages"
+            :current-page="pagination.current_page"
+            @change-prev-page="getAdminCoupons(pagination.current_page - 1)"
+            @change-next-page="getAdminCoupons(pagination.current_page + 1)"
+            @change-page="goToChangePage"
+          ></PageBtn>
+        </ul>
+      </nav>
+    </div>
   </div>
   <!-- 優惠券modal -->
   <CouponModal
@@ -83,6 +100,7 @@ import adminStore from '../../stores/adminStore';
 import StatusMessage from '../../components/backend/StatusMessage.vue';
 import DeleteModal from '../../components/backend/DeleteModal.vue';
 import CouponModal from '../../components/backend/CouponModal.vue';
+import PageBtn from '../../components/PageBtn.vue';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 
@@ -91,6 +109,7 @@ export default {
     return {
       getRemoteData: false,
       couponsData: [],
+      pagination: {},
       showData: {},
       inEditCouponMode: true,
       serverMessage: {
@@ -103,6 +122,7 @@ export default {
     StatusMessage,
     DeleteModal,
     CouponModal,
+    PageBtn,
   },
   methods: {
     // modal, 打開新增優惠券modal
@@ -123,14 +143,20 @@ export default {
       this.showData = JSON.parse(JSON.stringify(this.couponsData[index]));
       this.$refs.deleteModal.openModal();
     },
+    // fn, 切換頁數
+    goToChangePage(page) {
+      this.getAdminCoupons(page);
+    },
     // ajax, 取得coupons
-    getAdminCoupons() {
+    getAdminCoupons(page = 1) {
+      const strPage = page.toString();
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/coupons`;
       this.$http
-        .get(url)
+        .get(url, { params: { page: strPage } })
         .then((res) => {
           this.getRemoteData = res.data.success;
           this.couponsData = res.data.coupons;
+          this.pagination = res.data.pagination;
         })
         .catch((err) => {
           this.showErrMessage(err);
