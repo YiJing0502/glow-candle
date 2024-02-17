@@ -147,17 +147,42 @@
                   </div>
                 </div>
                 <div class="col-4">
-                  <ul>
-                    <li>
-                      <p>{{ showCreateAt }} 創立</p>
-                    </li>
-                    <li>
-                      <span v-if="updatedShowData.is_paid" class="text-main-spec fw-bold"
-                        >已於 {{ showPaidDate }} 付款</span
-                      >
-                      <span v-else class="text-deep-gray">未付款</span>
-                    </li>
-                  </ul>
+                  <template v-if="!inEditOrderMode">
+                    <ul>
+                      <li>
+                        <p>{{ showCreateAt }} 創立</p>
+                      </li>
+                      <li>
+                        <span v-if="updatedShowData.is_paid" class="text-main-spec fw-bold"
+                          >{{ showPaidDate }} 已付款</span
+                        >
+                        <span v-else class="text-deep-gray">未付款</span>
+                      </li>
+                    </ul>
+                  </template>
+                  <template v-else>
+                    <ul>
+                      <li>
+                        <p>{{ showCreateAt }} 創立</p>
+                      </li>
+                      <li>
+                        <div class="form-check">
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            id="is_paid"
+                            v-model="updatedShowData.is_paid"
+                          />
+                          <label for="is_paid" class="form-check-label">
+                            <span v-if="updatedShowData.is_paid" class="text-main-spec fw-bold"
+                              >{{ showPaidDate }} 已付款</span
+                            >
+                            <span v-else class="text-deep-gray">未付款</span>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </template>
                 </div>
               </div>
             </div>
@@ -325,6 +350,9 @@ export default {
         data.products[productKey] = obj;
       });
       data.total = total;
+      if (data.paid_date === undefined && data.is_paid === true) {
+        data.paid_date = this.dayToTimestamp10Code(this.currentDate);
+      }
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/order/${data.id}`;
       this.$http
         .put(url, { data })
