@@ -345,7 +345,7 @@
                       class="form-control"
                       :class="{ 'is-invalid': errors['收件地址'] }"
                       id="address"
-                      rules="required|max:50"
+                      rules="required|max:100"
                       placeholder="送貨地點目前僅提供：台灣、台灣外島宅配"
                       v-model="orderData.data.user.address"
                     ></vee-field>
