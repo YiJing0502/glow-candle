@@ -189,7 +189,6 @@ export default {
     getAdminOrders(page = 1) {
       const strPage = page.toString();
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/orders`;
-      this.isLoading = true;
       this.$http
         .get(url, {
           params: {
@@ -231,6 +230,7 @@ export default {
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
   },
   mounted() {
+    this.isLoading = true;
     this.getAdminOrders();
   },
 };
