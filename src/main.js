@@ -30,6 +30,7 @@ import {
   url,
   size,
   ext,
+  max_value,
 } from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
@@ -47,6 +48,7 @@ defineRule('one_of', one_of);
 defineRule('url', url);
 defineRule('size', size);
 defineRule('ext', ext);
+defineRule('max_value', max_value);
 configure({
   generateMessage: localize({ zh_TW: zhTW }), // 載入繁體中文語系
   validateOnInput: true, // 當輸入任何內容直接進行驗證
