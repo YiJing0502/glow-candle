@@ -31,7 +31,7 @@
         <tr v-for="(item, index) in couponsData" :key="item.id">
           <th>{{ item.title }}</th>
           <td>{{ item.percent }}</td>
-          <td>{{ timestamp10CodeToDay(item.due_date) }}</td>
+          <td>{{ couponsDueDateMessage(item.due_date) }}</td>
           <td>{{ item.code }}</td>
           <td>
             <span v-if="item.is_enabled === 1" class="text-main-spec fw-bold">啟用</span>
@@ -123,6 +123,7 @@ export default {
       this.showData = JSON.parse(JSON.stringify(this.couponsData[index]));
       this.$refs.deleteModal.openModal();
     },
+    // ajax, 取得coupons
     getAdminCoupons() {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/coupons`;
       this.$http
@@ -137,12 +138,16 @@ export default {
           this.$refs.resultModal.openModal();
         });
     },
+    // ajax, 新增coupon
     postAdminCoupon(updatedData) {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/coupon`;
       const data = {
         data: updatedData,
       };
       data.data.due_date = this.dayToTimestamp10Code(updatedData.due_date);
+      if (data.data.is_enabled === undefined) {
+        data.data.is_enabled = 2;
+      }
       this.$http
         .post(url, data)
         .then((res) => {
@@ -158,6 +163,7 @@ export default {
           this.$refs.resultModal.openModal();
         });
     },
+    // ajax, 修改coupon
     putAdminCoupon(updatedData) {
       const { id } = updatedData;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/coupon/${id}`;
@@ -180,6 +186,7 @@ export default {
           this.$refs.resultModal.openModal();
         });
     },
+    // ajax, 刪除coupon
     deleteAdminCoupon() {
       const { id } = this.showData;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/coupon/${id}`;
@@ -198,11 +205,24 @@ export default {
           this.$refs.resultModal.openModal();
         });
     },
+    // fn, 處理coupon到期日的顯示狀態
+    couponsDueDateMessage(dueDate) {
+      const timestampCurrentDate = this.dayToTimestamp10Code(this.currentDate);
+      const dueDateDay = this.timestamp10CodeToDay(dueDate);
+      if (dueDate < timestampCurrentDate) {
+        return `${dueDateDay} (已過期)`;
+      }
+      if (dueDate > timestampCurrentDate) {
+        return `${dueDateDay}`;
+      }
+      return `${dueDateDay} (今天過期)`;
+    },
     ...mapActions(adminStore, ['initializeAdmin', 'postApiUserCheck']),
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
   },
   computed: {
     ...mapState(adminStore, ['loginSuccess']),
+    ...mapState(timeStore, ['currentDate']),
   },
   mounted() {
     if (this.loginSuccess) {
