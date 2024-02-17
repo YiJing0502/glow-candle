@@ -62,7 +62,9 @@
                 <div class="row">
                   <div class="col-10">
                     <div class="mb-3">
-                      <label for="title" class="form-label">標題*</label>
+                      <label for="title" class="form-label">標題
+                        <span class="text-main-spec fw-bold">*</span>
+                      </label>
                       <input
                         type="text"
                         class="form-control"
@@ -93,7 +95,9 @@
                 </div>
                 <div class="row">
                   <div class="mb-3 col">
-                    <label for="category" class="form-label">分類*</label>
+                    <label for="category" class="form-label">分類
+                      <span class="text-main-spec fw-bold">*</span>
+                    </label>
                     <input
                       type="text"
                       class="form-control"
@@ -103,7 +107,9 @@
                     />
                   </div>
                   <div class="mb-3 col">
-                    <label for="unit" class="form-label">單位*</label>
+                    <label for="unit" class="form-label">單位
+                      <span class="text-main-spec fw-bold">*</span>
+                    </label>
                     <input
                       type="text"
                       class="form-control"
@@ -115,7 +121,9 @@
                 </div>
                 <div class="row">
                   <div class="mb-3 col">
-                    <label for="original_price" class="form-label">原價*</label>
+                    <label for="original_price" class="form-label">原價
+                      <span class="text-main-spec fw-bold">*</span>
+                    </label>
                     <input
                       type="number"
                       class="form-control"
@@ -125,7 +133,9 @@
                     />
                   </div>
                   <div class="mb-3 col">
-                    <label for="price" class="form-label">售價*</label>
+                    <label for="price" class="form-label">售價
+                      <span class="text-main-spec fw-bold">*</span>
+                    </label>
                     <input
                       type="number"
                       class="form-control"
