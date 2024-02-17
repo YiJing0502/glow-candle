@@ -168,9 +168,7 @@ export default {
     // modal, 打開新增產品 modal
     getAdminAddProductModal() {
       this.inEditProductMode = false;
-      this.showData = {
-        imagesUrl: [''],
-      };
+      this.showData = {};
       this.$refs.productModal.openModal();
     },
     // modal, 打開刪除產品modal

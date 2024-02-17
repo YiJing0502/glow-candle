@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // 引入 material-icons 的 CSS檔案
 import 'material-icons/iconfont/material-icons.css';
 
@@ -18,7 +19,18 @@ import 'vue-loading-overlay/dist/css/index.css';
 import {
   Field, Form, ErrorMessage, defineRule, configure,
 } from 'vee-validate';
-import { required, email, max } from '@vee-validate/rules';
+import {
+  required,
+  email,
+  max,
+  min_value,
+  numeric,
+  integer,
+  one_of,
+  url,
+  size,
+  ext,
+} from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import router from './router';
@@ -28,6 +40,13 @@ import ResultModal from './components/ResultModal.vue';
 defineRule('required', required);
 defineRule('email', email);
 defineRule('max', max);
+defineRule('min_value', min_value);
+defineRule('numeric', numeric);
+defineRule('integer', integer);
+defineRule('one_of', one_of);
+defineRule('url', url);
+defineRule('size', size);
+defineRule('ext', ext);
 configure({
   generateMessage: localize({ zh_TW: zhTW }), // 載入繁體中文語系
   validateOnInput: true, // 當輸入任何內容直接進行驗證

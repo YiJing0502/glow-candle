@@ -10,274 +10,356 @@
   >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">
-            {{ inEditProductMode ? '編輯產品' : '新增產品' }}
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <button
-                class="nav-link active w-50"
-                id="nav-home-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-home"
-                type="button"
-                role="tab"
-                aria-controls="nav-home"
-                aria-selected="true"
+        <vee-form
+          @submit="inEditProductMode ? putAdminProduct() : postAdminProduct()"
+          v-slot="{ errors }"
+        >
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              {{ inEditProductMode ? '編輯產品' : '新增產品' }}
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active w-50"
+                  id="nav-home-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="nav-home"
+                  aria-selected="true"
+                >
+                  商品內容
+                </button>
+                <button
+                  class="nav-link w-50"
+                  id="nav-profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="nav-profile"
+                  aria-selected="false"
+                >
+                  商品圖片
+                </button>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="nav-home"
+                role="tabpanel"
+                aria-labelledby="nav-home-tab"
+                tabindex="0"
               >
-                商品內容
-              </button>
-              <button
-                class="nav-link w-50"
-                id="nav-profile-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-profile"
-                type="button"
-                role="tab"
-                aria-controls="nav-profile"
-                aria-selected="false"
-              >
-                商品圖片
-              </button>
-            </div>
-          </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div
-              class="tab-pane fade show active"
-              id="nav-home"
-              role="tabpanel"
-              aria-labelledby="nav-home-tab"
-              tabindex="0"
-            >
-              <div class="row mt-3">
-                <div class="row">
-                  <div class="col-10">
-                    <div class="mb-3">
-                      <label for="title" class="form-label">標題
+                <div class="row mt-3">
+                  <div class="row">
+                    <div class="col-10">
+                      <div class="mb-3">
+                        <label for="title" class="form-label"
+                          >標題
+                          <span class="text-main-spec fw-bold">*</span>
+                        </label>
+                        <vee-field
+                          type="text"
+                          name="標題"
+                          :class="{ 'is-invalid': errors['標題'] }"
+                          rules="required|max:100"
+                          class="form-control"
+                          id="title"
+                          placeholder="請輸入標題"
+                          v-model="updatedShowData.title"
+                        />
+                        <vee-error-message class="invalid-feedback" name="標題"></vee-error-message>
+                      </div>
+                    </div>
+                    <div class="col-2 d-flex align-items-center">
+                      <div class="form-check mt-3">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="is_enabled"
+                          :true-value="1"
+                          :false-value="0"
+                          v-model="updatedShowData.is_enabled"
+                        />
+                        <label for="is_enabled" class="form-check-label">
+                          <span
+                            v-if="updatedShowData.is_enabled === 1"
+                            class="text-main-spec fw-bold"
+                            >啟用</span
+                          >
+                          <span v-else class="text-deep-gray">未啟用</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="mb-3 col">
+                      <label for="category" class="form-label"
+                        >分類
                         <span class="text-main-spec fw-bold">*</span>
                       </label>
-                      <input
+                      <vee-field
                         type="text"
+                        name="分類"
                         class="form-control"
-                        id="title"
-                        placeholder="請輸入標題"
-                        v-model="updatedShowData.title"
+                        :class="{ 'is-invalid': errors['分類'] }"
+                        rules="required|max:100"
+                        id="category"
+                        placeholder="請輸入分類"
+                        v-model="updatedShowData.category"
                       />
+                      <vee-error-message class="invalid-feedback" name="分類"></vee-error-message>
                     </div>
-                  </div>
-                  <div class="col-2 d-flex align-items-center">
-                    <div class="form-check mt-3">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="is_enabled"
-                        :true-value="1"
-                        :false-value="0"
-                        v-model="updatedShowData.is_enabled"
-                      />
-                      <label for="is_enabled" class="form-check-label">
-                        <span v-if="updatedShowData.is_enabled === 1" class="text-main-spec fw-bold"
-                          >啟用</span
-                        >
-                        <span v-else class="text-deep-gray">未啟用</span>
+                    <div class="mb-3 col">
+                      <label for="unit" class="form-label"
+                        >單位
+                        <span class="text-main-spec fw-bold">*</span>
                       </label>
+                      <vee-field
+                        type="text"
+                        name="單位"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['單位'] }"
+                        rules="required|max:100"
+                        id="unit"
+                        placeholder="請輸入單位"
+                        v-model="updatedShowData.unit"
+                      />
+                      <vee-error-message class="invalid-feedback" name="單位"></vee-error-message>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="mb-3 col">
-                    <label for="category" class="form-label">分類
-                      <span class="text-main-spec fw-bold">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="category"
-                      placeholder="請輸入分類"
-                      v-model="updatedShowData.category"
-                    />
-                  </div>
-                  <div class="mb-3 col">
-                    <label for="unit" class="form-label">單位
-                      <span class="text-main-spec fw-bold">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="unit"
-                      placeholder="請輸入單位"
-                      v-model="updatedShowData.unit"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="mb-3 col">
-                    <label for="original_price" class="form-label">原價
-                      <span class="text-main-spec fw-bold">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="original_price"
-                      placeholder="請輸入原價"
-                      v-model.number="updatedShowData.origin_price"
-                    />
-                  </div>
-                  <div class="mb-3 col">
-                    <label for="price" class="form-label">售價
-                      <span class="text-main-spec fw-bold">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="price"
-                      placeholder="請輸入售價"
-                      v-model.number="updatedShowData.price"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="mb-3 col">
-                    <label for="cost_price" class="form-label">成本價</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="cost_price"
-                      placeholder="請輸入成本價"
-                      v-model.number="updatedShowData.cost_price"
-                    />
-                  </div>
-                  <div class="mb-3 col">
-                    <label for="inventory" class="form-label">庫存量</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="inventory"
-                      placeholder="請輸入庫存量"
-                      v-model.number="updatedShowData.inventory"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <div class="mb-3">
-                      <label for="description" class="form-label">產品描述</label>
-                      <textarea
+                  <div class="row">
+                    <div class="mb-3 col">
+                      <label for="original_price" class="form-label"
+                        >原價
+                        <span class="text-main-spec fw-bold">*</span>
+                      </label>
+                      <vee-field
+                        type="number"
+                        name="原價"
                         class="form-control"
-                        id="description"
-                        rows="3"
-                        v-model="updatedShowData.description"
-                      ></textarea>
+                        :class="{ 'is-invalid': errors['原價'] }"
+                        rules="required|numeric|integer|min_value:1"
+                        id="original_price"
+                        placeholder="請輸入原價"
+                        v-model.number="updatedShowData.origin_price"
+                      />
+                      <vee-error-message class="invalid-feedback" name="原價"></vee-error-message>
+                    </div>
+                    <div class="mb-3 col">
+                      <label for="price" class="form-label"
+                        >售價
+                        <span class="text-main-spec fw-bold">*</span>
+                      </label>
+                      <vee-field
+                        type="number"
+                        name="售價"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['售價'] }"
+                        rules="required|numeric|integer|min_value:1"
+                        id="price"
+                        placeholder="請輸入售價"
+                        v-model.number="updatedShowData.price"
+                      />
+                      <vee-error-message class="invalid-feedback" name="售價"></vee-error-message>
                     </div>
                   </div>
-                  <div class="col">
-                    <div class="mb-3">
-                      <label for="content" class="form-label">說明內容</label>
-                      <textarea
+                  <div class="row">
+                    <div class="mb-3 col">
+                      <label for="cost_price" class="form-label">成本價</label>
+                      <vee-field
+                        type="number"
+                        name="成本價"
                         class="form-control"
-                        id="content"
-                        rows="3"
-                        v-model="updatedShowData.content"
-                      ></textarea>
+                        :class="{ 'is-invalid': errors['成本價'] }"
+                        rules="numeric|integer|min_value:1"
+                        id="cost_price"
+                        placeholder="請輸入成本價"
+                        v-model.number="updatedShowData.cost_price"
+                      />
+                      <vee-error-message class="invalid-feedback" name="成本價"></vee-error-message>
+                    </div>
+                    <div class="mb-3 col">
+                      <label for="inventory" class="form-label">庫存量</label>
+                      <vee-field
+                        type="number"
+                        name="庫存量"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['庫存量'] }"
+                        rules="numeric|integer|min_value:1"
+                        id="inventory"
+                        placeholder="請輸入庫存量"
+                        v-model.number="updatedShowData.inventory"
+                      />
+                      <vee-error-message class="invalid-feedback" name="庫存量"></vee-error-message>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label for="description" class="form-label">產品描述</label>
+                        <vee-field
+                          as="textarea"
+                          name="產品描述"
+                          class="form-control"
+                          :class="{ 'is-invalid': errors['產品描述'] }"
+                          rules="max:800"
+                          id="description"
+                          rows="3"
+                          v-model="updatedShowData.description"
+                        ></vee-field>
+                        <vee-error-message
+                          class="invalid-feedback"
+                          name="產品描述"
+                        ></vee-error-message>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="mb-3">
+                        <label for="content" class="form-label">說明內容</label>
+                        <vee-field
+                          as="textarea"
+                          name="說明內容"
+                          class="form-control"
+                          :class="{ 'is-invalid': errors['說明內容'] }"
+                          rules="max:800"
+                          id="content"
+                          rows="3"
+                          v-model="updatedShowData.content"
+                        ></vee-field>
+                        <vee-error-message
+                          class="invalid-feedback"
+                          name="說明內容"
+                        ></vee-error-message>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="nav-profile"
-              role="tabpanel"
-              aria-labelledby="nav-profile-tab"
-              tabindex="0"
-            >
-              <div class="row row-cols-4 mt-3">
-                <div class="col mb-3">
-                  <div class="mb-3">
-                    <label for="imageUrl" class="form-label">輸入主要圖片網址</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="請輸入主要圖片連結"
-                      v-model="updatedShowData.imageUrl"
-                    />
-                  </div>
-                  <img
-                    :src="updatedShowData.imageUrl"
-                    :alt="updatedShowData.title"
-                    class="img-fluid"
-                  />
-                </div>
-                <div
-                  class="col mb-3"
-                  v-for="(item, index) in updatedShowData.imagesUrl"
-                  :key="index"
-                >
-                  <div class="mb-3">
-                    <label for="imageUrl" class="form-label">輸入其他圖片網址</label>
-                    <button
-                      type="button"
-                      class="btn-close float-end"
-                      aria-label="Close"
-                      @click="deleteImage(index)"
-                    ></button>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="請輸入其他圖片連結"
-                      v-model="updatedShowData.imagesUrl[index]"
-                    />
-                  </div>
-                  <img
-                    v-if="updatedShowData.imagesUrl[index]"
-                    :src="updatedShowData.imagesUrl[index]"
-                    :alt="updatedShowData.title + index"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="col mb-3">
-                  <div class="card">
-                    <div class="card-body">
-                      <label for="formFile" class="form-label">上傳圖片檔案</label>
-                      <input
+              <div
+                class="tab-pane fade"
+                id="nav-profile"
+                role="tabpanel"
+                aria-labelledby="nav-profile-tab"
+                tabindex="0"
+              >
+                <div class="row row-cols-4 mt-3">
+                  <div class="col mb-3">
+                    <div class="mb-3">
+                      <label for="imageUrl" class="form-label">輸入主要圖片網址</label>
+                      <vee-field
+                        type="text"
+                        name="主要圖片網址"
                         class="form-control"
-                        type="file"
-                        name="fileInput"
-                        @change="uploadImages"
-                        ref="uploadInput"
-                        accept="image/jpeg, image/jpg, image/png"
-                        multiple
+                        :class="{ 'is-invalid': errors['主要圖片網址'] }"
+                        rules="url"
+                        placeholder="請輸入主要圖片連結"
+                        v-model="updatedShowData.imageUrl"
                       />
-                      <hr />
-                      <button class="btn btn-solid-dpgray w-100" @click="addImage">
-                        手動新增圖片
-                      </button>
+                      <vee-error-message
+                        class="invalid-feedback"
+                        name="主要圖片網址"
+                      ></vee-error-message>
+                    </div>
+                    <img
+                      :src="updatedShowData.imageUrl"
+                      :alt="updatedShowData.title"
+                      class="img-fluid"
+                    />
+                  </div>
+                  <div
+                    class="col mb-3"
+                    v-for="(item, index) in updatedShowData.imagesUrl"
+                    :key="index"
+                  >
+                    <div class="mb-3">
+                      <label for="imageUrl" class="form-label">輸入其他圖片網址</label>
+                      <button
+                        type="button"
+                        class="btn-close float-end"
+                        aria-label="Close"
+                        @click="deleteImage(index)"
+                      ></button>
+                      <vee-field
+                        type="text"
+                        name="其他圖片連結"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['其他圖片連結'] }"
+                        rules="url"
+                        placeholder="請輸入其他圖片連結"
+                        v-model="updatedShowData.imagesUrl[index]"
+                      />
+                      <vee-error-message
+                        class="invalid-feedback"
+                        name="其他圖片連結"
+                      ></vee-error-message>
+                    </div>
+                    <img
+                      v-if="updatedShowData.imagesUrl[index]"
+                      :src="updatedShowData.imagesUrl[index]"
+                      :alt="updatedShowData.title + index"
+                      class="img-fluid"
+                    />
+                  </div>
+                  <div class="col mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <label for="formFile" class="form-label">上傳圖片檔案</label>
+                        <vee-field
+                          class="form-control"
+                          :class="{ 'is-invalid': errors['多圖片上傳'] }"
+                          type="file"
+                          name="多圖片上傳"
+                          rules="size:3072|ext:jpeg,jpg,png"
+                          @change="uploadImages"
+                          ref="uploadInput"
+                          accept="image/jpeg, image/jpg, image/png"
+                          multiple
+                        />
+                        <vee-error-message
+                          class="invalid-feedback"
+                          name="多圖片上傳"
+                        ></vee-error-message>
+                        <ul>
+                          <li>限jpg、jpeg、png類型的檔案</li>
+                          <li>小於3MB</li>
+                        </ul>
+                        <hr />
+                        <button
+                          type="button"
+                          class="btn btn-solid-dpgray w-100"
+                          @click.prevent="addImage"
+                        >
+                          手動新增圖片
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-normal-dpgray" data-bs-dismiss="modal">關閉</button>
-          <button
-            type="button"
-            class="btn btn-solid-spec"
-            @click="inEditProductMode ? putAdminProduct() : postAdminProduct()"
-          >
-            {{ inEditProductMode ? '更新' : '新增' }}
-          </button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-normal-dpgray" data-bs-dismiss="modal">
+              關閉
+            </button>
+            <button type="submit" class="btn btn-solid-spec">
+              {{ inEditProductMode ? '更新' : '新增' }}
+            </button>
+          </div>
+        </vee-form>
       </div>
     </div>
   </div>
@@ -350,9 +432,6 @@ export default {
         const fileSizeInBytes = element.size;
         const limitedFileSize = 3 * 1024 * 1024;
         if (fileSizeInBytes > limitedFileSize) {
-          this.serverMessage.message = '圖片檔案不可超過3MB';
-          this.serverMessage.success = false;
-          this.$refs.resultModal.openModal();
           return false;
         }
         if (
@@ -360,9 +439,6 @@ export default {
           && element.type !== 'image/jpg'
           && element.type !== 'image/png'
         ) {
-          this.serverMessage.message = '只接收「jpg」、「jpeg」、「png」類型的圖片檔案';
-          this.serverMessage.success = false;
-          this.$refs.resultModal.openModal();
           return false;
         }
       }
