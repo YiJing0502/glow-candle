@@ -5,11 +5,9 @@
 @import './color.scss';
 // 定義字體大小
 @import './frontSize.scss';
-// 字體引入
-@import './front.scss';
 body {
   background-color: $lightMainColor;
-  font-family: 'Noto Serif TC', serif;
+  font-family: "Optima nova", sans-serif;
 }
 // 文字顏色｜深灰
 .myTextColor {
