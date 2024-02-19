@@ -5,7 +5,8 @@ import 'material-icons/iconfont/material-icons.css';
 import { createApp } from 'vue';
 // 載入 pinia
 import { createPinia } from 'pinia';
-
+// 載入 CKEditor
+import CKEditor from '@ckeditor/ckeditor5-vue';
 // Import all of Bootstrap's JS
 import * as bootstrap from 'bootstrap';
 
@@ -73,4 +74,6 @@ app.use(createPinia());
 app.use(router);
 // 使用 vue-axios
 app.use(VueAxios, axios);
+// 使用
+app.use(CKEditor);
 app.mount('#app');
