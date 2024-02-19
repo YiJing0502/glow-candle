@@ -323,7 +323,7 @@
                           type="file"
                           name="多圖片上傳"
                           rules="size:3072|ext:jpeg,jpg,png"
-                          @change="uploadImages"
+                          @change="goToUploadImages"
                           ref="uploadInput"
                           accept="image/jpeg, image/jpg, image/png"
                           multiple
@@ -367,9 +367,10 @@
 </template>
 <script>
 import { Modal } from 'bootstrap';
+import { mapActions } from 'pinia';
+import uploadImagesStore from '../../stores/uploadImagesStore';
 import ResultModal from '../ResultModal.vue';
 
-const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
   data() {
     return {
@@ -425,67 +426,29 @@ export default {
         this.updatedShowData.imagesUrl.push('');
       }
     },
-    validateImages(multipleFilesArray) {
-      // 驗證檔案大小、檔案類型
-      for (let index = 0; index < multipleFilesArray.length; index += 1) {
-        const element = multipleFilesArray[index];
-        const fileSizeInBytes = element.size;
-        const limitedFileSize = 3 * 1024 * 1024;
-        if (fileSizeInBytes > limitedFileSize) {
-          return false;
-        }
-        if (
-          element.type !== 'image/jpeg'
-          && element.type !== 'image/jpg'
-          && element.type !== 'image/png'
-        ) {
-          return false;
-        }
+    // fn, 前往store上傳多張圖片
+    async goToUploadImages(event) {
+      try {
+        const res = await this.uploadImages(event);
+        this.handleServerResponse(true, '上傳成功', res.data.imageUrl);
+        this.$refs.uploadInput.value = '';
+      } catch (err) {
+        this.handleServerResponse(false, err.response.data.message);
       }
-      return true;
+      this.$refs.uploadInput.value = '';
     },
-    // fn, 上傳多張圖片
-    uploadImages(event) {
-      const multipleFilesArray = [...event.target.files];
-      if (this.validateImages(multipleFilesArray)) {
-        // 上傳檔案
-        multipleFilesArray.forEach((item) => {
-          // 產生一個新的上傳表單格式
-          const formData = new FormData();
-          // 夾帶欄位與要上傳的檔案
-          formData.append('file-to-upload', item);
-          // 上傳檔案
-          this.$http
-            .post(`${VITE_BASE_URL}/api/${VITE_API_PATH}/admin/upload`, formData)
-            .then((res) => {
-              if (res.data.success) {
-                if (this.updatedShowData.imagesUrl === undefined) {
-                  this.updatedShowData.imagesUrl = [];
-                  this.updatedShowData.imagesUrl.push(res.data.imageUrl);
-                } else {
-                  this.updatedShowData.imagesUrl.push(res.data.imageUrl);
-                }
-                this.serverMessage.message = res.data.success;
-                this.serverMessage.success = '上傳成功';
-                this.$refs.resultModal.openModal();
-              } else {
-                this.serverMessage.success = res.data.success;
-                this.serverMessage.message = '上傳成功';
-                this.$refs.resultModal.openModal();
-              }
-              this.$refs.uploadInput.value = '';
-            })
-            .catch((err) => {
-              this.serverMessage.message = err.response.data.message;
-              this.serverMessage.success = err.response.data.success;
-              this.$refs.resultModal.openModal();
-              this.$refs.uploadInput.value = '';
-            });
-        });
+    handleServerResponse(success, message, imageUrl) {
+      this.serverMessage.message = message;
+      this.serverMessage.success = success;
+      this.$refs.resultModal.openModal();
+      if (success) {
+        this.updatedShowData.imagesUrl = this.updatedShowData.imagesUrl || [];
+        this.updatedShowData.imagesUrl.push(imageUrl);
       }
     },
+    ...mapActions(uploadImagesStore, ['uploadImages']),
   },
   props: ['showData', 'inEditProductMode'],
-  emits: ['upload-images', 'delete-image', 'add-image', 'put-admin-product', 'post-admin-product'],
+  emits: ['put-admin-product', 'post-admin-product'],
 };
 </script>
