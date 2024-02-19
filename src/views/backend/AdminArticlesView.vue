@@ -113,7 +113,7 @@ const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
   data() {
     return {
-      getRemoteData: true,
+      getRemoteData: false,
       articlesData: [],
       pagination: {},
       showData: {},
@@ -155,12 +155,13 @@ export default {
     // },
     // ajax, 取得 articles
     getAdminArticles(page = 1) {
+      this.getRemoteData = false;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/articles`;
       this.$http
         .get(url, { params: { page } })
         .then((res) => {
           this.articlesData = res.data.articles;
-          console.log(this.articlesData);
+          this.getRemoteData = true;
         })
         .catch((err) => {
           this.handleServerResponse(false, err.response.data.message);
