@@ -72,6 +72,11 @@ const router = createRouter({
           name: 'adminCoupons',
           component: () => import('../views/backend/AdminCouponsView.vue'),
         },
+        {
+          path: 'articles',
+          name: 'adminArticles',
+          component: () => import('../views/backend/AdminArticlesView.vue'),
+        },
       ],
     },
     // admin login

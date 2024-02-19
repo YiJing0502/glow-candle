@@ -15,6 +15,9 @@
       <li class="list-group-item">
         <router-link class="list-group-item" :to="{ name: 'adminCoupons' }">優惠券管理</router-link>
       </li>
+      <li class="list-group-item">
+        <router-link class="list-group-item" :to="{ name: 'adminArticles' }">文章管理</router-link>
+      </li>
     </ul>
     <div class="m-3 d-flex justify-content-center align-items-center">
       <button
