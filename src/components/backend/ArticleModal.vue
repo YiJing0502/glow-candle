@@ -258,10 +258,19 @@ export default {
       editor: ClassicEditor,
       editorConfig: {
         toolbar: [
-          'undo', 'redo',
-          '|', 'heading',
-          '|', 'bold', 'italic', 'blockQuote',
-          '|', 'numberedList', 'bulletedList', 'insertTable'],
+          'undo',
+          'redo',
+          '|',
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'blockQuote',
+          '|',
+          'numberedList',
+          'bulletedList',
+          'insertTable',
+        ],
         // The configuration of the editor.
       },
     };
