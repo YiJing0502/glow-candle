@@ -12,7 +12,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <vee-form
-          @submit="inEditCouponMode ? putAdminArticle() : postAdminArticle()"
+          @submit="inEditArticleMode ? putAdminArticle() : postAdminArticle()"
           v-slot="{ errors }"
         >
           <div class="modal-header">
@@ -68,16 +68,12 @@
                 <!-- 標籤 -->
                 <div class="">
                   <div class="row row-cols-4">
-                    <div class="col"
-                      v-for="(item, index) in updatedShowData.tag"
-                      :key="index">
+                    <div class="col" v-for="(item, index) in updatedShowData.tag" :key="index">
                       <label for="tag" class="form-label"
                         >標籤{{ index }}
                         <span class="text-main-spec fw-bold">*</span>
                       </label>
-                      <div
-                        class="col mb-3"
-                      >
+                      <div class="col mb-3">
                         <div class="input-group input-group-sm">
                           <vee-field
                             type="text"
@@ -132,10 +128,7 @@
                       placeholder="請輸入作者名稱"
                       v-model="updatedShowData.author"
                     />
-                    <vee-error-message
-                      class="invalid-feedback"
-                      name="作者名稱"
-                    ></vee-error-message>
+                    <vee-error-message class="invalid-feedback" name="作者名稱"></vee-error-message>
                   </div>
                   <div class="col">
                     <label for="create_at" class="form-label"
@@ -153,16 +146,14 @@
                       v-model="updatedShowData.create_at"
                       :min="currentDate"
                     />
-                    <vee-error-message
-                      class="invalid-feedback"
-                      name="創立日期"
-                    ></vee-error-message>
+                    <vee-error-message class="invalid-feedback" name="創立日期"></vee-error-message>
                   </div>
                 </div>
                 <!-- 描述、圖片 -->
                 <div class="row mb-3">
                   <div class="col">
-                    <label for="description" class="form-label">描述
+                    <label for="description" class="form-label"
+                      >描述
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
                     <vee-field
@@ -178,7 +169,8 @@
                     <vee-error-message class="invalid-feedback" name="描述"></vee-error-message>
                   </div>
                   <div class="col-4">
-                    <label for="imageUrl" class="form-label">輸入主要圖片網址
+                    <label for="imageUrl" class="form-label"
+                      >輸入主要圖片網址
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
                     <vee-field
@@ -213,10 +205,7 @@
                       ref="uploadInput"
                       accept="image/jpeg, image/jpg, image/png"
                     />
-                    <vee-error-message
-                      class="invalid-feedback"
-                      name="圖片上傳"
-                    ></vee-error-message>
+                    <vee-error-message class="invalid-feedback" name="圖片上傳"></vee-error-message>
                     <ul>
                       <li>限jpg、jpeg、png類型的檔案</li>
                       <li>小於3MB</li>
@@ -227,9 +216,10 @@
               </template>
               <template v-slot:1>
                 <ckeditor
-                :editor="editor"
-                v-model="updatedShowData.content"
-                :config="editorConfig"></ckeditor>
+                  :editor="editor"
+                  v-model="updatedShowData.content"
+                  :config="editorConfig"
+                ></ckeditor>
               </template>
             </TwoTabs>
           </div>
@@ -272,7 +262,7 @@ export default {
     };
   },
   props: ['inEditArticleMode', 'showData'],
-  emits: ['post-admin-article'],
+  emits: ['post-admin-article', 'put-admin-article'],
   watch: {
     showData() {
       this.updatedShowData = JSON.parse(JSON.stringify(this.showData));
@@ -291,7 +281,9 @@ export default {
     hideModal() {
       this.modal.hide();
     },
-    putAdminArticle() {},
+    putAdminArticle() {
+      this.$emit('put-admin-article', this.updatedShowData);
+    },
     postAdminArticle() {
       this.$emit('post-admin-article', this.updatedShowData);
     },

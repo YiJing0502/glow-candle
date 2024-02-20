@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in articlesData" :key="item.id">
+        <tr v-for="(item) in articlesData" :key="item.id">
           <th>{{ item.num }}</th>
           <th>
             <img :src="item.imageUrl" :alt="item.title" class="img-fluid" width="50" />
@@ -39,10 +39,11 @@
           <td>{{ item.title }}</td>
           <td>
             <span
-            class="badge bg-medium-gray text-deep-gray me-1"
-            v-for="(tag, index) in item.tag"
-            :key="index"
-            >{{ tag }}</span>
+              class="badge bg-medium-gray text-deep-gray me-1"
+              v-for="(tag, index) in item.tag"
+              :key="index"
+              >{{ tag }}</span
+            >
           </td>
           <td>{{ timestamp10CodeToDay(item.create_at) }}</td>
           <td>{{ item.author }}</td>
@@ -55,14 +56,14 @@
             <button
               type="button"
               class="btn btn-sm btn-normal-medium block w-50"
-              @click="getAdminDeleArticleModal(index)"
+              @click="getAdminDeleArticleModal(item.id)"
             >
               刪除
             </button>
             <button
               type="button"
               class="btn btn-sm btn-normal-medium block w-50"
-              @click="getAdminArticleModal(index)"
+              @click="getAdminArticle(item.id)"
             >
               編輯
             </button>
@@ -78,8 +79,8 @@
             :next-is-enabled="pagination.has_next"
             :totalPage="pagination.total_pages"
             :current-page="pagination.current_page"
-            @change-prev-page="getAdminCoupons(pagination.current_page - 1)"
-            @change-next-page="getAdminCoupons(pagination.current_page + 1)"
+            @change-prev-page="goToChangePage(pagination.current_page - 1)"
+            @change-next-page="goToChangePage(pagination.current_page + 1)"
             @change-page="goToChangePage"
           ></PageBtn>
         </ul>
@@ -91,23 +92,24 @@
     :in-edit-article-mode="inEditArticleMode"
     :show-data="showData"
     @post-admin-article="postAdminArticle"
+    @put-admin-article="putAdminArticle"
   ></ArticleModal>
   <!-- 刪除產品Modal -->
-  <!-- <DeleteModal
+  <DeleteModal
     ref="deleteModal"
     :show-data="showData"
-    @delete-function="deleteAdminArticle"
-  ></DeleteModal> -->
+    @delete-function="deleteAdminArticle(showData.id)"
+  ></DeleteModal>
   <!-- 結果modal -->
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
+import { mapState, mapActions } from 'pinia';
 import PageBtn from '../../components/PageBtn.vue';
 import StatusMessage from '../../components/backend/StatusMessage.vue';
 import DeleteModal from '../../components/backend/DeleteModal.vue';
 import ArticleModal from '../../components/backend/ArticleModal.vue';
 import timeStore from '../../stores/timeStore';
-import { mapState, mapActions } from 'pinia';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -145,14 +147,16 @@ export default {
       };
       this.$refs.articleModal.openModal();
     },
-    // // modal, 打開編輯文章modal
-    // getAdminArticleModal(index){},
-    // // modal, 打開刪除文章modal
-    // getAdminDeleArticleModal(index){},
-    // // fn, 切換頁數
-    // goToChangePage(page) {
-    //   this.getAdminArticles(page);
-    // },
+    // modal, 打開刪除文章modal
+    getAdminDeleArticleModal(id) {
+      const data = this.articlesData.find((article) => article.id === id);
+      this.showData = data;
+      this.$refs.deleteModal.openModal();
+    },
+    // fn, 切換頁數
+    goToChangePage(page) {
+      this.getAdminArticles(page);
+    },
     // ajax, 取得 articles
     getAdminArticles(page = 1) {
       this.getRemoteData = false;
@@ -161,7 +165,23 @@ export default {
         .get(url, { params: { page } })
         .then((res) => {
           this.articlesData = res.data.articles;
+          this.pagination = res.data.pagination;
           this.getRemoteData = true;
+        })
+        .catch((err) => {
+          this.handleServerResponse(false, err.response.data.message);
+        });
+    },
+    // ajax, 取得 article（編輯文章）
+    getAdminArticle(id) {
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/article/${id}`;
+      this.$http
+        .get(url)
+        .then((res) => {
+          this.showData = res.data.article;
+          this.showData.create_at = this.timestamp10CodeToDay(this.showData.create_at);
+          this.inEditArticleMode = true;
+          this.$refs.articleModal.openModal();
         })
         .catch((err) => {
           this.handleServerResponse(false, err.response.data.message);
@@ -175,6 +195,7 @@ export default {
       this.$http
         .post(url, data)
         .then((res) => {
+          this.getAdminArticles();
           this.$refs.articleModal.hideModal();
           this.handleServerResponse(true, res.data.message);
         })
@@ -182,10 +203,36 @@ export default {
           this.handleServerResponse(false, err.response.data.message);
         });
     },
-    // // ajax, 修改 articles
-    // putAdminArticle(updatedData){},
-    // // ajax, 刪除 articles
-    // deleteAdminArticle(){},
+    // ajax, 修改 articles
+    putAdminArticle(updatedData) {
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/article/${updatedData.id}`;
+      const data = { data: updatedData };
+      data.data.create_at = this.dayToTimestamp10Code(data.data.create_at);
+      this.$http
+        .put(url, data)
+        .then((res) => {
+          this.getAdminArticles();
+          this.$refs.articleModal.hideModal();
+          this.handleServerResponse(true, res.data.message);
+        })
+        .catch((err) => {
+          this.handleServerResponse(false, err.response.data.message);
+        });
+    },
+    // ajax, 刪除 articles
+    deleteAdminArticle(id) {
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/article/${id}`;
+      this.$http
+        .delete(url)
+        .then((res) => {
+          this.getAdminArticles();
+          this.$refs.deleteModal.hideModal();
+          this.handleServerResponse(true, res.data.message);
+        })
+        .catch((err) => {
+          this.handleServerResponse(false, err.response.data.message);
+        });
+    },
     // 處理 伺服器 訊息
     handleServerResponse(success, message) {
       this.serverMessage.message = message;
