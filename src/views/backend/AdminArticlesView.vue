@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item) in articlesData" :key="item.id">
+        <tr v-for="item in articlesData" :key="item.id">
           <th>{{ item.num }}</th>
           <th>
             <img :src="item.imageUrl" :alt="item.title" class="img-fluid" width="50" />
