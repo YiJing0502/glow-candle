@@ -281,7 +281,7 @@
                 <vee-form @submit="goToPostOrder" v-slot="{ errors }">
                   <!-- 收件人名稱 -->
                   <div class="mb-3">
-                    <label for="category" class="form-label"
+                    <label for="user" class="form-label"
                       >收件人名稱
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
@@ -291,7 +291,7 @@
                       class="form-control"
                       :class="{ 'is-invalid': errors['收件人'] }"
                       rules="required|max:15"
-                      id="category"
+                      id="user"
                       placeholder="請填入收件人真實姓名，以確保順利收件"
                       v-model="orderData.data.user.name"
                     ></vee-field>
@@ -353,7 +353,7 @@
                   </div>
                   <!-- 訂單備註 -->
                   <div class="mb-3">
-                    <p>訂單備註</p>
+                    <label for="orderMessage" class="form-label">訂單備註</label>
                     <vee-field
                       as="textarea"
                       name="訂單備註"
