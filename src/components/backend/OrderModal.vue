@@ -15,7 +15,7 @@
         <vee-form @submit="putOrder" v-slot="{ errors }">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              訂單編號｜{{ updatedShowData.id }}
+              {{ updatedShowData.num }}｜訂單編號：{{ updatedShowData.id }}
             </h1>
             <div class="">
               <button v-if="!inEditOrderMode" type="button" class="btn" @click="editOrder">
