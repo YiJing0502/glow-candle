@@ -11,7 +11,7 @@
         aria-controls="nav-home"
         aria-selected="true"
       >
-        {{  tabs[0].label }}
+        {{ tabs[0].label }}
       </button>
       <button
         class="nav-link w-50"
@@ -23,7 +23,7 @@
         aria-controls="nav-profile"
         aria-selected="false"
       >
-      {{  tabs[1].label }}
+        {{ tabs[1].label }}
       </button>
     </div>
   </nav>
@@ -51,8 +51,7 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     tabs: {
@@ -60,7 +59,6 @@ export default {
       required: true,
     },
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>

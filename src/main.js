@@ -74,6 +74,6 @@ app.use(createPinia());
 app.use(router);
 // 使用 vue-axios
 app.use(VueAxios, axios);
-// 使用
+// 使用 CKEditor
 app.use(CKEditor);
 app.mount('#app');
