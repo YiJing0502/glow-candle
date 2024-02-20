@@ -30,42 +30,8 @@
           </div>
         </div>
         <div class="modal-body" v-if="updatedShowData.user">
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <button
-                class="nav-link active w-50"
-                id="nav-home-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-home"
-                type="button"
-                role="tab"
-                aria-controls="nav-home"
-                aria-selected="true"
-              >
-                訂單資訊
-              </button>
-              <button
-                class="nav-link w-50"
-                id="nav-profile-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-profile"
-                type="button"
-                role="tab"
-                aria-controls="nav-profile"
-                aria-selected="false"
-              >
-                訂購資訊
-              </button>
-            </div>
-          </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div
-              class="tab-pane fade show active"
-              id="nav-home"
-              role="tabpanel"
-              aria-labelledby="nav-home-tab"
-              tabindex="0"
-            >
+          <TwoTabs :tabs="tabs">
+            <template v-slot:0>
               <div class="row mt-3">
                 <div v-if="!inEditOrderMode" class="col-8">
                   <div>
@@ -185,14 +151,8 @@
                   </template>
                 </div>
               </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="nav-profile"
-              role="tabpanel"
-              aria-labelledby="nav-profile-tab"
-              tabindex="0"
-            >
+            </template>
+            <template v-slot:1>
               <table class="table">
                 <thead>
                   <tr>
@@ -267,8 +227,8 @@
                   </tr>
                 </tfoot>
               </table>
-            </div>
-          </div>
+            </template>
+          </TwoTabs>
         </div>
         <div class="modal-footer">
           <button
@@ -299,6 +259,7 @@ import { Modal } from 'bootstrap';
 import { mapActions, mapState } from 'pinia';
 import timeStore from '../../stores/timeStore';
 import stringStore from '../../stores/stringStore';
+import TwoTabs from './TwoTabs.vue';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 
@@ -317,10 +278,14 @@ export default {
         success: true,
       },
       originalShowData: {},
+      tabs: [{ label: '訂單資訊' }, { label: '訂購資訊' }],
     };
   },
   props: ['showData'],
   emits: ['order-updated'],
+  components: {
+    TwoTabs,
+  },
   methods: {
     // ajax, 更新訂單
     putOrder() {
