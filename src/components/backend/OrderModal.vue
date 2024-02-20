@@ -12,242 +12,301 @@
   >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">
-            訂單編號｜{{ updatedShowData.id }}
-          </h1>
-          <div class="">
-            <button v-if="!inEditOrderMode" type="button" class="btn" @click="editOrder">
-              編輯訂單
+        <vee-form @submit="putOrder" v-slot="{ errors }">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              訂單編號｜{{ updatedShowData.id }}
+            </h1>
+            <div class="">
+              <button v-if="!inEditOrderMode" type="button" class="btn" @click="editOrder">
+                編輯訂單
+              </button>
+              <button v-if="inEditOrderMode" disabled type="button" class="btn">編輯訂單中</button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body" v-if="updatedShowData.user">
+            <TwoTabs :tabs="tabs">
+              <template v-slot:0>
+                <div class="row mt-3">
+                  <div v-if="!inEditOrderMode" class="col-8">
+                    <div>
+                      <h6><strong>收件人名稱</strong></h6>
+                      <p>{{ updatedShowData.user.name }}</p>
+                    </div>
+                    <div>
+                      <h6><strong>電子信箱</strong></h6>
+                      <p>{{ updatedShowData.user.email }}</p>
+                    </div>
+                    <div>
+                      <h6><strong>行動電話號碼</strong></h6>
+                      <p>{{ updatedShowData.user.tel }}</p>
+                    </div>
+                    <div>
+                      <h6><strong>收件地址</strong></h6>
+                      <p>{{ updatedShowData.user.address }}</p>
+                    </div>
+                    <div>
+                      <h6><strong>訂單備註</strong></h6>
+                      <div v-if="this.updatedShowData.message">
+                        <p v-for="(item, index) in showOrderMessage" :key="index">
+                          {{ item }}
+                        </p>
+                      </div>
+                      <p v-else>無訂單備註</p>
+                    </div>
+                  </div>
+                  <div v-else class="col-8">
+                    <div class="mb-3">
+                      <label for="user_name" class="form-label"
+                        >收件人名稱
+                        <span class="text-main-spec fw-bold">*</span>
+                      </label>
+                      <vee-field
+                        type="text"
+                        name="收件人"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['收件人'] }"
+                        rules="required|max:15"
+                        id="user_name"
+                        placeholder="請輸入收件人名稱"
+                        v-model="updatedShowData.user.name"
+                      />
+                      <vee-error-message class="invalid-feedback" name="收件人"></vee-error-message>
+                    </div>
+                    <div class="mb-3">
+                      <label for="user_email" class="form-label"
+                        >電子信箱
+                        <span class="text-main-spec fw-bold">*</span>
+                      </label>
+                      <vee-field
+                        type="email"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['電子信箱'] }"
+                        id="user_email"
+                        rules="email|required"
+                        name="電子信箱"
+                        placeholder="請輸入電子信箱"
+                        v-model="updatedShowData.user.email"
+                      />
+                      <vee-error-message
+                        class="invalid-feedback"
+                        name="電子信箱"
+                      ></vee-error-message>
+                    </div>
+                    <div class="mb-3">
+                      <label for="user_tel" class="form-label"
+                        >行動電話號碼
+                        <span class="text-main-spec fw-bold">*</span>
+                      </label>
+                      <vee-field
+                        type="text"
+                        name="行動電話"
+                        :rules="isPhone"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['行動電話'] }"
+                        id="user_tel"
+                        placeholder="請輸入行動電話號碼"
+                        v-model="updatedShowData.user.tel"
+                      />
+                      <vee-error-message
+                        class="invalid-feedback"
+                        name="行動電話"
+                      ></vee-error-message>
+                    </div>
+                    <div class="mb-3">
+                      <label for="user_address" class="form-label"
+                        >收件地址
+                        <span class="text-main-spec fw-bold">*</span>
+                      </label>
+                      <vee-field
+                        type="text"
+                        name="收件地址"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['收件地址'] }"
+                        rules="required|max:100"
+                        id="user_address"
+                        placeholder="請輸入收件地址"
+                        v-model="updatedShowData.user.address"
+                      />
+                      <vee-error-message
+                        class="invalid-feedback"
+                        name="收件地址"
+                      ></vee-error-message>
+                    </div>
+                    <div class="mb-3">
+                      <label for="message" class="form-label">訂單備註</label>
+                      <vee-field
+                        as="textarea"
+                        name="訂單備註"
+                        type="text"
+                        class="form-control"
+                        :class="{ 'is-invalid': errors['訂單備註'] }"
+                        id="message"
+                        placeholder="請輸入訂單備註"
+                        rules="max:800"
+                        v-model="updatedShowData.message"
+                      />
+                      <vee-error-message
+                        class="invalid-feedback"
+                        name="訂單備註"
+                      ></vee-error-message>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <template v-if="!inEditOrderMode">
+                      <ul>
+                        <li>
+                          <p>{{ showCreateAt }} 創立</p>
+                        </li>
+                        <li>
+                          <span v-if="updatedShowData.is_paid" class="text-main-spec fw-bold"
+                            >{{ showPaidDate }} 已付款</span
+                          >
+                          <span v-else class="text-deep-gray">未付款</span>
+                        </li>
+                      </ul>
+                    </template>
+                    <template v-else>
+                      <ul>
+                        <li>
+                          <p>{{ showCreateAt }} 創立</p>
+                        </li>
+                        <li>
+                          <div class="form-check">
+                            <input
+                              type="checkbox"
+                              class="form-check-input"
+                              id="is_paid"
+                              v-model="updatedShowData.is_paid"
+                            />
+                            <label for="is_paid" class="form-check-label">
+                              <span v-if="updatedShowData.is_paid" class="text-main-spec fw-bold"
+                                >{{ showPaidDate }} 已付款</span
+                              >
+                              <span v-else class="text-deep-gray">未付款</span>
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </template>
+                  </div>
+                </div>
+              </template>
+              <template v-slot:1>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">圖片</th>
+                      <th scope="col">類別</th>
+                      <th scope="col">名稱</th>
+                      <th scope="col">價格</th>
+                      <th scope="col">數量</th>
+                      <th scope="col">小計</th>
+                      <th scope="col">總額</th>
+                      <th scope="col">備註</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template v-if="!inEditOrderMode && updatedShowData.products">
+                      <tr v-for="item in showProductsArray" :key="item.id">
+                        <td>
+                          <img :src="item.product?.imageUrl" alt="" width="50" />
+                        </td>
+                        <td>{{ item.product?.category }}</td>
+                        <td>{{ item.product?.title }}</td>
+                        <td>{{ item.product?.price }}</td>
+                        <td>
+                          <strong>{{ item?.qty }}</strong>
+                        </td>
+                        <td>{{ item.total }}</td>
+                        <td>
+                          <strong>{{ item?.final_total }}</strong>
+                        </td>
+                        <td>
+                          <div v-if="item.coupon">
+                            <p>
+                              使用
+                              <strong>{{ item.coupon?.title }}</strong>
+                              優惠券
+                            </p>
+                            <p>
+                              折扣<strong>-{{ item.total - item.final_total }}</strong
+                              >元
+                            </p>
+                          </div>
+                          <span v-else>無</span>
+                        </td>
+                      </tr>
+                    </template>
+                    <template v-else>
+                      <tr v-for="item in showProductsArray" :key="item.id">
+                        <td>
+                          <img :src="item.product?.imageUrl" alt="" width="50" />
+                        </td>
+                        <td>{{ item.product?.category }}</td>
+                        <td>{{ item.product?.title }}</td>
+                        <td>{{ item.product?.price }}</td>
+                        <td>
+                          <vee-field
+                            name="商品數量"
+                            class="form-control"
+                            :class="{ 'is-invalid': errors['商品數量'] }"
+                            rules="required|numeric|integer|min_value:1"
+                            type="text"
+                            v-model.number="item.qty"
+                          />
+                          <vee-error-message class="invalid-feedback" name="商品數量">
+                          </vee-error-message>
+                        </td>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                      </tr>
+                    </template>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="8">
+                        <p class="float-end">
+                          訂單總金額：NT$
+                          <strong v-if="!inEditOrderMode" class="fs-3">
+                            {{ updatedShowData.total }}
+                          </strong>
+                          <strong v-else class="fs-2"> ... </strong>
+                        </p>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </template>
+            </TwoTabs>
+          </div>
+          <div class="modal-footer">
+            <button
+              v-if="inEditOrderMode"
+              type="button"
+              class="btn btn-normal-dpgray"
+              @click="cancelChangeOrder"
+            >
+              取消
             </button>
-            <button v-if="inEditOrderMode" disabled type="button" class="btn">編輯訂單中</button>
+            <button v-if="inEditOrderMode" type="submit" class="btn btn-solid-spec">更新</button>
             <button
               type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+              class="btn btn-solid-spec"
+              @click="hideModal"
+              v-if="!inEditOrderMode"
+            >
+              關閉
+            </button>
           </div>
-        </div>
-        <div class="modal-body" v-if="updatedShowData.user">
-          <TwoTabs :tabs="tabs">
-            <template v-slot:0>
-              <div class="row mt-3">
-                <div v-if="!inEditOrderMode" class="col-8">
-                  <div>
-                    <h6><strong>收件人名稱</strong></h6>
-                    <p>{{ updatedShowData.user.name }}</p>
-                  </div>
-                  <div>
-                    <h6><strong>電子信箱</strong></h6>
-                    <p>{{ updatedShowData.user.email }}</p>
-                  </div>
-                  <div>
-                    <h6><strong>行動電話號碼</strong></h6>
-                    <p>{{ updatedShowData.user.tel }}</p>
-                  </div>
-                  <div>
-                    <h6><strong>收件地址</strong></h6>
-                    <p>{{ updatedShowData.user.address }}</p>
-                  </div>
-                  <div>
-                    <h6><strong>訂單備註</strong></h6>
-                    <div v-if="this.updatedShowData.message">
-                      <p v-for="(item, index) in showOrderMessage" :key="index">
-                        {{ item }}
-                      </p>
-                    </div>
-                    <p v-else>無訂單備註</p>
-                  </div>
-                </div>
-                <div v-else class="col-8">
-                  <div class="mb-3">
-                    <label for="user_name" class="form-label">收件人名稱</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="user_name"
-                      placeholder="請輸入收件人名稱"
-                      v-model="updatedShowData.user.name"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="user_email" class="form-label">電子信箱</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="user_email"
-                      placeholder="請輸入電子信箱"
-                      v-model="updatedShowData.user.email"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="user_tel" class="form-label">行動電話號碼</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="user_tel"
-                      placeholder="請輸入行動電話號碼"
-                      v-model="updatedShowData.user.tel"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="user_address" class="form-label">收件地址</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="user_address"
-                      placeholder="請輸入收件地址"
-                      v-model="updatedShowData.user.address"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="user_address" class="form-label">訂單備註</label>
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      id="user_address"
-                      placeholder="請輸入訂單備註"
-                      v-model="updatedShowData.message"
-                    />
-                  </div>
-                </div>
-                <div class="col-4">
-                  <template v-if="!inEditOrderMode">
-                    <ul>
-                      <li>
-                        <p>{{ showCreateAt }} 創立</p>
-                      </li>
-                      <li>
-                        <span v-if="updatedShowData.is_paid" class="text-main-spec fw-bold"
-                          >{{ showPaidDate }} 已付款</span
-                        >
-                        <span v-else class="text-deep-gray">未付款</span>
-                      </li>
-                    </ul>
-                  </template>
-                  <template v-else>
-                    <ul>
-                      <li>
-                        <p>{{ showCreateAt }} 創立</p>
-                      </li>
-                      <li>
-                        <div class="form-check">
-                          <input
-                            type="checkbox"
-                            class="form-check-input"
-                            id="is_paid"
-                            v-model="updatedShowData.is_paid"
-                          />
-                          <label for="is_paid" class="form-check-label">
-                            <span v-if="updatedShowData.is_paid" class="text-main-spec fw-bold"
-                              >{{ showPaidDate }} 已付款</span
-                            >
-                            <span v-else class="text-deep-gray">未付款</span>
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
-                  </template>
-                </div>
-              </div>
-            </template>
-            <template v-slot:1>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">圖片</th>
-                    <th scope="col">類別</th>
-                    <th scope="col">名稱</th>
-                    <th scope="col">價格</th>
-                    <th scope="col">數量</th>
-                    <th scope="col">小計</th>
-                    <th scope="col">總額</th>
-                    <th scope="col">備註</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <template v-if="!inEditOrderMode && updatedShowData.products">
-                    <tr v-for="item in showProductsArray" :key="item.id">
-                      <td>
-                        <img :src="item.product?.imageUrl" alt="" width="50" />
-                      </td>
-                      <td>{{ item.product?.category }}</td>
-                      <td>{{ item.product?.title }}</td>
-                      <td>{{ item.product?.price }}</td>
-                      <td>
-                        <strong>{{ item?.qty }}</strong>
-                      </td>
-                      <td>{{ item.total }}</td>
-                      <td>
-                        <strong>{{ item?.final_total }}</strong>
-                      </td>
-                      <td>
-                        <div v-if="item.coupon">
-                          <p>
-                            使用
-                            <strong>{{ item.coupon?.title }}</strong>
-                            優惠券
-                          </p>
-                          <p>
-                            折扣<strong>-{{ item.total - item.final_total }}</strong
-                            >元
-                          </p>
-                        </div>
-                        <span v-else>無</span>
-                      </td>
-                    </tr>
-                  </template>
-                  <template v-else>
-                    <tr v-for="item in showProductsArray" :key="item.id">
-                      <td>
-                        <img :src="item.product?.imageUrl" alt="" width="50" />
-                      </td>
-                      <td>{{ item.product?.category }}</td>
-                      <td>{{ item.product?.title }}</td>
-                      <td>{{ item.product?.price }}</td>
-                      <td><input class="form-control" type="text" v-model.number="item.qty" /></td>
-                      <td>...</td>
-                      <td>...</td>
-                      <td>...</td>
-                    </tr>
-                  </template>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="8">
-                      <p class="float-end">
-                        訂單總金額：NT$
-                        <strong v-if="!inEditOrderMode" class="fs-3">
-                          {{ updatedShowData.total }}
-                        </strong>
-                        <strong v-else class="fs-2"> ... </strong>
-                      </p>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </template>
-          </TwoTabs>
-        </div>
-        <div class="modal-footer">
-          <button
-            v-if="inEditOrderMode"
-            type="button"
-            class="btn btn-normal-dpgray"
-            @click="cancelChangeOrder"
-          >
-            取消
-          </button>
-          <button
-            type="button"
-            class="btn"
-            @click="inEditOrderMode ? putOrder() : hideModal()"
-            :class="[inEditOrderMode ? 'btn-solid-spec' : 'btn-normal-dpgray']"
-          >
-            {{ inEditOrderMode ? '更新' : '關閉' }}
-          </button>
-        </div>
+        </vee-form>
       </div>
     </div>
   </div>
@@ -344,6 +403,10 @@ export default {
     cancelChangeOrder() {
       this.updatedShowData = this.originalShowData;
       this.inEditOrderMode = false;
+    },
+    isPhone(value) {
+      const phoneNumber = /^(09)[0-9]{8}$/;
+      return phoneNumber.test(value) ? true : '請輸入正確的行動電話號碼';
     },
     openModal() {
       this.modal.show();
