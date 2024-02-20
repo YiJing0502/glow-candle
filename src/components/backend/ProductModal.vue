@@ -26,42 +26,8 @@
             ></button>
           </div>
           <div class="modal-body">
-            <nav>
-              <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button
-                  class="nav-link active w-50"
-                  id="nav-home-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-home"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-home"
-                  aria-selected="true"
-                >
-                  商品內容
-                </button>
-                <button
-                  class="nav-link w-50"
-                  id="nav-profile-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-profile"
-                  aria-selected="false"
-                >
-                  商品圖片
-                </button>
-              </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-              <div
-                class="tab-pane fade show active"
-                id="nav-home"
-                role="tabpanel"
-                aria-labelledby="nav-home-tab"
-                tabindex="0"
-              >
+            <TwoTabs :tabs="tabs">
+              <template v-slot:0>
                 <div class="row mt-3">
                   <div class="row">
                     <div class="col-10">
@@ -247,14 +213,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="nav-profile"
-                role="tabpanel"
-                aria-labelledby="nav-profile-tab"
-                tabindex="0"
-              >
+              </template>
+              <template v-slot:1>
                 <div class="row row-cols-4 mt-3">
                   <div class="col mb-3">
                     <div class="mb-3">
@@ -348,8 +308,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </template>
+            </TwoTabs>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-normal-dpgray" data-bs-dismiss="modal">
@@ -370,6 +330,7 @@ import { Modal } from 'bootstrap';
 import { mapActions } from 'pinia';
 import uploadImagesStore from '../../stores/uploadImagesStore';
 import ResultModal from '../ResultModal.vue';
+import TwoTabs from './TwoTabs.vue';
 
 export default {
   data() {
@@ -380,10 +341,12 @@ export default {
         message: '',
         success: true,
       },
+      tabs: [{ label: '商品內容' }, { label: '商品圖片' }],
     };
   },
   components: {
     ResultModal,
+    TwoTabs,
   },
   mounted() {
     // 獲取 bsResultModal DOM
