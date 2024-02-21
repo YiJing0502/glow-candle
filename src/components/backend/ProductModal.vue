@@ -409,8 +409,8 @@ export default {
         .map((element) => this.handleServerResponse(false, element.value.error));
     },
     handleServerResponse(success, message) {
-      this.serverMessage.message = message;
       this.serverMessage.success = success;
+      this.serverMessage.message = message;
       this.$refs.resultModal.openModal();
     },
     ...mapActions(uploadImagesStore, ['uploadImages']),

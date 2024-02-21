@@ -190,9 +190,7 @@ export default {
           }
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     // ajax, 新增特定產品資料
@@ -205,15 +203,11 @@ export default {
         .post(url, data)
         .then((res) => {
           this.getAdminProductsAll();
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
           this.$refs.productModal.hideModal();
-          this.$refs.resultModal.openModal();
+          this.handleServerResponse(true, res.data.message);
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     // // ajax, 更新特定產品資料
@@ -228,16 +222,12 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.getAdminProductsAll();
-            this.serverMessage.message = res.data.message;
-            this.serverMessage.success = res.data.success;
             this.$refs.productModal.hideModal();
-            this.$refs.resultModal.openModal();
+            this.handleServerResponse(true, res.data.message);
           }
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     // ajax, 刪除特定產品資料
@@ -250,16 +240,12 @@ export default {
           if (res.data.success) {
             this.$refs.deleteModal.hideModal();
             this.getAdminProductsAll();
-            this.serverMessage.message = res.data.message;
-            this.serverMessage.success = res.data.success;
-            this.$refs.resultModal.openModal();
+            this.handleServerResponse(true, res.data.message);
           }
         })
         .catch((err) => {
           this.$refs.deleteModal.hideModal();
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     // fn, 分頁
@@ -348,6 +334,11 @@ export default {
       }
       this.paginationData = newData;
       this.pagination(1);
+    },
+    handleServerResponse(success, message) {
+      this.serverMessage.success = success;
+      this.serverMessage.message = message;
+      this.$refs.resultModal.openModal();
     },
   },
   mounted() {
