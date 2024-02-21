@@ -78,7 +78,7 @@ export default {
             // 清空輸入框
             this.email = '';
             this.password = '';
-            this.$router.push({ name: 'back' });
+            this.$router.push({ name: 'adminOrders' });
           }
         })
         .catch((err) => {
