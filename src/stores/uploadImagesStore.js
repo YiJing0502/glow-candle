@@ -25,29 +25,31 @@ export default defineStore('uploadImagesStore', {
       }
       return true;
     },
+    uploadFile(element) {
+      return new Promise((resolve) => {
+        const formData = new FormData();
+        formData.append('file-to-upload', element);
+        axios
+          .post(`${VITE_BASE_URL}/api/${VITE_API_PATH}/admin/upload`, formData)
+          .then((res) => {
+            resolve({ imageUrl: res.data.imageUrl });
+          })
+          .catch((err) => {
+            resolve({ error: err });
+          });
+      });
+    },
     // fn, 上傳多張圖片
     uploadImages(event) {
-      return new Promise((resolve, reject) => {
-        const multipleFilesArray = [...event.target.files];
-        if (this.validateImages(multipleFilesArray)) {
-          // 上傳檔案
-          multipleFilesArray.forEach((item) => {
-            // 產生一個新的上傳表單格式
-            const formData = new FormData();
-            // 夾帶欄位與要上傳的檔案
-            formData.append('file-to-upload', item);
-            // 上傳檔案
-            axios
-              .post(`${VITE_BASE_URL}/api/${VITE_API_PATH}/admin/upload`, formData)
-              .then((res) => {
-                resolve(res);
-              })
-              .catch((err) => {
-                reject(err);
-              });
-          });
-        }
-      });
+      const multipleFilesArray = [...event.target.files];
+      const uploadPromises = multipleFilesArray
+        .map((element) => this.uploadFile(element));
+      return Promise.allSettled(uploadPromises)
+        .then((results) => {
+          const successfulUploads = results.filter((result) => result.status === 'fulfilled');
+          const failedUploads = results.filter((result) => result.status === 'rejected');
+          return { successfulUploads, failedUploads };
+        });
     },
   },
 });

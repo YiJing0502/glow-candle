@@ -304,19 +304,28 @@ export default {
     async goToUploadImage(event) {
       try {
         const res = await this.uploadImages(event);
-        this.handleServerResponse(true, '上傳成功', res.data.imageUrl);
+        this.handleImagesResult(res);
+        // clear the file input value
+        const inputElement = event.target;
+        inputElement.value = null;
       } catch (err) {
         this.handleServerResponse(false, err.response.data.message);
       }
     },
-    handleServerResponse(success, message, imageUrl) {
+    handleImagesResult(imagesResultObject) {
+      // uploaded successfully
+      if (imagesResultObject.successfulUploads[0]) {
+        this.updatedShowData.imageUrl = imagesResultObject.successfulUploads[0].value.imageUrl;
+      }
+      // failed to upload
+      if (imagesResultObject.failedUploads[0]) {
+        this.handleServerResponse(false, imagesResultObject.failedUploads[0].value.error);
+      }
+    },
+    handleServerResponse(success, message) {
       this.serverMessage.message = message;
       this.serverMessage.success = success;
       this.$refs.resultModal.openModal();
-      this.$refs.uploadInput.value = '';
-      if (success) {
-        this.updatedShowData.imageUrl = imageUrl;
-      }
     },
     ...mapActions(uploadImagesStore, ['uploadImages']),
   },

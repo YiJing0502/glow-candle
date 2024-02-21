@@ -245,7 +245,7 @@
                     :key="index"
                   >
                     <div class="mb-3">
-                      <label for="imageUrl" class="form-label">輸入其他圖片網址</label>
+                      <label for="imageUrl" class="form-label">輸入其他圖片網址{{ index }}</label>
                       <button
                         type="button"
                         class="btn-close float-end"
@@ -254,16 +254,16 @@
                       ></button>
                       <vee-field
                         type="text"
-                        name="其他圖片連結"
+                        :name="'其他圖片連結' + index"
                         class="form-control"
-                        :class="{ 'is-invalid': errors['其他圖片連結'] }"
+                        :class="{ 'is-invalid': errors['其他圖片連結' + index] }"
                         rules="url"
                         placeholder="請輸入其他圖片連結"
                         v-model="updatedShowData.imagesUrl[index]"
                       />
                       <vee-error-message
                         class="invalid-feedback"
-                        name="其他圖片連結"
+                        :name="'其他圖片連結' + index"
                       ></vee-error-message>
                     </div>
                     <img
@@ -393,21 +393,25 @@ export default {
     async goToUploadImages(event) {
       try {
         const res = await this.uploadImages(event);
-        this.handleServerResponse(true, '上傳成功', res.data.imageUrl);
-        this.$refs.uploadInput.value = '';
+        this.handleImagesResult(res);
+        // clear the file input value
+        const inputElement = event.target;
+        inputElement.value = null;
       } catch (err) {
         this.handleServerResponse(false, err.response.data.message);
       }
-      this.$refs.uploadInput.value = '';
     },
-    handleServerResponse(success, message, imageUrl) {
+    handleImagesResult(imagesResultObject) {
+      this.updatedShowData.imagesUrl = this.updatedShowData.imagesUrl || [];
+      imagesResultObject.successfulUploads
+        .map((element) => this.updatedShowData.imagesUrl.push(element.value.imageUrl));
+      imagesResultObject.failedUploads
+        .map((element) => this.handleServerResponse(false, element.value.error));
+    },
+    handleServerResponse(success, message) {
       this.serverMessage.message = message;
       this.serverMessage.success = success;
       this.$refs.resultModal.openModal();
-      if (success) {
-        this.updatedShowData.imagesUrl = this.updatedShowData.imagesUrl || [];
-        this.updatedShowData.imagesUrl.push(imageUrl);
-      }
     },
     ...mapActions(uploadImagesStore, ['uploadImages']),
   },
