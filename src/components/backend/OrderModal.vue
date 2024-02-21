@@ -310,12 +310,11 @@
       </div>
     </div>
   </div>
-  <!-- 結果modal -->
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { Modal } from 'bootstrap';
 import { mapActions, mapState } from 'pinia';
+import toastsStore from '../../stores/toastsStore';
 import timeStore from '../../stores/timeStore';
 import stringStore from '../../stores/stringStore';
 import TwoTabs from './TwoTabs.vue';
@@ -331,11 +330,6 @@ export default {
       showPaidDate: '',
       showProductsArray: [],
       showOrderMessage: [],
-      // 提示訊息
-      serverMessage: {
-        message: '',
-        success: true,
-      },
       originalShowData: {},
       tabs: [{ label: '訂單資訊' }, { label: '訂購資訊' }],
     };
@@ -384,14 +378,10 @@ export default {
           this.hideModal();
           this.$emit('order-updated');
           this.inEditOrderMode = false;
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
-          this.$refs.resultModal.openModal();
+          this.handleServerResponse(true, res.data.message);
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     // fn, 編輯訂單
@@ -414,8 +404,16 @@ export default {
     hideModal() {
       this.modal.hide();
     },
+    handleServerResponse(success, message) {
+      const style = success ? 'bg-deep-gray' : 'bg-main-spec';
+      this.pushToast({
+        title: message,
+        style,
+      });
+    },
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
     ...mapActions(stringStore, ['splitStringByNewline']),
+    ...mapActions(toastsStore, ['pushToast']),
   },
   watch: {
     showData() {

@@ -235,24 +235,21 @@
       </div>
     </div>
   </div>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
-import { Modal } from 'bootstrap';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Modal } from 'bootstrap';
 import { mapState, mapActions } from 'pinia';
+import toastsStore from '../../stores/toastsStore';
 import timeStore from '../../stores/timeStore';
 import uploadImagesStore from '../../stores/uploadImagesStore';
+
 import TwoTabs from './TwoTabs.vue';
 
 export default {
   data() {
     return {
       updatedShowData: {},
-      serverMessage: {
-        message: '',
-        success: true,
-      },
       tabs: [{ label: '文章資料' }, { label: '文章內容' }],
       // editor
       editor: ClassicEditor,
@@ -308,6 +305,7 @@ export default {
         // clear the file input value
         const inputElement = event.target;
         inputElement.value = null;
+        this.handleServerResponse(true, '圖片已成功上傳');
       } catch (err) {
         this.handleServerResponse(false, err.response.data.message);
       }
@@ -323,11 +321,14 @@ export default {
       }
     },
     handleServerResponse(success, message) {
-      this.serverMessage.message = message;
-      this.serverMessage.success = success;
-      this.$refs.resultModal.openModal();
+      const style = success ? 'bg-deep-gray' : 'bg-main-spec';
+      this.pushToast({
+        title: message,
+        style,
+      });
     },
     ...mapActions(uploadImagesStore, ['uploadImages']),
+    ...mapActions(toastsStore, ['pushToast']),
   },
   mounted() {
     this.modal = new Modal(this.$refs.modal);

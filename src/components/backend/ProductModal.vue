@@ -323,13 +323,13 @@
       </div>
     </div>
   </div>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { Modal } from 'bootstrap';
 import { mapActions } from 'pinia';
 import uploadImagesStore from '../../stores/uploadImagesStore';
-import ResultModal from '../ResultModal.vue';
+import toastsStore from '../../stores/toastsStore';
+
 import TwoTabs from './TwoTabs.vue';
 
 export default {
@@ -337,15 +337,10 @@ export default {
     return {
       modal: '',
       updatedShowData: {},
-      serverMessage: {
-        message: '',
-        success: true,
-      },
       tabs: [{ label: '商品內容' }, { label: '商品圖片' }],
     };
   },
   components: {
-    ResultModal,
     TwoTabs,
   },
   mounted() {
@@ -397,6 +392,7 @@ export default {
         // clear the file input value
         const inputElement = event.target;
         inputElement.value = null;
+        this.handleServerResponse(true, '圖片已成功上傳');
       } catch (err) {
         this.handleServerResponse(false, err.response.data.message);
       }
@@ -413,11 +409,14 @@ export default {
       }
     },
     handleServerResponse(success, message) {
-      this.serverMessage.success = success;
-      this.serverMessage.message = message;
-      this.$refs.resultModal.openModal();
+      const style = success ? 'bg-deep-gray' : 'bg-main-spec';
+      this.pushToast({
+        title: message,
+        style,
+      });
     },
     ...mapActions(uploadImagesStore, ['uploadImages']),
+    ...mapActions(toastsStore, ['pushToast']),
   },
   props: ['showData', 'inEditProductMode'],
   emits: ['put-admin-product', 'post-admin-product'],

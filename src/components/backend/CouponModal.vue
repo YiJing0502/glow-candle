@@ -135,11 +135,9 @@
   </div>
 </template>
 <script>
-// pinia
 import { mapState } from 'pinia';
 import { Modal } from 'bootstrap';
 import timeStore from '../../stores/timeStore';
-// modal
 
 export default {
   data() {
