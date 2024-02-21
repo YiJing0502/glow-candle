@@ -8,4 +8,3 @@
     <button class="btn btn-outline-dpgray fs-5 mt-3" @click="this.$router.go(-1)">返回上一頁</button>
   </div>
 </template>
-<script></script>
