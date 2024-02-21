@@ -146,9 +146,7 @@ export default {
         return;
       }
       if (this.currentNum >= this.showData.inventory) {
-        this.serverMessage.message = '很抱歉，不能超出此庫存量';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.handleServerResponse(false, '很抱歉，不能超出此庫存量');
       }
     },
     // 減少數量
@@ -159,9 +157,7 @@ export default {
         return;
       }
       if (this.currentNum <= 1) {
-        this.serverMessage.message = '很抱歉，最低數量為1';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.handleServerResponse(false, '很抱歉，最低數量為1');
       }
     },
     // 輸入, 自訂數量
@@ -169,33 +165,23 @@ export default {
       this.currentNum = parseInt(e.target.value, 10);
       if (this.currentNum > this.showData.inventory) {
         this.currentNum = this.showData.inventory;
-        this.serverMessage.message = '很抱歉，不能超出此庫存量';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.handleServerResponse(false, '很抱歉，不能超出此庫存量');
       } else if (this.currentNum <= 0) {
         this.currentNum = 1;
-        this.serverMessage.message = '很抱歉，最低數量為1';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.handleServerResponse(false, '很抱歉，最低數量為1');
       } else if (Number.isNaN(this.currentNum)) {
         this.currentNum = 1;
-        this.serverMessage.message = '請輸入有效的數字';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.handleServerResponse(false, '請輸入有效的數字');
       }
     },
     validateQuantity(currentNum, inventory) {
       const parsedNum = parseInt(currentNum, 10);
       if (parsedNum > inventory) {
-        this.serverMessage.message = `無法將所選的數量加入到購物車，因為已經超過庫存的${inventory}件商品`;
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.handleServerResponse(false, `無法將所選的數量加入到購物車，因為已經超過庫存的${inventory}件商品`);
         return false;
       }
       if (parsedNum < 0) {
-        this.serverMessage.message = '無法將所選的數量加入到購物車，因為商品數量不得低於1';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.handleServerResponse(false, '無法將所選的數量加入到購物車，因為商品數量不得低於1');
         return false;
       }
       return true;
@@ -205,15 +191,11 @@ export default {
         const element = this.cartsData[index];
         if (element.product.id === productId) {
           if (element.qty >= inventory) {
-            this.serverMessage.message = `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，請至購物車頁面查看`;
-            this.serverMessage.success = false;
-            this.$refs.resultModal.openModal();
+            this.handleServerResponse(false, `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，請至購物車頁面查看`);
             return false;
           }
           if (element.qty + parseInt(currentNum, 10) >= inventory + 1) {
-            this.serverMessage.message = `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，加入所選的數量會超過庫存，請重新選擇後再送出`;
-            this.serverMessage.success = false;
-            this.$refs.resultModal.openModal();
+            this.handleServerResponse(false, `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，加入所選的數量會超過庫存，請重新選擇後再送出`);
             return false;
           }
         }
@@ -234,7 +216,7 @@ export default {
           await this.goToGetCart(false);
         }
       } catch (err) {
-        this.showErrMessage(err);
+        this.handleServerResponse(false, err.response.data.message);
       }
     },
     // 取得特定產品
@@ -257,19 +239,20 @@ export default {
             query: this.$route.query,
             hash: this.$route.hash,
           });
-          this.showErrMessage(err);
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     async goToGetCart(boolean = true) {
       try {
         await this.getCart(boolean);
       } catch (err) {
-        this.showErrMessage(err);
+        this.handleServerResponse(false, err.response.data.message);
       }
     },
-    showErrMessage(err) {
-      this.serverMessage.message = err.response.data.message;
-      this.serverMessage.success = err.response.data.success;
+    // 處理 伺服器 訊息
+    handleServerResponse(success, message) {
+      this.serverMessage.success = success;
+      this.serverMessage.message = message;
       this.$refs.resultModal.openModal();
     },
     ...mapActions(cartsStore, ['getCart', 'postCart']),
