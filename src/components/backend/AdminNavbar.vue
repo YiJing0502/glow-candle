@@ -1,5 +1,5 @@
 <template>
-  <div class="col-2 bg-main-medium vh-100 px-3">
+  <div class="col-2 bg-main-medium side-bar-height px-3">
     <div class="d-flex justify-content-center my-3">
       <router-link :to="{ name: 'front' }">
         <img src="/glow-logo.png" alt="" width="70" />
@@ -64,3 +64,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.side-bar-height {
+  min-height: 100vh;
+}
+</style>
