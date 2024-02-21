@@ -42,14 +42,12 @@ export default defineStore('uploadImagesStore', {
     // fn, 上傳多張圖片
     uploadImages(event) {
       const multipleFilesArray = [...event.target.files];
-      const uploadPromises = multipleFilesArray
-        .map((element) => this.uploadFile(element));
-      return Promise.allSettled(uploadPromises)
-        .then((results) => {
-          const successfulUploads = results.filter((result) => result.status === 'fulfilled');
-          const failedUploads = results.filter((result) => result.status === 'rejected');
-          return { successfulUploads, failedUploads };
-        });
+      const uploadPromises = multipleFilesArray.map((element) => this.uploadFile(element));
+      return Promise.allSettled(uploadPromises).then((results) => {
+        const successfulUploads = results.filter((result) => result.status === 'fulfilled');
+        const failedUploads = results.filter((result) => result.status === 'rejected');
+        return { successfulUploads, failedUploads };
+      });
     },
   },
 });
