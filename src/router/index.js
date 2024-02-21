@@ -77,6 +77,12 @@ const router = createRouter({
           name: 'adminArticles',
           component: () => import('../views/backend/AdminArticlesView.vue'),
         },
+        // 404 route
+        {
+          path: ':pathMatch(.*)*',
+          name: 'admin404',
+          component: () => import('../views/backend/AdminNotFoundView.vue'),
+        },
       ],
     },
     // admin login
