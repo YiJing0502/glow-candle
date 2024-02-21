@@ -121,8 +121,8 @@
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
-import { mapState } from 'pinia';
-import adminStore from '../../stores/adminStore';
+import { mapActions } from 'pinia';
+import toastsStore from '../../stores/toastsStore';
 // components
 import DeleteModal from '../../components/backend/DeleteModal.vue';
 import ProductModal from '../../components/backend/ProductModal.vue';
@@ -154,9 +154,6 @@ export default {
     ProductModal,
     StatusMessage,
     PageBtn,
-  },
-  computed: {
-    ...mapState(adminStore, ['loginSuccess']),
   },
   methods: {
     // modal, 打開編輯產品modal
@@ -204,7 +201,10 @@ export default {
         .then((res) => {
           this.getAdminProductsAll();
           this.$refs.productModal.hideModal();
-          this.handleServerResponse(true, res.data.message);
+          this.pushToast({
+            title: res.data.message,
+            style: 'bg-deep-gray',
+          });
         })
         .catch((err) => {
           this.handleServerResponse(false, err.response.data.message);
@@ -223,7 +223,10 @@ export default {
           if (res.data.success) {
             this.getAdminProductsAll();
             this.$refs.productModal.hideModal();
-            this.handleServerResponse(true, res.data.message);
+            this.pushToast({
+              title: res.data.message,
+              style: 'bg-deep-gray',
+            });
           }
         })
         .catch((err) => {
@@ -240,7 +243,10 @@ export default {
           if (res.data.success) {
             this.$refs.deleteModal.hideModal();
             this.getAdminProductsAll();
-            this.handleServerResponse(true, res.data.message);
+            this.pushToast({
+              title: res.data.message,
+              style: 'bg-deep-gray',
+            });
           }
         })
         .catch((err) => {
@@ -340,11 +346,10 @@ export default {
       this.serverMessage.message = message;
       this.$refs.resultModal.openModal();
     },
+    ...mapActions(toastsStore, ['pushToast']),
   },
   mounted() {
-    if (this.loginSuccess) {
-      this.getAdminProductsAll();
-    }
+    this.getAdminProductsAll();
   },
 };
 </script>

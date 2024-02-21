@@ -110,6 +110,7 @@ import StatusMessage from '../../components/backend/StatusMessage.vue';
 import DeleteModal from '../../components/backend/DeleteModal.vue';
 import ArticleModal from '../../components/backend/ArticleModal.vue';
 import timeStore from '../../stores/timeStore';
+import toastsStore from '../../stores/toastsStore';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -197,7 +198,10 @@ export default {
         .then((res) => {
           this.getAdminArticles();
           this.$refs.articleModal.hideModal();
-          this.handleServerResponse(true, res.data.message);
+          this.pushToast({
+            title: res.data.message,
+            style: 'bg-deep-gray',
+          });
         })
         .catch((err) => {
           this.handleServerResponse(false, err.response.data.message);
@@ -213,7 +217,10 @@ export default {
         .then((res) => {
           this.getAdminArticles();
           this.$refs.articleModal.hideModal();
-          this.handleServerResponse(true, res.data.message);
+          this.pushToast({
+            title: res.data.message,
+            style: 'bg-deep-gray',
+          });
         })
         .catch((err) => {
           this.handleServerResponse(false, err.response.data.message);
@@ -227,7 +234,10 @@ export default {
         .then((res) => {
           this.getAdminArticles();
           this.$refs.deleteModal.hideModal();
-          this.handleServerResponse(true, res.data.message);
+          this.pushToast({
+            title: res.data.message,
+            style: 'bg-deep-gray',
+          });
         })
         .catch((err) => {
           this.handleServerResponse(false, err.response.data.message);
@@ -240,6 +250,7 @@ export default {
       this.$refs.resultModal.openModal();
     },
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
+    ...mapActions(toastsStore, ['pushToast']),
   },
   mounted() {
     this.getAdminArticles();

@@ -102,6 +102,8 @@
 <script>
 import { mapActions } from 'pinia';
 import timeStore from '../../stores/timeStore';
+import toastsStore from '../../stores/toastsStore';
+
 import PageBtn from '../../components/PageBtn.vue';
 import OrderModal from '../../components/backend/OrderModal.vue';
 import DeleteModal from '../../components/backend/DeleteModal.vue';
@@ -159,10 +161,13 @@ export default {
         .then((res) => {
           this.getAdminOrders();
           this.$refs.deleteOrdersModal.hideModal();
-          this.showResMessage(res);
+          this.pushToast({
+            title: res.data.message,
+            style: 'bg-deep-gray',
+          });
         })
         .catch((err) => {
-          this.showErrMessage(err);
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     // fn, 打開刪除「單一筆」訂單的Modal
@@ -179,10 +184,13 @@ export default {
         .then((res) => {
           this.getAdminOrders();
           this.$refs.deleteOrderModal.hideModal();
-          this.showResMessage(res);
+          this.pushToast({
+            title: res.data.message,
+            style: 'bg-deep-gray',
+          });
         })
         .catch((err) => {
-          this.showErrMessage(err);
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
     // ajax, 取得訂單
@@ -200,34 +208,17 @@ export default {
           this.isLoading = false;
         })
         .catch((err) => {
-          this.showErrMessage(err);
+          this.handleServerResponse(false, err.response.data.message);
         });
     },
-    // fn, 顯示 ajax 成功內容
-    showResMessage(res) {
-      if (res && res.data !== undefined) {
-        this.serverMessage.message = res.data.message;
-        this.serverMessage.success = res.data.success;
-        this.$refs.resultModal.openModal();
-      } else {
-        this.serverMessage.message = '未被定義的回應';
-        this.serverMessage.success = true;
-        this.$refs.resultModal.openModal();
-      }
-    },
-    // fn, 顯示 ajax 錯誤內容
-    showErrMessage(err) {
-      if (err && err.response && err.response.data !== undefined) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
-      } else {
-        this.serverMessage.message = '未被定義的錯誤';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
-      }
+    // 處理 伺服器 訊息
+    handleServerResponse(success, message) {
+      this.serverMessage.success = success;
+      this.serverMessage.message = message;
+      this.$refs.resultModal.openModal();
     },
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
+    ...mapActions(toastsStore, ['pushToast']),
   },
   mounted() {
     this.isLoading = true;
