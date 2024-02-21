@@ -403,10 +403,14 @@ export default {
     },
     handleImagesResult(imagesResultObject) {
       this.updatedShowData.imagesUrl = this.updatedShowData.imagesUrl || [];
-      imagesResultObject.successfulUploads
-        .map((element) => this.updatedShowData.imagesUrl.push(element.value.imageUrl));
-      imagesResultObject.failedUploads
-        .map((element) => this.handleServerResponse(false, element.value.error));
+      if (imagesResultObject.successfulUploads.length > 0) {
+        imagesResultObject.successfulUploads
+          .map((element) => this.updatedShowData.imagesUrl.push(element.value.imageUrl));
+      }
+      if (imagesResultObject.failedUploads.length > 0) {
+        imagesResultObject.failedUploads
+          .map((element) => this.handleServerResponse(false, element.value.error));
+      }
     },
     handleServerResponse(success, message) {
       this.serverMessage.success = success;
