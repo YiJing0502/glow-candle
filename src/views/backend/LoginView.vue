@@ -4,38 +4,34 @@
       <div class="d-flex justify-content-center mb-2">
         <img src="/glow-logo.png" alt="" class="img-fluid" width="100" />
       </div>
-      <h3 class="mb-3 text-center myTextColor">請先登入</h3>
+      <h3 class="mb-3 text-center text-deep-gray">請先登入</h3>
       <form id="form" class="form-signin" @submit.prevent="postAdminSignin">
         <div class="form-floating mb-3">
           <input
             v-model="email"
             type="email"
-            class="form-control myTextColor"
+            class="form-control text-deep-gray"
             id="username"
             placeholder="name@example.com"
             required
             autofocus
           />
-          <label for="username" class="myTextColor"> 輸入您的電子郵件 </label>
+          <label for="username" class="text-deep-gray"> 輸入您的電子郵件 </label>
         </div>
         <div class="form-floating mb-3">
           <input
             v-model="password"
             type="password"
-            class="form-control myTextColor"
+            class="form-control text-deep-gray"
             id="password"
             placeholder="password"
             required
           />
-          <label for="password" class="myTextColor"> 輸入您的密碼 </label>
+          <label for="password" class="text-deep-gray"> 輸入您的密碼 </label>
         </div>
         <div class="d-flex">
-          <button type="button" class="btn btn-lg btn-solid-dpgray w-100 mt-3 resetBorderRadius">
-            回首頁
-          </button>
-          <button class="btn btn-lg w-100 mt-3 resetBorderRadius btn-solid-spec" type="submit">
-            登入
-          </button>
+          <button type="button" class="btn btn-lg btn-solid-dpgray w-100 mt-3">回首頁</button>
+          <button class="btn btn-lg w-100 mt-3 btn-solid-spec" type="submit">登入</button>
         </div>
       </form>
     </div>
