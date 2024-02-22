@@ -1,25 +1,18 @@
 <template>
-  <div class="d-flex">
-    <div class="bg-white d-flex w-50 mb-3 gap-3 border">
-      <button :disabled="currentNum === 1" type="button" class="btn btn-lg" @click="minusNum">
-        -
-      </button>
+  <div class="">
+    <div class="bg-white d-flex mb-3 border btns-max-width">
+      <button :disabled="currentNum === 1" type="button" class="btn" @click="minusNum">-</button>
       <input
         type="number"
-        class="form-control border-white shadow-none text-center"
+        class="form-control border-white shadow-none text-center fw-bold"
         v-model.number="currentNum"
         @blur="blurNum"
       />
-      <button
-        :disabled="currentNum === inventory"
-        type="button"
-        class="btn btn-lg"
-        @click="plusNum"
-      >
+      <button :disabled="currentNum === inventory" type="button" class="btn" @click="plusNum">
         +
       </button>
     </div>
-    <p class="d-flex align-items-end ms-3">目前庫存：{{ inventory }}</p>
+    <p class="d-flex align-items-end">目前庫存：{{ inventory }}</p>
   </div>
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
@@ -109,3 +102,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.btns-max-width {
+  max-width: 250px;
+}
+</style>
