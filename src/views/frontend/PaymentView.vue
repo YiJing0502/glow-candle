@@ -6,79 +6,17 @@
     :is-full-page="true"
     :color="'#52504B'"
   />
-  <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
+  <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
     <!-- 大標題 -->
     <div class="d-flex align-items-center justify-content-center mb-3">
-      <h2 v-if="!showData.is_paid" class="text-center border-bottom border-secondary pb-2 w-50">
-        訂單已建立！請點擊按鈕付款
+      <h2 v-if="!showData.is_paid" class="text-center border-secondary pb-2 fw-bold">
+        訂單已建立！
       </h2>
-      <h2 v-else class="text-center border-bottom border-secondary pb-2 w-50">
-        感謝您的購買，已完成訂購！
-      </h2>
+      <h2 v-else class="text-center border-secondary pb-2 fw-bold">訂購完成！</h2>
     </div>
     <!-- 詳細內容 -->
-    <div class="row">
+    <div class="row row-cols-1 row-cols-lg-2">
       <!-- 詳細內容左 -->
-      <div class="col">
-        <div class="accordion">
-          <!-- 聯絡我們 -->
-          <div class="accordion-item">
-            <!-- ContactUsSection -->
-            <h2 class="accordion-header" id="ContactUsSection">
-              <button
-                class="accordion-button collapsed fs-5 fw-semibold"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#ContactUsDetails"
-                aria-expanded="false"
-                aria-controls="ContactUsDetails"
-              >
-                聯絡我們
-              </button>
-            </h2>
-            <!-- ContactUsDetails -->
-            <div
-              id="ContactUsDetails"
-              class="accordion-collapse collapse show"
-              aria-labelledby="ContactUsSection"
-            >
-              <div class="accordion-body">
-                <!-- 聯絡信箱 -->
-                <div class="d-flex justify-content-between">
-                  <p>聯絡信箱</p>
-                  <p>glow.2023@gmail.com</p>
-                </div>
-                <!-- 聯絡電話 -->
-                <div class="d-flex justify-content-between">
-                  <p>聯絡電話</p>
-                  <p>0988000999</p>
-                </div>
-                <!-- 營業時間 -->
-                <div class="d-flex justify-content-between mb-3">
-                  <p>營業時間</p>
-                  <p>週一至週五 09:00~17:00</p>
-                </div>
-                <!-- 購物保證 -->
-                <div class="row mb-3">
-                  <div class="col d-flex flex-column align-items-center">
-                    <span class="material-icons-outlined fs-1 mb-3"> local_shipping </span>
-                    <span>免費標準配送</span>
-                  </div>
-                  <div class="col d-flex flex-column align-items-center">
-                    <span class="material-icons-outlined fs-1 mb-3"> redeem </span>
-                    <span>七日內免費退貨</span>
-                  </div>
-                  <div class="col d-flex flex-column align-items-center">
-                    <span class="material-icons-outlined fs-1 mb-3"> enhanced_encryption </span>
-                    <span>安全購物</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 詳細內容右 -->
       <div class="col">
         <div class="accordion">
           <!-- 訂單資訊 -->
@@ -149,6 +87,66 @@
                   >
                     點擊查看此筆訂單
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 詳細內容右 -->
+      <div class="col">
+        <div class="accordion">
+          <!-- 聯絡我們 -->
+          <div class="accordion-item">
+            <!-- ContactUsSection -->
+            <h2 class="accordion-header" id="ContactUsSection">
+              <button
+                class="accordion-button collapsed fs-5 fw-semibold"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#ContactUsDetails"
+                aria-expanded="false"
+                aria-controls="ContactUsDetails"
+              >
+                聯絡我們
+              </button>
+            </h2>
+            <!-- ContactUsDetails -->
+            <div
+              id="ContactUsDetails"
+              class="accordion-collapse collapse show"
+              aria-labelledby="ContactUsSection"
+            >
+              <div class="accordion-body">
+                <!-- 聯絡信箱 -->
+                <div class="d-flex justify-content-between">
+                  <p>聯絡信箱</p>
+                  <p>glow.2023@gmail.com</p>
+                </div>
+                <!-- 聯絡電話 -->
+                <div class="d-flex justify-content-between">
+                  <p>聯絡電話</p>
+                  <p>0988000999</p>
+                </div>
+                <!-- 營業時間 -->
+                <div class="d-flex justify-content-between mb-3">
+                  <p>營業時間</p>
+                  <p>週一至週五 09:00~17:00</p>
+                </div>
+                <!-- 購物保證 -->
+                <div class="row mb-3">
+                  <div class="col d-flex flex-column align-items-center">
+                    <span class="material-icons-outlined fs-1 mb-3"> local_shipping </span>
+                    <span>免費標準配送</span>
+                  </div>
+                  <div class="col d-flex flex-column align-items-center">
+                    <span class="material-icons-outlined fs-1 mb-3"> redeem </span>
+                    <span>七日內免費退貨</span>
+                  </div>
+                  <div class="col d-flex flex-column align-items-center">
+                    <span class="material-icons-outlined fs-1 mb-3"> enhanced_encryption </span>
+                    <span>安全購物</span>
+                  </div>
                 </div>
               </div>
             </div>
