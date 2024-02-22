@@ -6,40 +6,56 @@
     :is-full-page="true"
     :color="'#52504B'"
   />
-  <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
-    <div class="row position-relative">
-      <div class="col me-5">
-        <img :src="showData.imageUrl" alt="" class="img-fluid" />
-        <img
-          v-for="(item, index) in showData.imagesUrl"
-          :key="index"
-          :src="item"
-          alt=""
-          class="img-fluid"
-        />
+  <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
+    <div class="row row-cols-1 row-cols-lg-2">
+      <div class="col">
+        <swiper
+          v-if="!isBootstrapLarge"
+          :navigation="true"
+          :pagination="true"
+          :modules="modules"
+          class="mySwiper d-lg-none mb-3"
+        >
+          <swiper-slide>
+            <img :src="showData.imageUrl" alt="" class="img-fluid" />
+          </swiper-slide>
+          <swiper-slide v-for="(item, index) in showData.imagesUrl" :key="index">
+            <img :src="item" alt="" class="img-fluid" />
+          </swiper-slide>
+        </swiper>
+        <div v-if="isBootstrapLarge" class="d-none d-lg-block">
+          <img :src="showData.imageUrl" alt="" class="img-fluid" />
+          <img
+            v-for="(item, index) in showData.imagesUrl"
+            :key="index"
+            :src="item"
+            alt=""
+            class="img-fluid"
+          />
+        </div>
       </div>
       <div class="col">
-        <!-- 商品分類與單位 -->
+        <!-- 產品分類與單位 -->
         <div class="d-flex justify-content-between">
           <p>{{ showData.category }}</p>
           <p>{{ showData.unit }}</p>
         </div>
-        <!-- 商品標題 -->
+        <!-- 產品標題 -->
         <h4>{{ showData.title }}</h4>
         <hr />
-        <!-- 商品描述 -->
+        <!-- 產品描述 -->
         <p>{{ showData.description }}</p>
-        <!-- 商品價格 -->
+        <!-- 產品價格 -->
         <h4 class="mt-3 mb-3">NT$ {{ showData.price }}</h4>
         <!-- 購物車增減按鈕與庫存 -->
         <div class="d-flex">
-          <div class="bg-white d-flex w-50 mb-3 gap-3 border">
+          <div class="bg-white d-flex w-50 mb-3 border">
             <button :disabled="currentNum === 1" type="button" class="btn btn-lg" @click="minusNum">
               -
             </button>
             <input
               type="number"
-              class="form-control border-white shadow-none text-center"
+              class="form-control border-white shadow-none text-center fw-bold"
               v-model.number="currentNum"
               @blur="blurNum"
             />
@@ -78,7 +94,7 @@
         <hr />
         <!-- 手風琴組 -->
         <div class="accordion">
-          <!-- 商品內容 -->
+          <!-- 產品內容 -->
           <div class="accordion-item">
             <!-- ProductContentSection -->
             <h2 class="accordion-header" id="ProductContentSection">
@@ -115,6 +131,10 @@
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
+// eslint-disable-next-line import/no-unresolved
+import { Swiper, SwiperSlide } from 'swiper/vue';
+// import required modules
+import { Pagination, Navigation } from 'swiper/modules';
 import { mapActions, mapState } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import stringStore from '../../stores/stringStore';
@@ -133,7 +153,14 @@ export default {
         message: '',
         success: true,
       },
+      modules: [Pagination, Navigation],
+      viewportWidth: window.innerWidth,
+      isBootstrapLarge: false,
     };
+  },
+  components: {
+    Swiper,
+    SwiperSlide,
   },
   computed: {
     ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),
@@ -180,12 +207,12 @@ export default {
       if (parsedNum > inventory) {
         this.handleServerResponse(
           false,
-          `無法將所選的數量加入到購物車，因為已經超過庫存的${inventory}件商品`,
+          `無法將所選的數量加入到購物車，因為已經超過庫存的${inventory}件產品`,
         );
         return false;
       }
       if (parsedNum < 0) {
-        this.handleServerResponse(false, '無法將所選的數量加入到購物車，因為商品數量不得低於1');
+        this.handleServerResponse(false, '無法將所選的數量加入到購物車，因為產品數量不得低於1');
         return false;
       }
       return true;
@@ -197,14 +224,14 @@ export default {
           if (element.qty >= inventory) {
             this.handleServerResponse(
               false,
-              `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，請至購物車頁面查看`,
+              `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件產品，請至購物車頁面查看`,
             );
             return false;
           }
           if (element.qty + parseInt(currentNum, 10) >= inventory + 1) {
             this.handleServerResponse(
               false,
-              `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，加入所選的數量會超過庫存，請重新選擇後再送出`,
+              `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件產品，加入所選的數量會超過庫存，請重新選擇後再送出`,
             );
             return false;
           }
@@ -269,6 +296,10 @@ export default {
       this.serverMessage.message = message;
       this.$refs.resultModal.openModal();
     },
+    handleResize() {
+      this.viewportWidth = window.innerWidth;
+      this.isBootstrapLarge = this.viewportWidth > 992;
+    },
     ...mapActions(cartsStore, ['getCart', 'postCart']),
     ...mapActions(toastsStore, ['pushToast']),
   },
@@ -280,6 +311,11 @@ export default {
   mounted() {
     this.getProduct();
     this.getCart(false);
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   },
 };
 </script>
