@@ -6,13 +6,13 @@
     :is-full-page="true"
     :color="'#52504B'"
   />
-  <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
+  <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
     <!-- 大標題 -->
     <div class="d-flex align-items-center justify-content-center mb-3">
-      <h2 class="text-center border-bottom border-secondary pb-2 w-25">結帳</h2>
+      <h2 class="text-center border-secondary pb-2 fw-bold">結帳</h2>
     </div>
     <!-- 詳細內容 -->
-    <div class="row">
+    <div class="row row-cols-1 row-cols-lg-2">
       <!-- 詳細內容左 -->
       <div class="col">
         <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -39,7 +39,7 @@
             >
               <div class="accordion-body">
                 <div class="" v-if="cartsData.length === 0">
-                  <p>目前購物車內沒有商品 😄</p>
+                  <p>目前購物車內沒有產品 😄</p>
                   <router-link :to="{ name: 'products' }" class="btn btn-solid-spec w-100 btn-lg">
                     繼續購物
                   </router-link>
@@ -52,15 +52,18 @@
                       :color="'#52504B'"
                     >
                     </VueLoading>
-                    <div class="col-3 d-flex align-items-center">
+                    <div
+                      class="col col-sm-2 col-lg-3 d-flex align-items-center justify-content-center"
+                    >
                       <img
                         :src="item.product.imageUrl"
                         :alt="item.product.title"
                         class="img-fluid"
+                        width="150"
                       />
                     </div>
-                    <div class="col-9">
-                      <div class="d-flex">
+                    <div class="col col-sm-10 col-lg-9">
+                      <div class="d-flex justify-content-between">
                         <h6>{{ item.product.title }}</h6>
                         <button
                           type="button"
@@ -123,9 +126,9 @@
               aria-labelledby="OrderConfirmationSection"
             >
               <div class="accordion-body">
-                <!-- 商品總金額 -->
+                <!-- 產品總金額 -->
                 <div class="d-flex justify-content-between">
-                  <p>商品總金額</p>
+                  <p>產品總金額</p>
                   <p>NT$ {{ parseInt(allCartsData.total) }}</p>
                 </div>
                 <!-- 運費 -->
@@ -386,7 +389,7 @@
                   <div class="bg-medium-gray text-deep-gray px-3 py-2 mb-3">
                     <h6>免運服務</h6>
                     <span
-                      >我們的商品付款採用「線上信用卡」付款後出貨，運送採用「宅配到府」免運服務，讓您輕鬆購買、安心收貨。</span
+                      >我們的產品付款採用「線上信用卡」付款後出貨，運送採用「宅配到府」免運服務，讓您輕鬆購買、安心收貨。</span
                     >
                   </div>
                   <!-- 結帳按鈕 -->
@@ -413,6 +416,7 @@
 import { mapActions, mapState } from 'pinia';
 import ordersStore from '../../stores/ordersStore';
 import cartsStore from '../../stores/cartsStore';
+import toastsStore from '../../stores/toastsStore';
 // component
 import QuantityControlButtons from '../../components/QuantityControlButtons.vue';
 
@@ -461,32 +465,48 @@ export default {
     },
     async goToPutCart(productCartId, productId, qty) {
       try {
-        await this.putCart(productCartId, productId, qty);
+        const res = await this.putCart(productCartId, productId, qty);
         await this.goToGetCart(false);
+        this.pushToast({
+          title: res.data.message,
+          style: 'bg-deep-gray',
+        });
       } catch (err) {
         this.showErrMessage(err);
       }
     },
     async goToDeleteCart(productCartId) {
       try {
-        await this.deleteCart(productCartId);
+        const res = await this.deleteCart(productCartId);
         await this.goToGetCart(false);
+        this.pushToast({
+          title: res.data.message,
+          style: 'bg-deep-gray',
+        });
       } catch (err) {
         this.showErrMessage(err);
       }
     },
     async goToDeleteCarts() {
       try {
-        await this.deleteCarts();
+        const res = await this.deleteCarts();
         await this.goToGetCart();
+        this.pushToast({
+          title: res.data.message,
+          style: 'bg-deep-gray',
+        });
       } catch (err) {
         this.showErrMessage(err);
       }
     },
     async goToPostCoupon() {
       try {
-        await this.postCoupon(this.couponCode);
+        const res = await this.postCoupon(this.couponCode);
         await this.goToGetCart(false);
+        this.pushToast({
+          title: res.data.message,
+          style: 'bg-deep-gray',
+        });
       } catch (err) {
         this.showErrMessage(err);
       }
@@ -517,6 +537,7 @@ export default {
     },
     ...mapActions(cartsStore, ['getCart', 'putCart', 'deleteCart', 'deleteCarts', 'postCoupon']),
     ...mapActions(ordersStore, ['postOrder']),
+    ...mapActions(toastsStore, ['pushToast']),
   },
   computed: {
     ...mapState(cartsStore, ['isLoading', 'isSmLoading', 'cartsData', 'allCartsData']),
