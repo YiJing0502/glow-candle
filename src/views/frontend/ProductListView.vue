@@ -6,27 +6,15 @@
     :is-full-page="true"
     :color="'#52504B'"
   />
-  <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
-    <div class="row">
-      <!-- sort title -->
-      <div class="col-8">
-        <h1 class="mb-3">所有商品</h1>
-      </div>
-      <div class="col-4">
-        <!-- search product -->
-        <input
-          class="form-control"
-          list="datalistOptions"
-          id="exampleDataList"
-          placeholder="搜尋產品..."
-        />
-      </div>
+  <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
+    <div class="d-flex align-items-center justify-content-center mb-3">
+      <h2 class="text-center border-secondary pb-2 fw-bold">全部產品</h2>
     </div>
     <!-- dropDown/sort -->
     <div class="d-flex justify-content-between">
-      <div class="border-start border-dark border-2">
+      <div class="">
         <!-- 類別 -->
-        <div class="btn-group ms-3">
+        <div class="btn-group">
           <button
             type="button"
             class="btn dropdown-toggle"
@@ -111,8 +99,8 @@
       </div>
     </div>
     <!-- product card -->
-    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mt-3 mb-3" role="button">
-      <div class="col mb-3" v-for="item in productsData" :key="item.id">
+    <div class="row row-cols-lg-4 row-cols-md-4 row-cols-sm-2 row-cols-2 mt-3 mb-3" role="button">
+      <div class="col mb-3" v-for="item in productPagesData.products" :key="item.id">
         <div class="card" @click="changeToProductPage(item.id)">
           <img :src="item.imageUrl" class="card-img-top" alt="..." />
           <div class="card-body">
@@ -123,12 +111,35 @@
         </div>
       </div>
     </div>
+    <!-- pageBtn -->
+    <div
+      v-if="
+        productPagesData && productPagesData.pagination && productPagesData.products?.length !== 0
+      "
+      class="d-flex justify-content-end mt-4"
+    >
+      <nav aria-label="Page navigation example">
+        <ul class="pagination" id="pageid">
+          <PageBtn
+            :prev-is-enabled="productPagesData.pagination.hasPrevPage"
+            :next-is-enabled="productPagesData.pagination.hasNextPage"
+            :totalPage="productPagesData.pagination.totalPage"
+            :current-page="productPagesData.pagination.currentPage"
+            @change-prev-page="goToChangePage(productPagesData.pagination.currentPage - 1)"
+            @change-next-page="goToChangePage(productPagesData.pagination.currentPage + 1)"
+            @change-page="goToChangePage"
+          ></PageBtn>
+        </ul>
+      </nav>
+    </div>
   </div>
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
 import productsStore from '../../stores/productsStore';
+
+import PageBtn from '../../components/PageBtn.vue';
 
 export default {
   data() {
@@ -139,6 +150,9 @@ export default {
         success: true,
       },
     };
+  },
+  components: {
+    PageBtn,
   },
   methods: {
     // 跳轉至產品頁面
@@ -157,10 +171,13 @@ export default {
         this.$refs.resultModal.openModal();
       }
     },
-    ...mapActions(productsStore, ['getProductsAll', 'getProduct']),
+    goToChangePage(page) {
+      this.pagination(page);
+    },
+    ...mapActions(productsStore, ['getProductsAll', 'getProduct', 'pagination']),
   },
   computed: {
-    ...mapState(productsStore, ['isLoading', 'productsData']),
+    ...mapState(productsStore, ['isLoading', 'productPagesData']),
   },
   mounted() {
     this.goToGetProductsAll();
