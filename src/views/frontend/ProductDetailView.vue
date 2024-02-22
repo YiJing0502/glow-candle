@@ -118,6 +118,7 @@
 import { mapActions, mapState } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import stringStore from '../../stores/stringStore';
+import toastsStore from '../../stores/toastsStore';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -177,7 +178,10 @@ export default {
     validateQuantity(currentNum, inventory) {
       const parsedNum = parseInt(currentNum, 10);
       if (parsedNum > inventory) {
-        this.handleServerResponse(false, `無法將所選的數量加入到購物車，因為已經超過庫存的${inventory}件商品`);
+        this.handleServerResponse(
+          false,
+          `無法將所選的數量加入到購物車，因為已經超過庫存的${inventory}件商品`,
+        );
         return false;
       }
       if (parsedNum < 0) {
@@ -191,11 +195,17 @@ export default {
         const element = this.cartsData[index];
         if (element.product.id === productId) {
           if (element.qty >= inventory) {
-            this.handleServerResponse(false, `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，請至購物車頁面查看`);
+            this.handleServerResponse(
+              false,
+              `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，請至購物車頁面查看`,
+            );
             return false;
           }
           if (element.qty + parseInt(currentNum, 10) >= inventory + 1) {
-            this.handleServerResponse(false, `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，加入所選的數量會超過庫存，請重新選擇後再送出`);
+            this.handleServerResponse(
+              false,
+              `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件商品，加入所選的數量會超過庫存，請重新選擇後再送出`,
+            );
             return false;
           }
         }
@@ -210,8 +220,12 @@ export default {
           this.validateQuantity(currentNum, inventory)
           && this.validateCartQuantity(productId, currentNum, inventory)
         ) {
-          await this.postCart(productId, parseInt(currentNum, 10));
+          const res = await this.postCart(productId, parseInt(currentNum, 10));
           // 顯示成功的加入結果
+          this.pushToast({
+            title: res.data.message,
+            style: 'bg-deep-gray',
+          });
           // 更新畫面顯示目前購物車狀態
           await this.goToGetCart(false);
         }
@@ -256,6 +270,7 @@ export default {
       this.$refs.resultModal.openModal();
     },
     ...mapActions(cartsStore, ['getCart', 'postCart']),
+    ...mapActions(toastsStore, ['pushToast']),
   },
   watch: {
     $route(to) {
