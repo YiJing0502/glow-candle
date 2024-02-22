@@ -337,7 +337,7 @@ export default {
     return {
       modal: '',
       updatedShowData: {},
-      tabs: [{ label: '商品內容' }, { label: '商品圖片' }],
+      tabs: [{ label: '產品內容' }, { label: '產品圖片' }],
     };
   },
   components: {
@@ -400,12 +400,12 @@ export default {
     handleImagesResult(imagesResultObject) {
       this.updatedShowData.imagesUrl = this.updatedShowData.imagesUrl || [];
       if (imagesResultObject.successfulUploads.length > 0) {
-        imagesResultObject.successfulUploads
-          .map((element) => this.updatedShowData.imagesUrl.push(element.value.imageUrl));
+        // eslint-disable-next-line max-len
+        imagesResultObject.successfulUploads.map((element) => this.updatedShowData.imagesUrl.push(element.value.imageUrl));
       }
       if (imagesResultObject.failedUploads.length > 0) {
-        imagesResultObject.failedUploads
-          .map((element) => this.handleServerResponse(false, element.value.error));
+        // eslint-disable-next-line max-len
+        imagesResultObject.failedUploads.map((element) => this.handleServerResponse(false, element.value.error));
       }
     },
     handleServerResponse(success, message) {

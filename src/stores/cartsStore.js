@@ -62,7 +62,7 @@ export default defineStore('cartsStore', {
           });
       });
     },
-    // ajax, 加入購物車商品方法
+    // ajax, 加入購物車產品方法
     postCart(productId, qty) {
       return new Promise((resolve, reject) => {
         this.isSmLoading = productId;
@@ -85,7 +85,7 @@ export default defineStore('cartsStore', {
           });
       });
     },
-    // ajax, 修改購物車商品數量方法
+    // ajax, 修改購物車產品數量方法
     putCart(productCartId, productId, qty) {
       return new Promise((resolve, reject) => {
         this.isSmLoading = productId;
@@ -108,7 +108,7 @@ export default defineStore('cartsStore', {
           });
       });
     },
-    // ajax, 刪除購物車商品方法
+    // ajax, 刪除購物車產品方法
     deleteCart(productCartId) {
       return new Promise((resolve, reject) => {
         this.isSmLoading = productCartId;

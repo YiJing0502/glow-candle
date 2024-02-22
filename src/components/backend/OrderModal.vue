@@ -254,14 +254,14 @@
                         <td>{{ item.product?.price }}</td>
                         <td>
                           <vee-field
-                            name="商品數量"
+                            name="產品數量"
                             class="form-control"
-                            :class="{ 'is-invalid': errors['商品數量'] }"
+                            :class="{ 'is-invalid': errors['產品數量'] }"
                             rules="required|numeric|integer|min_value:1"
                             type="text"
                             v-model.number="item.qty"
                           />
-                          <vee-error-message class="invalid-feedback" name="商品數量">
+                          <vee-error-message class="invalid-feedback" name="產品數量">
                           </vee-error-message>
                         </td>
                         <td>...</td>
