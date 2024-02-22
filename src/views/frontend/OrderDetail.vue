@@ -6,15 +6,13 @@
     :is-full-page="true"
     :color="'#52504B'"
   />
-  <div v-else class="container bg-main-medium rounded-10em mt-5 mb-5 px-5r py-7r">
+  <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
     <!-- 大標題 -->
     <div class="d-flex align-items-center justify-content-center mb-3">
-      <h2 class="text-center border-bottom border-secondary pb-2 w-50">
-        訂單編號：{{ showData.id }}
-      </h2>
+      <h2 class="text-center border-secondary pb-2 fw-bold">訂單詳情</h2>
     </div>
     <!-- 詳細內容 -->
-    <div class="row">
+    <div class="row row-cols-1 row-cols-lg-2">
       <!-- 詳細內容左 -->
       <div class="col">
         <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -41,10 +39,10 @@
             >
               <div class="accordion-body">
                 <div class="row mb-3" v-for="item in productData" :key="item.id">
-                  <div class="col-3 d-flex align-items-center">
+                  <div class="col col-sm-2 col-lg-3 d-flex align-items-center">
                     <img :src="item.product.imageUrl" :alt="item.product.title" class="img-fluid" />
                   </div>
-                  <div class="col-9">
+                  <div class="col col-sm-10 col-lg-9">
                     <div class="d-flex">
                       <h6>{{ item.product.title }}</h6>
                     </div>
@@ -55,7 +53,10 @@
                         / 優惠價NT$ {{ parseInt(item.final_total) }}
                       </span>
                     </p>
-                    <p>數量：{{ item.qty }}</p>
+                    <p>
+                      數量：
+                      <span class="fw-bold">{{ item.qty }}</span>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -83,6 +84,11 @@
               aria-labelledby="OrderConfirmationSection"
             >
               <div class="accordion-body">
+                <!-- 訂單編號 -->
+                <div class="d-flex justify-content-between">
+                  <p>訂單編號</p>
+                  <p>{{ showData.id }}</p>
+                </div>
                 <!-- 訂單建立日 -->
                 <div class="d-flex justify-content-between">
                   <p>訂單建立日</p>
@@ -101,7 +107,11 @@
                 <!-- 使用優惠代碼3 -->
                 <div v-if="couponData" class="d-flex justify-content-between">
                   <p>使用優惠券</p>
-                  <p>已使用{{ couponData.title }}優惠券</p>
+                  <p>
+                    已使用
+                    <span class="fw-bold">{{ couponData.title }}</span>
+                    優惠券
+                  </p>
                 </div>
                 <hr />
                 <!-- 總付款金額 -->
