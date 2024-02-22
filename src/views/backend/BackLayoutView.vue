@@ -6,7 +6,7 @@
     :color="'#52504B'"
   />
   <div v-else class="d-flex">
-    <ToastMessges></ToastMessges>
+    <ToastMessages></ToastMessages>
     <AdminNavbar></AdminNavbar>
     <router-view></router-view>
   </div>
@@ -19,7 +19,7 @@ import adminStore from '../../stores/adminStore';
 import toastsStore from '../../stores/toastsStore';
 // components
 import AdminNavbar from '../../components/backend/AdminNavbar.vue';
-import ToastMessges from '../../components/ToastMessges.vue';
+import ToastMessages from '../../components/ToastMessages.vue';
 
 export default {
   data() {
@@ -32,7 +32,7 @@ export default {
   },
   components: {
     AdminNavbar,
-    ToastMessges,
+    ToastMessages,
   },
   computed: {
     ...mapState(adminStore, ['loginSuccess']),
