@@ -1,6 +1,14 @@
 // border
-.rounded-10em {
-  border-radius: 10em;
+.container-rounded {
+  border-radius: 6em;
+  // md
+  @media (min-width: 767.98px) {
+    border-radius: 8em;
+  }
+  // lg
+  @media (min-width: 991.98px) {
+    border-radius: 10em;
+  }
 }
 // if becomes smell 5rem
 // spacing

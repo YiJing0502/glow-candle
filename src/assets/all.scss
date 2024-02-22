@@ -1,25 +1,24 @@
 // 引入bootStrap的SCSS檔案
 @import 'bootstrap/scss/bootstrap';
-
+// 引入swiper的檔案
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 // 定義顏色
 @import './color.scss';
 // 定義字體大小
 @import './frontSize.scss';
+
 body {
   background-color: $lightMainColor;
   font-family: 'Optima nova', sans-serif;
 }
-// 文字顏色｜深灰
-.myTextColor {
-  color: $deepGrayColor;
-}
-.resetBorderRadius {
-  border-radius: 0;
-}
 
-// 輸入框設定
+// 自定義 bootstrap
 @import './bs-reset.scss';
 // 按鈕設定
 @import './button.scss';
 // 客製設定（自定義scss）
 @import './custom.scss';
+// 自定義 swiper
+@import './swiper-reset.scss';
