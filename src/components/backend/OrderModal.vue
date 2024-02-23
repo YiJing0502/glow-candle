@@ -105,7 +105,7 @@
                         <span class="text-main-spec fw-bold">*</span>
                       </label>
                       <vee-field
-                        type="text"
+                        type="tel"
                         name="行動電話"
                         :rules="isPhone"
                         class="form-control"
@@ -205,8 +205,8 @@
                       <th scope="col">圖片</th>
                       <th scope="col">類別</th>
                       <th scope="col">名稱</th>
-                      <th scope="col">價格</th>
                       <th scope="col">數量</th>
+                      <th scope="col">價格</th>
                       <th scope="col">小計</th>
                       <th scope="col">總額</th>
                       <th scope="col">備註</th>
@@ -220,10 +220,10 @@
                         </td>
                         <td>{{ item.product?.category }}</td>
                         <td>{{ item.product?.title }}</td>
-                        <td>{{ item.product?.price }}</td>
                         <td>
                           <strong>{{ item?.qty }}</strong>
                         </td>
+                        <td>{{ item.product?.price }}</td>
                         <td>{{ item.total }}</td>
                         <td>
                           <strong>{{ item?.final_total }}</strong>
@@ -245,25 +245,26 @@
                       </tr>
                     </template>
                     <template v-else>
-                      <tr v-for="item in showProductsArray" :key="item.id">
+                      <tr v-for="(item) in showProductsArray" :key="item.id">
                         <td>
                           <img :src="item.product?.imageUrl" alt="" width="50" />
                         </td>
                         <td>{{ item.product?.category }}</td>
                         <td>{{ item.product?.title }}</td>
-                        <td>{{ item.product?.price }}</td>
                         <td>
                           <vee-field
-                            name="產品數量"
+                            :name="item.product?.title + '產品數量'"
                             class="form-control"
-                            :class="{ 'is-invalid': errors['產品數量'] }"
+                            :class="{ 'is-invalid': errors[item.product?.title + '產品數量'] }"
                             rules="required|numeric|integer|min_value:1"
                             type="text"
                             v-model.number="item.qty"
                           />
-                          <vee-error-message class="invalid-feedback" name="產品數量">
+                          <vee-error-message class="invalid-feedback"
+                          :name="item.product?.title + '產品數量'">
                           </vee-error-message>
                         </td>
+                        <td>{{ item.product?.price }}</td>
                         <td>...</td>
                         <td>...</td>
                         <td>...</td>
