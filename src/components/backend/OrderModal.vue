@@ -245,7 +245,7 @@
                       </tr>
                     </template>
                     <template v-else>
-                      <tr v-for="(item) in showProductsArray" :key="item.id">
+                      <tr v-for="item in showProductsArray" :key="item.id">
                         <td>
                           <img :src="item.product?.imageUrl" alt="" width="50" />
                         </td>
@@ -260,8 +260,10 @@
                             type="text"
                             v-model.number="item.qty"
                           />
-                          <vee-error-message class="invalid-feedback"
-                          :name="item.product?.title + '產品數量'">
+                          <vee-error-message
+                            class="invalid-feedback"
+                            :name="item.product?.title + '產品數量'"
+                          >
                           </vee-error-message>
                         </td>
                         <td>{{ item.product?.price }}</td>

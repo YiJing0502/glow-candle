@@ -8,7 +8,7 @@
   <div v-else class="d-flex">
     <ToastMessages></ToastMessages>
     <AdminNavbar></AdminNavbar>
-    <router-view></router-view>
+    <RouterView></RouterView>
   </div>
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>

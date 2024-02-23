@@ -1,6 +1,6 @@
 <template>
   <FrontNavbar></FrontNavbar>
-  <router-view :key="$route.fullPath"></router-view>
+  <RouterView :key="$route.fullPath"></RouterView>
   <ToastMessages></ToastMessages>
 </template>
 <script>
