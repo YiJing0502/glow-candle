@@ -325,7 +325,7 @@
                       <span class="text-main-spec fw-bold">*</span>
                     </label>
                     <vee-field
-                      type="text"
+                      type="tel"
                       name="行動電話"
                       :rules="isPhone"
                       class="form-control"
