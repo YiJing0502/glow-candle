@@ -138,6 +138,7 @@ export default {
     getOrderData(id) {
       const orderData = this.adminOrdersData.orders.find((item) => item.id === id);
       this.showData = orderData;
+      this.showData.title = `${this.showData.user.name}的訂單`;
     },
     // fn, 打開查看訂單的Modal
     getAdminOrderModal(id) {
