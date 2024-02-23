@@ -4,15 +4,18 @@ import { defineStore } from 'pinia';
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default defineStore('productsStore', {
   state: () => ({
-    // 所有產品資料
+    // 所有產品資料(store共用)
     productsData: [],
     // 是否正在載入
     isLoading: false,
+    // 有分頁的產品資料(顯示使用)
     productPagesData: {},
+    // 產品類別
+    productsCategory: [],
   }),
   getters: {},
   actions: {
-    // 取得所有產品
+    // ajax, 取得所有產品
     getProductsAll() {
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products/all`;
@@ -22,8 +25,24 @@ export default defineStore('productsStore', {
           .then((res) => {
             this.productsData = res.data.products;
             this.pagination(1);
+            this.getCategory();
             resolve(res);
             this.isLoading = false;
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    // ajax, 取得產品類別的產品
+    getProducts(category, page) {
+      this.isLoading = true;
+      const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products`;
+      return new Promise((resolve, reject) => {
+        axios
+          .get(url, { params: { category, page } })
+          .then((res) => {
+            resolve(res);
           })
           .catch((err) => {
             reject(err);
@@ -71,6 +90,17 @@ export default defineStore('productsStore', {
         products: newData,
         pagination: page,
       };
+    },
+    // fn,取得最新 category
+    getCategory() {
+      // 使用 Set 來確保類別的唯一性
+      const uniqueCategories = new Set();
+      Object.keys(this.productsData).forEach((element) => {
+        const { category } = this.productsData[element];
+        uniqueCategories.add(category);
+      });
+      // 轉換 Set 為陣列，然後將它設置到 data 中的 productsCategory
+      this.productsCategory = Array.from(uniqueCategories);
     },
   },
 });
