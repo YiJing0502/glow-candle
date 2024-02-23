@@ -23,12 +23,22 @@
             >
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'products' }" class="nav-link" aria-current="page"
+            <router-link
+              :to="{ name: 'products', params: { category: '全部產品' } }"
+              class="nav-link"
+              aria-current="page"
               >全部產品
             </router-link>
           </li>
           <li class="nav-item" v-for="(item, key) in productsCategory" :key="key">
-            <button type="button" class="nav-link" aria-current="page">{{ item }}</button>
+            <button
+              type="button"
+              class="nav-link"
+              aria-current="page"
+              @click="goToProductsCategoryPage(item)"
+            >
+              {{ item }}
+            </button>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -40,9 +50,11 @@
               從系列選擇
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li v-for="(item, index) in uniqueSeriesArray" :key="index">
+                <button @click="goToFilterCandles(2, item)" class="dropdown-item">
+                  {{ item }}
+                </button>
+              </li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -55,9 +67,11 @@
               從調性選擇
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li v-for="(item, index) in uniqueTonesArray" :key="index">
+                <button @click="goToFilterCandles(1, item)" class="dropdown-item">
+                  {{ item }}
+                </button>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -123,7 +137,13 @@ export default {
   },
   computed: {
     ...mapState(cartsStore, ['cartProductQuantity']),
-    ...mapState(productsStore, ['isLoading', 'productPagesData', 'productsCategory']),
+    ...mapState(productsStore, [
+      'isLoading',
+      'productPagesData',
+      'productsCategory',
+      'uniqueSeriesArray',
+      'uniqueTonesArray',
+    ]),
   },
   methods: {
     async goToGetCart(boolean = true) {
@@ -135,10 +155,31 @@ export default {
         this.$refs.resultModal.openModal();
       }
     },
+    async goToGetProductsAll() {
+      try {
+        await this.getProductsAll();
+      } catch (err) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
+      }
+    },
+    goToFilterCandles(key, content) {
+      this.$router.push({
+        name: 'products',
+        params: { category: '香氛蠟燭' },
+        query: { key, content },
+      });
+    },
+    goToProductsCategoryPage(category) {
+      this.$router.push({ name: 'products', params: { category } });
+    },
     ...mapActions(cartsStore, ['getCart']),
+    ...mapActions(productsStore, ['getProducts', 'getProductsAll', 'filterCandles']),
   },
   mounted() {
     this.goToGetCart(false);
+    this.goToGetProductsAll();
   },
 };
 </script>

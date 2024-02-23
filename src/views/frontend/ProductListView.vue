@@ -8,31 +8,11 @@
   />
   <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
     <div class="d-flex align-items-center justify-content-center mb-3">
-      <h2 class="text-center border-secondary pb-2 fw-bold">全部產品</h2>
+      <h2 class="text-center border-secondary pb-2 fw-bold">{{ productsPageStatus }}</h2>
     </div>
     <!-- dropDown/sort -->
     <div class="d-flex justify-content-between">
-      <div class="">
-        <!-- 類別 -->
-        <div class="btn-group">
-          <button
-            type="button"
-            class="btn dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            類別
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">全部</a></li>
-            <li><a class="dropdown-item" href="#">香氛蠟燭</a></li>
-            <li><a class="dropdown-item" href="#">香氛蠟燭</a></li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li><a class="dropdown-item" href="#">香氛蠟燭</a></li>
-          </ul>
-        </div>
+      <div v-if="productsPageStatus === '香氛蠟燭'" class="">
         <!-- 系列 -->
         <div class="btn-group">
           <button
@@ -44,13 +24,11 @@
             系列
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">全部</a></li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
-            <li>
-              <hr class="dropdown-divider" />
+            <li v-for="(item, index) in uniqueSeriesArray" :key="index">
+              <button @click="filterCandles(2, item)" class="dropdown-item">
+                {{ item }}
+              </button>
             </li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
           </ul>
         </div>
         <!-- 調性 -->
@@ -64,13 +42,11 @@
             調性
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">全部</a></li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
-            <li>
-              <hr class="dropdown-divider" />
+            <li v-for="(item, index) in uniqueTonesArray" :key="index">
+              <button @click="filterCandles(1, item)" class="dropdown-item">
+                {{ item }}
+              </button>
             </li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
           </ul>
         </div>
         <!-- 容量 -->
@@ -84,18 +60,18 @@
             容量
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">全部</a></li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
-            <li>
-              <hr class="dropdown-divider" />
+            <li v-for="(item, index) in uniqueCapacitiesArray" :key="index">
+              <button @click="filterCandles(3, item)" class="dropdown-item">
+                {{ item }}
+              </button>
             </li>
-            <li><a class="dropdown-item" href="#">花香調</a></li>
           </ul>
         </div>
       </div>
       <div class="">
-        <button type="button" class="btn">價格由低到高</button>
+        <button type="button" class="btn" @click="sortPrice('a-b', productPagesData)">
+          價格由低到高
+        </button>
       </div>
     </div>
     <!-- product card -->
@@ -121,12 +97,12 @@
       <nav aria-label="Page navigation example">
         <ul class="pagination" id="pageid">
           <PageBtn
-            :prev-is-enabled="productPagesData.pagination.hasPrevPage"
-            :next-is-enabled="productPagesData.pagination.hasNextPage"
-            :totalPage="productPagesData.pagination.totalPage"
-            :current-page="productPagesData.pagination.currentPage"
-            @change-prev-page="goToChangePage(productPagesData.pagination.currentPage - 1)"
-            @change-next-page="goToChangePage(productPagesData.pagination.currentPage + 1)"
+            :prev-is-enabled="productPagesData.pagination.has_pre"
+            :next-is-enabled="productPagesData.pagination.has_next"
+            :totalPage="productPagesData.pagination.total_pages"
+            :current-page="productPagesData.pagination.current_page"
+            @change-prev-page="goToChangePage(productPagesData.pagination.current_page - 1)"
+            @change-next-page="goToChangePage(productPagesData.pagination.current_page + 1)"
             @change-page="goToChangePage"
           ></PageBtn>
         </ul>
@@ -171,17 +147,59 @@ export default {
         this.$refs.resultModal.openModal();
       }
     },
+    async goToGetProducts(category, page = 1) {
+      try {
+        await this.getProducts(category, page);
+      } catch (err) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
+      }
+    },
     goToChangePage(page) {
+      if (this.productPagesData.pagination.category) {
+        this.goToGetProducts(this.$route.params.category, page);
+        return;
+      }
       this.pagination(page);
     },
-    ...mapActions(productsStore, ['getProductsAll', 'getProduct', 'pagination', 'getProducts']),
+    initializePage() {
+      if (this.$route.params.category === '全部產品') {
+        this.goToGetProductsAll();
+      } else if (this.$route.query.key && this.$route.query.content) {
+        this.filterCandles(this.$route.query.key, this.$route.query.content);
+      } else {
+        const categoryIndex = this.productsCategory.findIndex(
+          (category) => category === this.$route.params.category,
+        );
+        if (categoryIndex !== -1) {
+          this.goToGetProducts(this.$route.params.category);
+        }
+      }
+    },
+    ...mapActions(productsStore, [
+      'getProductsAll',
+      'getProduct',
+      'pagination',
+      'getProducts',
+      'sortPrice',
+      'filterCandles',
+    ]),
   },
   computed: {
-    ...mapState(productsStore, ['isLoading', 'productPagesData']),
+    ...mapState(productsStore, [
+      'isLoading',
+      'productPagesData',
+      'productsPageStatus',
+      'productsCategory',
+      'uniqueSeriesArray',
+      'uniqueTonesArray',
+      'uniqueCapacitiesArray',
+    ]),
   },
+  watch: {},
   mounted() {
-    this.goToGetProductsAll();
-    this.getProducts('香氛蠟燭', 1);
+    this.initializePage();
   },
 };
 </script>

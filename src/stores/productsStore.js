@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from 'axios';
 import { defineStore } from 'pinia';
 
@@ -6,12 +7,22 @@ export default defineStore('productsStore', {
   state: () => ({
     // 所有產品資料(store共用)
     productsData: [],
+    // 產品資料（展示）
+    showProductsData: [],
     // 是否正在載入
     isLoading: false,
     // 有分頁的產品資料(顯示使用)
     productPagesData: {},
     // 產品類別
     productsCategory: [],
+    // 產品頁狀態(目前產品頁要顯示的內容)
+    productsPageStatus: '全部產品',
+    // 香氛蠟燭
+    uniqueSeriesArray: [],
+    uniqueTonesArray: [],
+    uniqueCapacitiesArray: [],
+    // candle data
+    candlesData: [],
   }),
   getters: {},
   actions: {
@@ -23,8 +34,12 @@ export default defineStore('productsStore', {
         axios
           .get(url)
           .then((res) => {
+            this.productsPageStatus = '全部產品';
             this.productsData = res.data.products;
+            this.showProductsData = res.data.products;
             this.pagination(1);
+            this.getCandlesData();
+            this.getCandleFilterArray();
             this.getCategory();
             resolve(res);
             this.isLoading = false;
@@ -35,13 +50,16 @@ export default defineStore('productsStore', {
       });
     },
     // ajax, 取得產品類別的產品
-    getProducts(category, page) {
+    getProducts(category, page = 1) {
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products`;
       return new Promise((resolve, reject) => {
         axios
           .get(url, { params: { category, page } })
           .then((res) => {
+            this.productPagesData = res.data;
+            this.productsPageStatus = category;
+            this.isLoading = false;
             resolve(res);
           })
           .catch((err) => {
@@ -51,23 +69,23 @@ export default defineStore('productsStore', {
     },
     // 分頁
     pagination(nowPage) {
-      const data = this.productsData;
+      const data = this.showProductsData;
       // 取得全部資料長度
       const dataLength = Object.keys(data).length;
       // 設定每頁資料量
-      const perPage = 8;
+      const perPage = 10;
       // 取得總頁數，使用無條件進位
-      const totalPage = Math.ceil(dataLength / perPage);
+      const total_pages = Math.ceil(dataLength / perPage);
       // 設定當前頁數，變數
-      let currentPage = nowPage;
+      let current_page = nowPage;
       // 防呆：避免當前頁數比總頁數大
-      if (currentPage > totalPage) {
-        currentPage = totalPage;
+      if (current_page > total_pages) {
+        current_page = total_pages;
       }
       // 計算當前分頁顯示的資料範圍的最小值
-      const minPerPageData = currentPage * perPage - perPage + 1;
+      const minPerPageData = current_page * perPage - perPage + 1;
       // 計算當前分頁顯示的資料範圍的最大值
-      const maxPerPageData = currentPage * perPage;
+      const maxPerPageData = current_page * perPage;
       // 建立新陣列，存放我們每頁的資料
       const newData = [];
       Object.keys(data).forEach((item, index) => {
@@ -79,12 +97,12 @@ export default defineStore('productsStore', {
       });
       // 用物件方式來傳遞資料
       const page = {
-        totalPage,
-        currentPage,
+        total_pages,
+        current_page,
         // 是否有上一頁
-        hasPrevPage: currentPage > 1,
+        has_pre: current_page > 1,
         // 是否有下一頁
-        hasNextPage: currentPage < totalPage,
+        has_next: current_page < total_pages,
       };
       this.productPagesData = {
         products: newData,
@@ -101,6 +119,48 @@ export default defineStore('productsStore', {
       });
       // 轉換 Set 為陣列，然後將它設置到 data 中的 productsCategory
       this.productsCategory = Array.from(uniqueCategories);
+    },
+    // sort
+    sortPrice(sort, data) {
+      if (sort === 'a-b') {
+        data.products.sort((a, b) => a.price - b.price);
+      } else {
+        data.products.sort((a, b) => b.price - a.price);
+      }
+    },
+    getCandlesData() {
+      this.candlesData = this.productsData.filter((product) => product.category === '香氛蠟燭');
+    },
+    // filter
+    getCandleFilterArray() {
+      const data = this.candlesData;
+      const uniqueSeries = new Set();
+      const uniqueTones = new Set();
+      const uniqueCapacities = new Set();
+      data.forEach((element) => {
+        const term = element.title.split('｜');
+        if (term[2] !== undefined && term[1] !== undefined && term[3] !== undefined) {
+          uniqueSeries.add(term[2]);
+          uniqueTones.add(term[1]);
+          uniqueCapacities.add(term[3]);
+        }
+      });
+      this.uniqueSeriesArray = Array.from(uniqueSeries);
+      this.uniqueTonesArray = Array.from(uniqueTones);
+      this.uniqueCapacitiesArray = Array.from(uniqueCapacities).sort(
+        (a, b) => parseInt(a.replace(/[^0-9]/g, ''), 10) - parseInt(b.replace(/[^0-9]/g, ''), 10),
+      );
+    },
+    filterCandles(key, content) {
+      this.showProductsData = [];
+      const data = this.candlesData;
+      data.forEach((element) => {
+        const term = element.title.split('｜');
+        if (term[key] === content) {
+          this.showProductsData.push(element);
+        }
+      });
+      this.pagination(1);
     },
   },
 });
