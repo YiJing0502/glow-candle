@@ -48,7 +48,6 @@ export default {
     this.postApiUserCheck()
       .then(() => {
         if (this.loginSuccess) {
-          this.$router.push({ name: 'adminOrders' });
           this.pushToast({
             title: '登入成功',
             style: 'bg-deep-gray',
