@@ -174,13 +174,14 @@ export default {
     goToChangePage(page) {
       this.pagination(page);
     },
-    ...mapActions(productsStore, ['getProductsAll', 'getProduct', 'pagination']),
+    ...mapActions(productsStore, ['getProductsAll', 'getProduct', 'pagination', 'getProducts']),
   },
   computed: {
     ...mapState(productsStore, ['isLoading', 'productPagesData']),
   },
   mounted() {
     this.goToGetProductsAll();
+    this.getProducts('香氛蠟燭', 1);
   },
 };
 </script>

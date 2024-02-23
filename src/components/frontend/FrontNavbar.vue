@@ -27,20 +27,8 @@
               >全部產品
             </router-link>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              產品類別
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+          <li class="nav-item" v-for="(item, key) in productsCategory" :key="key">
+            <button type="button" class="nav-link" aria-current="page">{{ item }}</button>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -121,6 +109,7 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
+import productsStore from '../../stores/productsStore';
 
 export default {
   data() {
@@ -134,6 +123,7 @@ export default {
   },
   computed: {
     ...mapState(cartsStore, ['cartProductQuantity']),
+    ...mapState(productsStore, ['isLoading', 'productPagesData', 'productsCategory']),
   },
   methods: {
     async goToGetCart(boolean = true) {
