@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar sticky-top navbar-expand-lg bg-main-light p-0">
     <div class="container">
-      <router-link :to="{ name: 'front' }" class="navbar-brand">
+      <router-link :to="{ name: 'home' }" class="navbar-brand">
         <img class="p-1" src="/glow-logo.png" alt="glow-logo" width="50" />
       </router-link>
       <button
@@ -18,13 +18,13 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item">
-            <router-link :to="{ name: 'front' }" class="nav-link" aria-current="page"
+            <router-link :to="{ name: 'home' }" class="nav-link" aria-current="page"
               >首頁</router-link
             >
           </li>
           <li class="nav-item">
             <router-link
-              :to="{ name: 'products', params: { category: '全部產品' } }"
+              :to="{ name: 'products', query: { category: '全部產品', page: 1 } }"
               class="nav-link"
               aria-current="page"
               >全部產品
@@ -155,9 +155,12 @@ export default {
         this.$refs.resultModal.openModal();
       }
     },
-    async goToGetProductsAll() {
+    async goToGetProductsAll(boolean) {
       try {
-        await this.getProductsAll();
+        await this.getProductsAll(boolean);
+        if (this.$route.name === 'products') {
+          await this.initializePage(this.$route.query);
+        }
       } catch (err) {
         this.serverMessage.message = err.response.data.message;
         this.serverMessage.success = err.response.data.success;
@@ -167,19 +170,20 @@ export default {
     goToFilterCandles(key, content) {
       this.$router.push({
         name: 'products',
-        params: { category: '香氛蠟燭' },
-        query: { key, content },
+        query: {
+          category: '香氛蠟燭', key, content, page: 1,
+        },
       });
     },
     goToProductsCategoryPage(category) {
-      this.$router.push({ name: 'products', params: { category } });
+      this.$router.push({ name: 'products', query: { category, page: 1 } });
     },
     ...mapActions(cartsStore, ['getCart']),
-    ...mapActions(productsStore, ['getProducts', 'getProductsAll', 'filterCandles']),
+    ...mapActions(productsStore, ['getProducts', 'getProductsAll', 'filterCandles', 'initializePage']),
   },
   mounted() {
     this.goToGetCart(false);
-    this.goToGetProductsAll();
+    this.goToGetProductsAll(true);
   },
 };
 </script>

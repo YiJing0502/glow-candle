@@ -10,12 +10,17 @@ const router = createRouter({
       component: () => import('../views/frontend/FrontLayoutView.vue'),
       children: [
         {
+          path: '',
+          name: 'home',
+          component: () => import('../views/frontend/HomeView.vue'),
+        },
+        {
           path: '/:pathMatch(.*)*',
           name: 'front404',
           component: () => import('../views/NotFoundView.vue'),
         },
         {
-          path: 'products/:category',
+          path: 'products',
           name: 'products',
           component: () => import('../views/frontend/ProductListView.vue'),
         },
