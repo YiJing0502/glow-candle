@@ -46,7 +46,18 @@
         <!-- 產品描述 -->
         <p>{{ showData.description }}</p>
         <!-- 產品價格 -->
-        <h4 class="mt-3 mb-3">NT$ {{ showData.price }}</h4>
+        <h4
+        v-if="showData.price === showData.origin_price"
+        class="mt-3 mb-3">NT$ {{ showData.price }}
+        </h4>
+        <div
+        v-else
+        class="d-flex align-items-end">
+        <h4
+        class="me-3 text-decoration-line-through text-deep-gray">NT${{ showData.origin_price }}
+        </h4>
+        <h2 class="text-main-spec fw-bolder">NT${{ showData.price }}</h2>
+        </div>
         <!-- 購物車增減按鈕與庫存 -->
         <div class="d-flex">
           <div class="bg-white d-flex w-50 mb-3 border">
