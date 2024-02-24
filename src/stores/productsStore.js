@@ -27,20 +27,24 @@ export default defineStore('productsStore', {
   getters: {},
   actions: {
     // ajax, 取得所有產品
-    getProductsAll() {
+    getProductsAll(init = false, page = 1) {
       this.isLoading = true;
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/products/all`;
       return new Promise((resolve, reject) => {
         axios
           .get(url)
           .then((res) => {
-            this.productsPageStatus = '全部產品';
-            this.productsData = res.data.products;
-            this.showProductsData = res.data.products;
-            this.pagination(1);
-            this.getCandlesData();
-            this.getCandleFilterArray();
-            this.getCategory();
+            if (init) {
+              this.productsData = res.data.products;
+              this.getCandlesData();
+              this.getCandleFilterArray();
+              this.getCategory();
+            } else {
+              this.productsPageStatus = '全部產品';
+              this.showProductsData = res.data.products;
+              this.pagination(page);
+              console.log('getProductsAll');
+            }
             resolve(res);
             this.isLoading = false;
           })
@@ -121,12 +125,22 @@ export default defineStore('productsStore', {
       this.productsCategory = Array.from(uniqueCategories);
     },
     // sort
-    sortPrice(sort, data) {
-      if (sort === 'a-b') {
-        data.products.sort((a, b) => a.price - b.price);
+    sortPrice(query) {
+      let data;
+      if (query.key && query.content) {
+        data = this.showProductsData;
+      } else if (query.category === '全部產品') {
+        data = this.productsData;
       } else {
-        data.products.sort((a, b) => b.price - a.price);
+        data = this.productsData.filter((item) => item.category === query.category);
       }
+      if (query.price === 'asc') {
+        data.sort((a, b) => a.price - b.price);
+      } else if (query.price === 'desc') {
+        data.sort((a, b) => b.price - a.price);
+      }
+      this.showProductsData = data;
+      this.pagination(query.page);
     },
     getCandlesData() {
       this.candlesData = this.productsData.filter((product) => product.category === '香氛蠟燭');
@@ -151,8 +165,9 @@ export default defineStore('productsStore', {
         (a, b) => parseInt(a.replace(/[^0-9]/g, ''), 10) - parseInt(b.replace(/[^0-9]/g, ''), 10),
       );
     },
-    filterCandles(key, content) {
+    filterCandles(key, content, page = 1) {
       this.showProductsData = [];
+      this.productsPageStatus = '香氛蠟燭';
       const data = this.candlesData;
       data.forEach((element) => {
         const term = element.title.split('｜');
@@ -160,7 +175,22 @@ export default defineStore('productsStore', {
           this.showProductsData.push(element);
         }
       });
-      this.pagination(1);
+      this.pagination(page);
+    },
+    initializePage(query) {
+      if (query.category === '全部產品') {
+        this.getProductsAll(false, query.page);
+      } else if (query.key && query.content) {
+        // this.goToGetProducts('香氛蠟燭');
+        this.filterCandles(query.key, query.content, query.page);
+      } else {
+        const categoryIndex = this.productsCategory.findIndex(
+          (category) => category === query.category,
+        );
+        if (categoryIndex !== -1) {
+          this.getProducts(query.category, query.page);
+        }
+      }
     },
   },
 });

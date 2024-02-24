@@ -41,7 +41,7 @@
                 <div class="" v-if="cartsData.length === 0">
                   <p>目前購物車內沒有產品 😄</p>
                   <router-link
-                    :to="{ name: 'products', params: { category: '全部產品' } }"
+                    :to="{ name: 'products', query: { category: '全部產品' } }"
                     class="btn btn-solid-spec w-100 btn-lg"
                   >
                     繼續購物
