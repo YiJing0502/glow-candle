@@ -2,6 +2,12 @@
   <div class="card" @click="changeToProductPage(item.id)">
     <div class="myImage">
       <img
+      v-if="item.imagesUrl === undefined"
+      :src="item.imageUrl"
+      class="card-img-top"
+      :alt="item.title" />
+      <img
+      v-else
       :ref="`productImage${item.id}`"
       @mouseover="changeImage(`productImage${item.id}`, item.imagesUrl[0])"
       @mouseout="changeImage(`productImage${item.id}`, item.imageUrl)"
