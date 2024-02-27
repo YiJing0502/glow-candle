@@ -111,23 +111,7 @@
       <!-- product card -->
       <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-2 mt-3 mb-3" role="button">
         <div class="col mb-3" v-for="item in productPagesData.products" :key="item.id">
-          <div class="card" @click="changeToProductPage(item.id)">
-            <img :src="item.imageUrl" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <p class="card-text">{{ item.unit }}</p>
-              <p class="card-title fw-medium">{{ item.title }}</p>
-              <h5
-              v-if="item.price === item.origin_price" class="card-text fw-bolder">
-                NT${{ item.price }}
-              </h5>
-              <div class="d-flex align-items-end" v-else>
-                <h6
-                class="me-3 text-decoration-line-through text-deep-gray">NT${{ item.origin_price }}
-                </h6>
-                <h5 class="text-main-spec fw-bolder">NT${{ item.price }}</h5>
-              </div>
-            </div>
-          </div>
+          <ProductCard :product="item"></ProductCard>
         </div>
       </div>
       <!-- pageBtn -->
@@ -160,6 +144,7 @@ import { mapState, mapActions } from 'pinia';
 import productsStore from '../../stores/productsStore';
 
 import PageBtn from '../../components/PageBtn.vue';
+import ProductCard from '../../components/frontend/ProductCard.vue';
 
 export default {
   data() {
@@ -173,15 +158,9 @@ export default {
   },
   components: {
     PageBtn,
+    ProductCard,
   },
   methods: {
-    // 跳轉至產品頁面
-    changeToProductPage(id) {
-      this.$router.push({
-        name: 'product',
-        params: { id },
-      });
-    },
     goToChangePage(page) {
       const { query } = this.$route;
       const updatedQuery = { ...query, page };
@@ -236,4 +215,5 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+</style>
