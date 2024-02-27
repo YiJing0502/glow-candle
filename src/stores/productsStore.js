@@ -23,6 +23,12 @@ export default defineStore('productsStore', {
     uniqueCapacitiesArray: [],
     // candle data
     candlesData: [],
+    // 首頁需要的產品資料
+    calmSeriesProducts: ['-NoLTSCPuUQGarWezIAl', '-NoLWB8MDGIYr9flJ0Pb', '-NoLWTOY-q1QXZOnQmEN', '-NoLWnut3G93WzfuedRW'],
+    bestsellers: ['-NoLXYH97x33NA7DUGnQ', '-NoLY64ZdZ5tKG0MYgXk', '-NoL_80KGaePj1gdr6Gp', '-NoLRz5ol1emgz6xq7j0'],
+    calmSeriesBundle: {},
+    bestsellersData: [],
+    calmSeriesData: [],
   }),
   getters: {},
   actions: {
@@ -39,11 +45,16 @@ export default defineStore('productsStore', {
               this.getCandlesData();
               this.getCandleFilterArray();
               this.getCategory();
+              this.calmSeriesProducts.map((product) => this.calmSeriesData
+                .push(this.getParticularProduct(product)));
+              this.calmSeriesBundle = this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T');
+              this.bestsellers.map((bestseller) => this.bestsellersData
+                .push(this.getParticularProduct(bestseller)));
+              console.log(this.calmSeriesBundle);
             } else {
               this.productsPageStatus = '全部產品';
               this.showProductsData = res.data.products;
               this.pagination(page);
-              console.log('getProductsAll');
             }
             resolve(res);
             this.isLoading = false;
@@ -191,6 +202,10 @@ export default defineStore('productsStore', {
           this.getProducts(query.category, query.page);
         }
       }
+    },
+    getParticularProduct(id) {
+      const data = this.productsData.find((product) => product.id === id);
+      return data;
     },
   },
 });
