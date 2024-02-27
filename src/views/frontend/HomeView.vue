@@ -1,36 +1,121 @@
 <template>
+  <!-- 大圖branner -->
   <div class="container">
-    <section>大圖廣告</section>
-    <section>系列介紹</section>
-    <section>特價商品</section>
-    <!-- 經典系列 -->
-    <section>
-      <h2>我們的經典－平靜日系列</h2>
-      <p>「平日中的靜謐時刻，溫暖的光輝將您包裹，帶來安詳的平靜。在這裡，您可以找到簡單而美好的生活瞬間」</p>
-      <div class="row">
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
+    <section class="mb-5">
+      <div class="container d-flex flex-column main-img container-rounded">
+        <div class="row justify-content-center my-auto">
+          <div class="col-md-4 text-center d-flex flex-column align-items-center">
+            <h2 class="text-main-light">愜意花園系列 <br> x <br> 甜點香氛</h2>
+            <h6 class="mb-3 text-main-light">焦糖蘋果塔、南瓜派、雲朵蛋糕，在家也能享受宛如待在咖啡館的下午茶時光</h6>
+            <RouterLink
+            to="/products?category=香氛蠟燭&key=2&content=愜意花園系列&page=1"
+            type="button" class="btn btn-lg btn-solid-main d-flex align-items-center">立即購買
+              <span class="material-icons">chevron_right</span>
+            </RouterLink>
+          </div>
+        </div>
       </div>
     </section>
-    <!-- 品牌介紹 -->
+  </div>
+  <!-- 暢銷單品 -->
+  <div class="container-fluid bg-main-medium py-5">
+    <section class="container">
+      <h2 class="text-center text-main-spec"> ✦ 暢銷單品 ✦ </h2>
+      <p class="text-center">不知道該選哪種香氛蠟燭？以下是我們的回購率最高的商品：）</p>
+      <div
+      class="row row-cols-lg-4 row-cols-sm-2 row-cols-1"
+      role="button"
+      >
+        <div class="col"
+        v-for="item in bestsellersData"
+        :key="item.id"
+        >
+          <ProductCard :product="item"></ProductCard>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- 經典系列 -->
+  <div class="container py-5">
     <section class="">
-      <div class="bg-main-medium px-5 py-3 mb-5">
-        <div class="row mb-4 py-4">
-          <div class="col d-flex flex-column justify-content-center">
-            <h2 class="mb-4">GLOW 光輝<br>台灣原創香氛品牌</h2>
-            <p class="w-75">「自創立以來，GLOW的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」</p>
-            <button class="btn btn-solid-dpgray btn-lg w-75">關於我們</button>
+      <h2 class="text-center text-main-spec"> ✦ 我們的經典 ✦ </h2>
+      <p class="text-center">
+        「平日中的靜謐時刻，溫暖的光輝將您包裹，帶來安詳的平靜。在平靜日系列裡，您可以找到簡單而美好的生活瞬間」
+      </p>
+      <!-- 平靜日卡片 -->
+      <div
+      class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 mb-5"
+      role="button"
+      >
+        <div class="col"
+        v-for="item in calmSeriesData"
+        :key="item.id"
+        >
+          <ProductCard :product="item"></ProductCard>
+        </div>
+      </div>
+      <!-- 收藏套組 -->
+      <div class="row row-cols-sm-2 row-cols-1">
+        <div class="col px-0">
+          <div class=" overflow-hidden w-100">
+            <img src="https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1708418706132.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Tu33qbf%2FVBJxXSudzGvKGsnMgL5%2FnenSjGrDErVDdjRm0q4KXAKOZrwSx01TLcOnkuK1EACMDfTeQa0QHDxrYMZlZSa%2B4ik%2BQHB4%2FuWSrazLFzP2FhqdoZkqSw585cxt8FOifbaX2yGJ%2BEPtRi5RhVUqPLS02sS7m2KQtd%2FT0CIKe6LsF4hTTqU6A1kKeSCTxPyIr1S6jEuaTrmrMGiWbpC9G7kA6IK8t9jb1Ax3pavPXyYVq2GDkOa5C84OU2aunQSJc365GGknAPap0Zl9JUv7NXLhaFVMc%2BrmbziebTYGlhaTnVqgtw4rtS9hC%2FsfN%2FnE2klqZQloxiDa3LOn1w%3D%3D" alt="平靜日系列210g四入香氛蠟燭收藏套組" class="img-fluid bundle-image">
           </div>
-          <div class="col">
+        </div>
+        <div
+        class="col bg-main-spec d-flex flex-column justify-content-center align-items-center p-5"
+        >
+          <h2 class="text-center text-main-light">最佳的送禮選擇</h2>
+          <h4 class="text-center text-main-light">平靜日系列210g四入香氛蠟燭收藏套組</h4>
+          <h6 class="text-center text-main-light">現正特價中</h6>
+          <RouterLink
+          to="/product/-NoLX8ZL10JiBTlwGN6T"
+          type="button" class="btn btn-lg btn-solid-main d-flex align-items-center">立即購買
+            <span class="material-icons">chevron_right</span>
+          </RouterLink>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- 品牌介紹 -->
+  <div class="container-fluid bg-main-medium ">
+    <section class="container">
+      <!-- 品牌介紹 -->
+      <div class="py-3 mb-5">
+        <div class="row row-cols-md-2 row-cols-1 mb-4 py-4">
+          <div
+          class="col d-flex flex-column px-0
+           justify-content-center align-items-center align-items-md-start"
+          >
+            <h2 class="">GLOW 光輝</h2>
+            <h2 class="mb-4">台灣原創香氛品牌</h2>
+            <p class="w-75">「自創立以來，GLOW的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」</p>
+            <button class="btn btn-solid-dpgray btn-lg w-75 mb-3">關於我們</button>
+          </div>
+          <div class="col px-0">
             <img src="https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1708763924054.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=jjqlD5PtlNlYnPpvuKreWbuOskRxwCqy5ygyw55ZkHnnNa8YM6Ru%2FgCdaQc95qtswI0KUXzuRzLWWCFj3OYlM3NX%2FQZmpQilKJotulVRVyvy3%2FXqi3bNThvDu4Xv2BGKLEJ77tlQ3hkB4%2Brde%2FKE%2FZbc5HP1klG95Ihj4AIT%2FBVHA4LkbHzSsIQf7OuqiJNVYHcjkvhi5RviTtWG5hKwP%2FwpMinTvGyhzRpUSpKyu4wMKpNxg4NuNuV1MD6DAeuusgY5x1yYHZ1k7NcMzxn0Wumpo0geyW2yeqm831Q%2BRN5KVWG%2Fo468dQZ0FDXo6DsOja%2FCAXHDj6NuIiZMgAr9Tw%3D%3D" class="img-fluid d-flex justify-content-start align-items-center" alt="">
           </div>
         </div>
         <p class="text-center">我們自豪地使用100%大豆蠟製成香氛蠟燭，每一款都經過精心的手工製作，並以限量方式販售。</p>
       </div>
-      <div class="border-bottom border-1 border-dark">
-        <div class="row">
+    </section>
+  </div>
+  <div class="container">
+    <section class="">
+      <!-- 社群媒體 -->
+      <div class="container d-flex flex-column social-img mb-5">
+        <div class="row justify-content-center my-auto">
+          <div class="col-md-4 text-center d-flex flex-column align-items-center">
+            <h2 class="text-main-light">#光輝蠟燭 <br> 在 <br> INSTAGRAM</h2>
+            <h6 class="mb-3 text-main-light">加入我們，了解更多有關於我們的產品、發佈會以及活動！</h6>
+            <button type="button" class="btn btn-lg btn-solid-main d-flex align-items-center">追蹤我們
+              <span class="material-icons">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- 服務保障 -->
+      <div class="border-bottom border-1 border-dark mb-5 pb-3">
+        <div class="row row-cols-md-4 row-cols-2">
           <div class="col">
             <span class="material-icons-round fs-1 mb-3"> local_shipping </span>
             <p class="fs-2">交貨快速</p>
@@ -56,3 +141,43 @@
     </section>
   </div>
 </template>
+<script>
+import { RouterLink } from 'vue-router';
+import { mapState } from 'pinia';
+import productsStore from '../../stores/productsStore';
+import ProductCard from '../../components/frontend/ProductCard.vue';
+
+export default {
+  data() {
+    return {
+      spaceBetween: 10,
+    };
+  },
+  computed: {
+    ...mapState(productsStore, ['bestsellersData', 'calmSeriesData', 'calmSeriesBundle']),
+  },
+  components: {
+    ProductCard,
+    RouterLink,
+  },
+};
+</script>
+<style lang="scss" scoped>
+.main-img {
+  background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1708936810913.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=coIMN4vj%2FhT9ywSbS%2FZF%2BjM1CZTewhhkDlR05aXEyCYbAHIn6wP2Zrj2q2yd444z%2BRwOHKFzU423mqF3MjTwpFfx%2Bh4achbHPfhr%2F78GE3rT7P30lNaVL6V9%2BbhDs0yk8CJC%2F86M2x2xBjq8ue%2Bga2DYOLvun1ki16osdhAiTYWrHuPmQyzewyuEmkNNB6eAygVFq2qtpaDtmalPgCcKYladrg5etlxtFfGGzXr8q9ga0CwPym6Vt3nYE9YG7A5t5D7seR4e%2FwRUsxHRWyOJkW7Oro%2BA%2FW0N%2BSIb%2B9R0kludYwZQGnHD5UFhMFmnhGdNua5Rx24nTXvesHfck2mo4A%3D%3D);
+  background-position: center center;
+  height: 80vh;
+}
+.social-img {
+  background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1709002297226.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=K9HTO3SVRrruyAnwfGde6rKMjzqsdWUeQwewzeLqE342vcHJoPQFyHyCIM%2B8eLqZWB%2FempcMHMoGy%2Bh8jLJUnKaJ8y3TKNWr2kcqUHYH%2BdNlFGg5sVVRqVG5Juhca1XJGh0voUWy%2BeyDzpM6RGYycrhgDLzl88m0xA9guewAO16YO8xI2dnetZMINlBEcyvsaDJrxUk3Ys3v%2B2GNjR3eWaq0eh0Izh%2BBBDTRyfK7mxJj7qV7ApSeJ%2FM%2FznI%2BTpLsKPDIfxoZ1cav%2BCT%2Brkp2ShuaavztLaSoMdY98tmpupx6uEmOfivLYqUKPwx0mpwIh09AAPpP63DItXyF%2FgX9tg%3D%3D);
+  /* background-position: center center; */
+  background-size: cover;
+  height: 40vh;
+}
+.bundle-image {
+  transform:scale(1,1);transition: all 1s ease-out;display: block;
+  &:hover{
+    transform:scale(1.2,1.2);
+  }
+}
+</style>
