@@ -1,3 +1,14 @@
+// 主色按鈕
+.btn-solid-main {
+  background-color: darken($specialMainColor, 5%);
+  color: $specialMainColor;
+  border-radius: 0;
+  background-color: $lightMainColor;
+  &:hover {
+    background-color: $specialMainColor;
+    color: $lightMainColor;
+  }
+}
 // 深紅實心按鈕
 .btn-solid-spec {
   border: solid 1px $specialMainColor;
