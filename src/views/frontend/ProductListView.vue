@@ -109,7 +109,9 @@
         </div> -->
       </div>
       <!-- product card -->
-      <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-2 mt-3 mb-3" role="button">
+      <div
+      class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mt-3 mb-3"
+      role="button">
         <div class="col mb-3" v-for="item in productPagesData.products" :key="item.id">
           <ProductCard :product="item"></ProductCard>
         </div>
