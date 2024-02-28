@@ -258,5 +258,17 @@ export default defineStore('productsStore', {
       const randomProduct = categoryData[randomIndex];
       return randomProduct;
     },
+    // fn, 搜尋
+    searchProduct(keyword) {
+      const newData = [];
+      const lowerCaseKeyword = keyword.toLowerCase();
+      Object.keys(this.productsData).forEach((element) => {
+        if (this.productsData[element].title.toLowerCase().match(lowerCaseKeyword)) {
+          newData.push(this.productsData[element]);
+        }
+      });
+      this.showProductsData = newData;
+      // this.pagination(1);
+    },
   },
 });
