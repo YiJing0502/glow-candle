@@ -89,7 +89,9 @@
             <h2 class="">GLOW 光輝</h2>
             <h2 class="mb-4">台灣原創香氛品牌</h2>
             <p class="w-75">「自創立以來，GLOW的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」</p>
-            <button class="btn btn-solid-dpgray btn-lg w-75 mb-3">關於我們</button>
+            <RouterLink
+            :to="{ name: 'about' }"
+            class="btn btn-solid-dpgray btn-lg w-75 mb-3">關於我們</RouterLink>
           </div>
           <div class="col px-0">
             <img src="https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1708763924054.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=jjqlD5PtlNlYnPpvuKreWbuOskRxwCqy5ygyw55ZkHnnNa8YM6Ru%2FgCdaQc95qtswI0KUXzuRzLWWCFj3OYlM3NX%2FQZmpQilKJotulVRVyvy3%2FXqi3bNThvDu4Xv2BGKLEJ77tlQ3hkB4%2Brde%2FKE%2FZbc5HP1klG95Ihj4AIT%2FBVHA4LkbHzSsIQf7OuqiJNVYHcjkvhi5RviTtWG5hKwP%2FwpMinTvGyhzRpUSpKyu4wMKpNxg4NuNuV1MD6DAeuusgY5x1yYHZ1k7NcMzxn0Wumpo0geyW2yeqm831Q%2BRN5KVWG%2Fo468dQZ0FDXo6DsOja%2FCAXHDj6NuIiZMgAr9Tw%3D%3D" class="img-fluid d-flex justify-content-start align-items-center" alt="">
