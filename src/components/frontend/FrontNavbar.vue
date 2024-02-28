@@ -1,7 +1,12 @@
 <template>
   <nav class="navbar sticky-top navbar-expand-lg bg-main-light p-0">
     <div class="container">
-      <RouterLink :to="{ name: 'home' }" class="navbar-brand">
+      <RouterLink
+      :to="{ name: 'home' }"
+      class="navbar-brand"
+      :class="{ 'active':nowPage === '首頁' }"
+      @click="nowPage = '首頁'"
+      >
         <img class="p-1" src="/glow-logo.png" alt="glow-logo" width="50" />
       </RouterLink>
       <button
@@ -18,14 +23,22 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item">
-            <RouterLink :to="{ name: 'home' }" class="nav-link" aria-current="page"
-              >首頁</RouterLink
+            <RouterLink
+            :to="{ name: 'home' }"
+            class="nav-link"
+            :class="{ 'active':nowPage === '首頁' }"
+            @click="nowPage = '首頁'"
+            aria-current="page"
             >
+            首頁
+            </RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink
               :to="{ name: 'products', query: { category: '全部產品', page: 1 } }"
               class="nav-link"
+              @click="nowPage = '全部產品'"
+              :class="{ 'active':nowPage === '全部產品' }"
               aria-current="page"
               >全部產品
             </RouterLink>
@@ -34,6 +47,7 @@
             <button
               type="button"
               class="nav-link"
+              :class="{ 'active':nowPage === item }"
               aria-current="page"
               @click="goToProductsCategoryPage(item)"
             >
@@ -75,12 +89,18 @@
             </ul>
           </li>
           <li class="nav-item">
-            <RouterLink :to="{ name: 'about' }" class="nav-link" aria-current="page"
+            <RouterLink
+            :to="{ name: 'about' }"
+            class="nav-link"
+            @click="nowPage = '關於我們'"
+            :class="{ 'active':nowPage === '關於我們' }"
+            aria-current="page"
               >關於我們</RouterLink
             >
           </li>
           <li class="nav-item dropdown">
             <a
+              @click="goToSearchProduct"
               class="nav-link dropdown-toggle"
               role="button"
               data-bs-toggle="dropdown"
@@ -88,14 +108,13 @@
             >
               <span class="material-icons-outlined fs-3 mt-1">search</span>
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
           </li>
           <li class="nav-item">
-            <RouterLink :to="{ name: 'about' }" class="nav-link" aria-current="page">
+            <RouterLink
+            :to="{ name: 'about' }"
+            class="nav-link"
+            aria-current="page"
+            >
               <span class="material-icons fs-4 mt-1">forum</span>
             </RouterLink>
           </li>
@@ -103,6 +122,8 @@
             <RouterLink
               :to="{ name: 'checkout' }"
               class="nav-link position-relative"
+              :class="{ 'active':nowPage === 'checkout' }"
+              @click="nowPage = 'checkout'"
               aria-current="page"
             >
               <span class="material-icons-outlined fs-3 mt-1">shopping_bag</span>
@@ -119,21 +140,27 @@
     </div>
   </nav>
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
+  <SearchModal ref="searchModal"></SearchModal>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import productsStore from '../../stores/productsStore';
+import SearchModal from './SearchModal.vue';
 
 export default {
   data() {
     return {
+      nowPage: '',
       // result model
       serverMessage: {
         message: '',
         success: true,
       },
     };
+  },
+  components: {
+    SearchModal,
   },
   computed: {
     ...mapState(cartsStore, ['cartProductQuantity']),
@@ -143,9 +170,13 @@ export default {
       'productsCategory',
       'uniqueSeriesArray',
       'uniqueTonesArray',
+      'productsPageStatus',
     ]),
   },
   methods: {
+    goToSearchProduct() {
+      this.$refs.searchModal.openModal();
+    },
     async goToGetCart(boolean = true) {
       try {
         await this.getCart(boolean);
@@ -168,6 +199,7 @@ export default {
       }
     },
     goToFilterCandles(key, content) {
+      this.nowPage = '香氛蠟燭';
       this.$router.push({
         name: 'products',
         query: {
@@ -176,6 +208,7 @@ export default {
       });
     },
     goToProductsCategoryPage(category) {
+      this.nowPage = category;
       this.$router.push({ name: 'products', query: { category, page: 1 } });
     },
     ...mapActions(cartsStore, ['getCart']),

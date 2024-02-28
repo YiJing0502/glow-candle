@@ -111,7 +111,6 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
   ],
-  linkActiveClass: 'active',
 });
 
 export default router;
