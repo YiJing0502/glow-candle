@@ -1,22 +1,22 @@
 <template>
   <div class="col-2 bg-main-medium side-bar-height px-3">
     <div class="d-flex justify-content-center my-3">
-      <router-link :to="{ name: 'front' }">
+      <RouterLink :to="{ name: 'front' }">
         <img src="/glow-logo.png" alt="" width="70" />
-      </router-link>
+      </RouterLink>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
-        <router-link class="list-group-item" :to="{ name: 'adminOrders' }">訂單管理</router-link>
+        <RouterLink class="list-group-item" :to="{ name: 'adminOrders' }">訂單管理</RouterLink>
       </li>
       <li class="list-group-item">
-        <router-link class="list-group-item" :to="{ name: 'adminProducts' }">產品管理</router-link>
+        <RouterLink class="list-group-item" :to="{ name: 'adminProducts' }">產品管理</RouterLink>
       </li>
       <li class="list-group-item">
-        <router-link class="list-group-item" :to="{ name: 'adminCoupons' }">優惠券管理</router-link>
+        <RouterLink class="list-group-item" :to="{ name: 'adminCoupons' }">優惠券管理</RouterLink>
       </li>
       <li class="list-group-item">
-        <router-link class="list-group-item" :to="{ name: 'adminArticles' }">文章管理</router-link>
+        <RouterLink class="list-group-item" :to="{ name: 'adminArticles' }">文章管理</RouterLink>
       </li>
     </ul>
     <div class="m-3 d-flex justify-content-center align-items-center">

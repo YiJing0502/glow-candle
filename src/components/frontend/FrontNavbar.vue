@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar sticky-top navbar-expand-lg bg-main-light p-0">
     <div class="container">
-      <router-link :to="{ name: 'home' }" class="navbar-brand">
+      <RouterLink :to="{ name: 'home' }" class="navbar-brand">
         <img class="p-1" src="/glow-logo.png" alt="glow-logo" width="50" />
-      </router-link>
+      </RouterLink>
       <button
         class="navbar-toggler"
         type="button"
@@ -18,17 +18,17 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item">
-            <router-link :to="{ name: 'home' }" class="nav-link" aria-current="page"
-              >首頁</router-link
+            <RouterLink :to="{ name: 'home' }" class="nav-link" aria-current="page"
+              >首頁</RouterLink
             >
           </li>
           <li class="nav-item">
-            <router-link
+            <RouterLink
               :to="{ name: 'products', query: { category: '全部產品', page: 1 } }"
               class="nav-link"
               aria-current="page"
               >全部產品
-            </router-link>
+            </RouterLink>
           </li>
           <li class="nav-item" v-for="(item, key) in productsCategory" :key="key">
             <button
@@ -75,8 +75,8 @@
             </ul>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'about' }" class="nav-link" aria-current="page"
-              >關於GLOW</router-link
+            <RouterLink :to="{ name: 'about' }" class="nav-link" aria-current="page"
+              >關於我們</RouterLink
             >
           </li>
           <li class="nav-item dropdown">
@@ -95,12 +95,12 @@
             </ul>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'about' }" class="nav-link" aria-current="page">
+            <RouterLink :to="{ name: 'about' }" class="nav-link" aria-current="page">
               <span class="material-icons fs-4 mt-1">forum</span>
-            </router-link>
+            </RouterLink>
           </li>
           <li class="nav-item">
-            <router-link
+            <RouterLink
               :to="{ name: 'checkout' }"
               class="nav-link position-relative"
               aria-current="page"
@@ -112,7 +112,7 @@
               >
                 {{ cartProductQuantity }}
               </span>
-            </router-link>
+            </RouterLink>
           </li>
         </ul>
       </div>
