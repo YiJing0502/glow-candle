@@ -29,6 +29,8 @@ export default defineStore('productsStore', {
     calmSeriesBundle: {},
     bestsellersData: [],
     calmSeriesData: [],
+    // 產品推薦
+    recommendationsData: [],
   }),
   getters: {},
   actions: {
@@ -50,7 +52,6 @@ export default defineStore('productsStore', {
               this.calmSeriesBundle = this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T');
               this.bestsellers.map((bestseller) => this.bestsellersData
                 .push(this.getParticularProduct(bestseller)));
-              console.log(this.calmSeriesBundle);
             } else {
               this.productsPageStatus = '全部產品';
               this.showProductsData = res.data.products;
@@ -82,7 +83,7 @@ export default defineStore('productsStore', {
           });
       });
     },
-    // 分頁
+    // fn,分頁
     pagination(nowPage) {
       const data = this.showProductsData;
       // 取得全部資料長度
@@ -135,7 +136,7 @@ export default defineStore('productsStore', {
       // 轉換 Set 為陣列，然後將它設置到 data 中的 productsCategory
       this.productsCategory = Array.from(uniqueCategories);
     },
-    // sort
+    // fn,篩選價錢
     sortPrice(query) {
       let data;
       if (query.key && query.content) {
@@ -153,10 +154,11 @@ export default defineStore('productsStore', {
       this.showProductsData = data;
       this.pagination(query.page);
     },
+    // fn,取得蠟燭資料
     getCandlesData() {
       this.candlesData = this.productsData.filter((product) => product.category === '香氛蠟燭');
     },
-    // filter
+    // fn,篩選各種蠟燭類別
     getCandleFilterArray() {
       const data = this.candlesData;
       const uniqueSeries = new Set();
@@ -176,6 +178,7 @@ export default defineStore('productsStore', {
         (a, b) => parseInt(a.replace(/[^0-9]/g, ''), 10) - parseInt(b.replace(/[^0-9]/g, ''), 10),
       );
     },
+    // fn,篩選各類別的蠟燭（帶有頁面）
     filterCandles(key, content, page = 1) {
       this.showProductsData = [];
       this.productsPageStatus = '香氛蠟燭';
@@ -188,6 +191,7 @@ export default defineStore('productsStore', {
       });
       this.pagination(page);
     },
+    // fn,初始化頁面
     initializePage(query) {
       if (query.category === '全部產品') {
         this.getProductsAll(false, query.page);
@@ -203,9 +207,56 @@ export default defineStore('productsStore', {
         }
       }
     },
+    // fn,使用 id 取得特定產品
     getParticularProduct(id) {
       const data = this.productsData.find((product) => product.id === id);
       return data;
+    },
+    recommendations(id) {
+      this.recommendationsData = [];
+      const data = this.getParticularProduct(id);
+      const { title } = data;
+      const serious = title.split('｜')[2];
+      const { category } = data;
+      const categoryData = this.productsData.filter((product) => product.category === category);
+      if (category === '香氛蠟燭') {
+        const seriousData = categoryData.filter((product) => product.title.split('｜')[2] === serious);
+        const filteredData = seriousData.filter((product) => product.id !== id);
+        if (filteredData.length < 4) {
+          filteredData.push(this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T'));
+        }
+        if (filteredData.length === 4) {
+          this.recommendationsData = filteredData;
+        }
+      }
+      if (category === '送禮搭配') {
+        while (this.recommendationsData.length < 4) {
+          const randomProduct = this.getRandomProduct(categoryData);
+          const result = this.recommendationsData
+            .findIndex((product) => product.id === randomProduct.id);
+          if (result === -1 && randomProduct.id !== id) {
+            this.recommendationsData.push(randomProduct);
+          }
+        }
+      }
+      if (category === '蠟燭配件') {
+        while (this.recommendationsData.length < 4) {
+          let randomProduct = this.getRandomProduct(categoryData);
+          if (this.recommendationsData.length >= categoryData.length - 1) {
+            randomProduct = this.getRandomProduct(this.candlesData);
+          }
+          const result = this.recommendationsData
+            .findIndex((product) => product.id === randomProduct.id);
+          if (result === -1 && randomProduct.id !== id) {
+            this.recommendationsData.push(randomProduct);
+          }
+        }
+      }
+    },
+    getRandomProduct(categoryData) {
+      const randomIndex = Math.floor(Math.random() * categoryData.length);
+      const randomProduct = categoryData[randomIndex];
+      return randomProduct;
     },
   },
 });

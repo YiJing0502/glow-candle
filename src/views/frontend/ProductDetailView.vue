@@ -139,6 +139,21 @@
       </div>
     </div>
   </div>
+  <div class="container">
+    <h4>或許你會喜歡</h4>
+    <div
+    class="row row-cols-lg-4 row-cols-2"
+    role="button"
+    >
+      <div
+      class="col"
+      v-for="item in recommendationsData"
+      :key="item.id"
+      >
+        <ProductCard :product="item"></ProductCard>
+      </div>
+    </div>
+  </div>
   <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
@@ -150,6 +165,9 @@ import { mapActions, mapState } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import stringStore from '../../stores/stringStore';
 import toastsStore from '../../stores/toastsStore';
+import productsStore from '../../stores/productsStore';
+
+import ProductCard from '../../components/frontend/ProductCard.vue';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -172,9 +190,11 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
+    ProductCard,
   },
   computed: {
     ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),
+    ...mapState(productsStore, ['recommendationsData']),
   },
   methods: {
     // 增加數量
@@ -313,6 +333,7 @@ export default {
     },
     ...mapActions(cartsStore, ['getCart', 'postCart']),
     ...mapActions(toastsStore, ['pushToast']),
+    ...mapActions(productsStore, ['recommendations']),
   },
   watch: {
     $route(to) {
@@ -324,6 +345,7 @@ export default {
     this.getCart(false);
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
+    this.recommendations(this.$route.params.id);
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize);
