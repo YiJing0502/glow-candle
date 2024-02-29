@@ -7,6 +7,7 @@
   &:hover {
     background-color: $specialMainColor;
     color: $lightMainColor;
+    border: solid 1px $lightMainColor;
   }
 }
 // 深紅實心按鈕
