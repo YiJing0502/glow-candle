@@ -59,6 +59,11 @@ const router = createRouter({
           name: 'contact',
           component: () => import('../views/frontend/ContactView.vue'),
         },
+        {
+          path: 'collaborate',
+          name: 'collaborate',
+          component: () => import('../views/frontend/CollaborateView.vue'),
+        },
       ],
     },
     // 後台 backend routes

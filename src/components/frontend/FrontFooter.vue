@@ -41,7 +41,17 @@
             <li class="nav-item">蠟燭使用方式</li>
             <li class="nav-item">購物說明</li>
             <li class="nav-item">退換貨政策</li>
-            <li class="nav-item">企業採購/異業合作</li>
+            <li class="nav-item">
+              <RouterLink
+              :to="{ name: 'collaborate' }"
+              class="nav-link"
+              @click="changeNowPage('企業採購/異業合作')"
+              :class="{ 'active':nowPage === '企業採購/異業合作' }"
+              aria-current="page"
+              >
+              企業採購/異業合作
+              </RouterLink>
+            </li>
           </ul>
         </div>
         <!-- 聯絡我們 -->
