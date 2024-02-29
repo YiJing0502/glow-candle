@@ -47,11 +47,16 @@ export default defineStore('productsStore', {
               this.getCandlesData();
               this.getCandleFilterArray();
               this.getCategory();
-              this.calmSeriesProducts.map((product) => this.calmSeriesData
-                .push(this.getParticularProduct(product)));
-              this.calmSeriesBundle = this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T');
-              this.bestsellers.map((bestseller) => this.bestsellersData
-                .push(this.getParticularProduct(bestseller)));
+              Promise.all(this.calmSeriesProducts
+                .map((product) => this.getParticularProduct(product)))
+                .then((calmSeriesData) => {
+                  this.calmSeriesData = calmSeriesData;
+                });
+              Promise.all(this.bestsellers
+                .map((bestseller) => this.getParticularProduct(bestseller)))
+                .then((bestsellerData) => {
+                  this.bestsellersData = bestsellerData;
+                });
             } else {
               this.productsPageStatus = '全部產品';
               this.showProductsData = res.data.products;
@@ -209,49 +214,72 @@ export default defineStore('productsStore', {
     },
     // fn,使用 id 取得特定產品
     getParticularProduct(id) {
+      // 如果仍在載入中，返回一個在載入完成時解析的 Promise
+      if (this.isLoading) {
+        return new Promise((resolve) => {
+          const checkLoading = () => {
+            // 當載入完成時
+            if (!this.isLoading) {
+              const data = this.productsData.find((product) => product.id === id);
+              resolve(data);
+            } else {
+              // 如果仍在載入中，稍後再次檢查
+              setTimeout(checkLoading, 100);
+            }
+          };
+          checkLoading();
+        });
+      }
+      // 如果不在載入中，直接找到對應的產品資料，並返回已解析的 Promise
       const data = this.productsData.find((product) => product.id === id);
-      return data;
+      return Promise.resolve(data);
     },
     recommendations(id) {
       this.recommendationsData = [];
-      const data = this.getParticularProduct(id);
-      const { title } = data;
-      const serious = title.split('｜')[2];
-      const { category } = data;
-      const categoryData = this.productsData.filter((product) => product.category === category);
-      if (category === '香氛蠟燭') {
-        const seriousData = categoryData.filter((product) => product.title.split('｜')[2] === serious);
-        const filteredData = seriousData.filter((product) => product.id !== id);
-        if (filteredData.length < 4) {
-          filteredData.push(this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T'));
-        }
-        if (filteredData.length === 4) {
-          this.recommendationsData = filteredData;
-        }
-      }
-      if (category === '送禮搭配') {
-        while (this.recommendationsData.length < 4) {
-          const randomProduct = this.getRandomProduct(categoryData);
-          const result = this.recommendationsData
-            .findIndex((product) => product.id === randomProduct.id);
-          if (result === -1 && randomProduct.id !== id) {
-            this.recommendationsData.push(randomProduct);
+      Promise.all([this.getParticularProduct(id)])
+        .then(([data]) => {
+          const { title } = data;
+          const serious = title.split('｜')[2];
+          const { category } = data;
+          const categoryData = this.productsData.filter((product) => product.category === category);
+          if (category === '香氛蠟燭') {
+            const seriousData = categoryData.filter((product) => product.title.split('｜')[2] === serious);
+            const filteredData = seriousData.filter((product) => product.id !== id);
+            if (filteredData.length < 4) {
+              this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T')
+                .then((product) => {
+                  filteredData.push(product);
+                  this.recommendationsData = filteredData;
+                });
+            }
+            if (filteredData.length === 4) {
+              this.recommendationsData = filteredData;
+            }
           }
-        }
-      }
-      if (category === '蠟燭配件') {
-        while (this.recommendationsData.length < 4) {
-          let randomProduct = this.getRandomProduct(categoryData);
-          if (this.recommendationsData.length >= categoryData.length - 1) {
-            randomProduct = this.getRandomProduct(this.candlesData);
+          if (category === '送禮搭配') {
+            while (this.recommendationsData.length < 4) {
+              const randomProduct = this.getRandomProduct(categoryData);
+              const result = this.recommendationsData
+                .findIndex((product) => product.id === randomProduct.id);
+              if (result === -1 && randomProduct.id !== id) {
+                this.recommendationsData.push(randomProduct);
+              }
+            }
           }
-          const result = this.recommendationsData
-            .findIndex((product) => product.id === randomProduct.id);
-          if (result === -1 && randomProduct.id !== id) {
-            this.recommendationsData.push(randomProduct);
+          if (category === '蠟燭配件') {
+            while (this.recommendationsData.length < 4) {
+              let randomProduct = this.getRandomProduct(categoryData);
+              if (this.recommendationsData.length >= categoryData.length - 1) {
+                randomProduct = this.getRandomProduct(this.candlesData);
+              }
+              const result = this.recommendationsData
+                .findIndex((product) => product.id === randomProduct.id);
+              if (result === -1 && randomProduct.id !== id) {
+                this.recommendationsData.push(randomProduct);
+              }
+            }
           }
-        }
-      }
+        });
     },
     getRandomProduct(categoryData) {
       const randomIndex = Math.floor(Math.random() * categoryData.length);
