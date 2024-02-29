@@ -1,0 +1,123 @@
+<template>
+  <div class="container py-5">
+    <h2 class="text-center"> ✦ 讓光輝照亮生活的每一刻 ✦ </h2>
+    <h6 class="text-center">為您的生活注入光輝是我們的使命</h6>
+  </div>
+  <!-- 社群媒體 -->
+  <div class="container d-flex flex-column social-img mb-5">
+    <div class="row justify-content-center my-auto">
+      <div class="col-md-4 text-center d-flex flex-column align-items-center">
+        <h2 class="text-main-light">#光輝蠟燭 <br> 在 <br> INSTAGRAM</h2>
+        <h6 class="mb-3 text-main-light">加入我們，了解更多有關於我們的產品、發佈會以及活動！</h6>
+        <button type="button" class="btn btn-lg btn-solid-main d-flex align-items-center">追蹤我們
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- 灰底 -->
+  <div class="container-fluid bg-main-medium py-5 border-bottom border-1 border-main-color">
+    <section class="container">
+      <div class="row">
+        <!-- logo&標語 -->
+        <div class="col">
+          <img class="p-1 mb-3" src="/glow-logo.png" alt="glow-logo" width="75" />
+        </div>
+        <!-- 關於 -->
+        <div class="col">
+          <h5>關於</h5>
+          <ul class="navbar-nav lh-lg">
+            <li class="nav-item">
+              <RouterLink
+              :to="{ name: 'about' }"
+              class="nav-link"
+              @click="changeNowPage('關於我們')"
+              :class="{ 'active':nowPage === '關於我們' }"
+              aria-current="page"
+              >
+              關於我們
+            </RouterLink>
+            </li>
+            <li class="nav-item">蠟燭使用方式</li>
+            <li class="nav-item">購物說明</li>
+            <li class="nav-item">退換貨政策</li>
+            <li class="nav-item">企業採購/異業合作</li>
+          </ul>
+        </div>
+        <!-- 聯絡我們 -->
+        <div class="col">
+          <h5>聯絡我們</h5>
+          <ul class="navbar-nav lh-lg">
+            <li class="nav-item">LINE 訂單客服</li>
+            <li class="nav-item">聯絡我們</li>
+            <li class="nav-item">INSTAGRAM</li>
+            <li class="nav-item">FACEBOOK</li>
+          </ul>
+        </div>
+        <!-- 品牌 -->
+        <div class="col">
+          <h5 class="lh-base">
+            光輝<br>
+            台灣原創香氛品牌
+          </h5>
+          <p class="lh-base">「自創立以來，GLOW的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」</p>
+        </div>
+      </div>
+      <!-- social -->
+      <div class="row pt-5">
+        <div class="col  d-flex justify-content-center">
+          <img class="px-3" width="52" :src="facebook" alt="">
+          <img class="px-3" width="52" :src="instagram" alt="">
+          <img class="px-3" width="52" :src="line" alt="">
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- 底文 -->
+  <div class="container-fluid bg-main-medium py-5">
+    <section class="container">
+      <div class="row pt-5">
+        <div class="col  d-flex flex-column justify-content-center align-items-center">
+          <p class="text-center text-medium-gray">
+            相關產品圖片使用來自 Unsplash 所提供的免費圖片，網站本身無任何商業用途
+          </p>
+          <p class="text-center text-medium-gray">
+            © 2024, 光輝 香氛蠟燭 由 六角學院－後端API 與 YiJing－前端畫面 技術支援
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+<script>
+import { mapActions, mapState } from 'pinia';
+import pageStore from '../../stores/pageStore';
+
+import facebook from '../../assets/svg/facebook.svg';
+import instagram from '../../assets/svg/instagram.svg';
+import line from '../../assets/svg/line.svg';
+
+export default {
+  data() {
+    return {
+      facebook,
+      instagram,
+      line,
+    };
+  },
+  computed: {
+    ...mapState(pageStore, ['nowPage']),
+  },
+  methods: {
+    ...mapActions(pageStore, ['changeNowPage']),
+  },
+};
+</script>
+<style scoped>
+.social-img {
+  background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1709002297226.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=K9HTO3SVRrruyAnwfGde6rKMjzqsdWUeQwewzeLqE342vcHJoPQFyHyCIM%2B8eLqZWB%2FempcMHMoGy%2Bh8jLJUnKaJ8y3TKNWr2kcqUHYH%2BdNlFGg5sVVRqVG5Juhca1XJGh0voUWy%2BeyDzpM6RGYycrhgDLzl88m0xA9guewAO16YO8xI2dnetZMINlBEcyvsaDJrxUk3Ys3v%2B2GNjR3eWaq0eh0Izh%2BBBDTRyfK7mxJj7qV7ApSeJ%2FM%2FznI%2BTpLsKPDIfxoZ1cav%2BCT%2Brkp2ShuaavztLaSoMdY98tmpupx6uEmOfivLYqUKPwx0mpwIh09AAPpP63DItXyF%2FgX9tg%3D%3D);
+  /* background-position: center center; */
+  background-size: cover;
+  height: 40vh;
+}
+</style>

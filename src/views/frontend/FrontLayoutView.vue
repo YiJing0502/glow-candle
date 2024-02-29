@@ -2,10 +2,12 @@
   <FrontNavbar></FrontNavbar>
   <RouterView :key="$route.fullPath"></RouterView>
   <ToastMessages></ToastMessages>
+  <FrontFooter></FrontFooter>
 </template>
 <script>
 import FrontNavbar from '../../components/frontend/FrontNavbar.vue';
 import ToastMessages from '../../components/ToastMessages.vue';
+import FrontFooter from '../../components/frontend/FrontFooter.vue';
 
 export default {
   data() {
@@ -16,6 +18,7 @@ export default {
   components: {
     FrontNavbar,
     ToastMessages,
+    FrontFooter,
   },
   watch: {
     $route() {
