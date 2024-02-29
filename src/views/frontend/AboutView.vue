@@ -58,7 +58,7 @@
       class="col bg-main-spec d-flex flex-column justify-content-center align-items-start p-5"
       >
         <h2 class="text-main-light">關於我們的團隊</h2>
-        <p class="text-main-light font-monospace lh-base">自 2024 年創立，來自台灣原創生活風格品牌，以手工香氛蠟燭作為開端。
+        <p class="text-main-light font-monospace lh-base">自 2023 年創立，來自台灣原創生活風格品牌，以手工香氛蠟燭作為開端。
         <br>
         從生產到顧客使用，我們致力於讓所有細小的過程體驗都能創造平靜、舒適、和諧的氛圍。
         <br>

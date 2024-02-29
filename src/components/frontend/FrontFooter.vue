@@ -18,13 +18,13 @@
   <!-- 灰底 -->
   <div class="container-fluid bg-main-medium py-5 border-bottom border-1 border-main-color">
     <section class="container">
-      <div class="row">
+      <div class="row row-cols-1 row-cols-sm-4">
         <!-- logo&標語 -->
-        <div class="col">
+        <div class="col mb-5">
           <img class="p-1 mb-3" src="/glow-logo.png" alt="glow-logo" width="75" />
         </div>
         <!-- 關於 -->
-        <div class="col">
+        <div class="col mb-5">
           <h5>關於</h5>
           <ul class="navbar-nav lh-lg">
             <li class="nav-item">
@@ -36,7 +36,7 @@
               aria-current="page"
               >
               關於我們
-            </RouterLink>
+              </RouterLink>
             </li>
             <li class="nav-item">蠟燭使用方式</li>
             <li class="nav-item">購物說明</li>
@@ -45,22 +45,32 @@
           </ul>
         </div>
         <!-- 聯絡我們 -->
-        <div class="col">
+        <div class="col mb-5">
           <h5>聯絡我們</h5>
           <ul class="navbar-nav lh-lg">
             <li class="nav-item">LINE 訂單客服</li>
-            <li class="nav-item">聯絡我們</li>
+            <li class="nav-item">
+              <RouterLink
+              :to="{ name: 'contact' }"
+              class="nav-link"
+              @click="changeNowPage('聯絡我們')"
+              :class="{ 'active':nowPage === '聯絡我們' }"
+              aria-current="page"
+              >
+              聯絡我們
+              </RouterLink>
+            </li>
             <li class="nav-item">INSTAGRAM</li>
             <li class="nav-item">FACEBOOK</li>
           </ul>
         </div>
         <!-- 品牌 -->
-        <div class="col">
+        <div class="col mb-5">
           <h5 class="lh-base">
-            光輝<br>
+            光輝時刻<br>
             台灣原創香氛品牌
           </h5>
-          <p class="lh-base">「自創立以來，GLOW的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」</p>
+          <p class="lh-base">「自創立以來，光輝的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」</p>
         </div>
       </div>
       <!-- social -->
@@ -82,7 +92,7 @@
             相關產品圖片使用來自 Unsplash 所提供的免費圖片，網站本身無任何商業用途
           </p>
           <p class="text-center text-medium-gray">
-            © 2024, 光輝 香氛蠟燭 由 六角學院－後端API 與 YiJing－前端畫面 技術支援
+            © 2024, 光輝時刻 由 六角學院－後端API 與 YiJing－前端畫面 技術支援
           </p>
         </div>
       </div>
