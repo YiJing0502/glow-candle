@@ -60,10 +60,12 @@
     <h4 class="mb-3">更多我們的詳細資訊</h4>
     <p>公司名稱：
       光輝時刻有限公司</p>
-    <p>聯絡信箱：
-      glow.2023@gmail.com</p>
     <p>統一編號：08765445</p>
-    <p>聯絡電話：0988000999</p>
+    <p>聯絡信箱：
+      <a class="text-deep-gray" href="mailto:glow.2023@gmail.com">glow.2023@gmail.com</a></p>
+    <p>聯絡電話：
+      <a class="text-deep-gray" href="tel:0988000999">0988000999</a>
+    </p>
     <p>營業時間：週一至週五 09:00~17:00</p>
   </div>
 </template>

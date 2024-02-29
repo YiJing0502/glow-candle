@@ -121,12 +121,18 @@
                 <!-- 聯絡信箱 -->
                 <div class="d-flex justify-content-between">
                   <p>聯絡信箱</p>
-                  <p>glow.2023@gmail.com</p>
+                  <p>
+                    <a class="text-deep-gray" href="mailto:glow.2023@gmail.com">
+                      glow.2023@gmail.com
+                    </a>
+                  </p>
                 </div>
                 <!-- 聯絡電話 -->
                 <div class="d-flex justify-content-between">
                   <p>聯絡電話</p>
-                  <p>0988000999</p>
+                  <p>
+                    <a class="text-deep-gray" href="tel:0988000999">0988000999</a>
+                  </p>
                 </div>
                 <!-- 營業時間 -->
                 <div class="d-flex justify-content-between mb-3">
