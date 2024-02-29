@@ -5,8 +5,8 @@
   <!-- 介紹 -->
   <div class="container">
     <div class="text-center py-5">
-      <h2 class="text-main-spec fs-1">讓光輝照亮生活的每一刻</h2>
-      <h6>「光輝」是一個專注於製作高品質蠟燭的品牌，致力於為客戶營造溫馨、浪漫和舒適的氛圍。<br>以下是我們的堅持的品牌理念：</h6>
+      <h2 class="text-main-spec fs-1">點亮屬於你的時刻</h2>
+      <h6 class="lh-lg">「光輝」是一個專注於製作高品質蠟燭的品牌，致力於為客戶營造溫馨、浪漫和舒適的氛圍。<br>以下是我們的堅持的品牌理念：</h6>
     </div>
   </div>
   <!-- 理念 -->
