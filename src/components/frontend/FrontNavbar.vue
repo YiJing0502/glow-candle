@@ -3,9 +3,9 @@
     <div class="container">
       <RouterLink
       :to="{ name: 'home' }"
-      class="navbar-brand"
+      class="navbar-brand d-flex"
       :class="{ 'active':nowPage === '首頁' }"
-      @click="nowPage = '首頁'"
+      @click="changeNowPage('首頁')"
       >
         <img class="p-1" src="/glow-logo.png" alt="glow-logo" width="50" />
       </RouterLink>
@@ -27,7 +27,7 @@
             :to="{ name: 'home' }"
             class="nav-link"
             :class="{ 'active':nowPage === '首頁' }"
-            @click="nowPage = '首頁'"
+            @click="changeNowPage('首頁')"
             aria-current="page"
             >
             首頁
@@ -37,7 +37,7 @@
             <RouterLink
               :to="{ name: 'products', query: { category: '全部產品', page: 1 } }"
               class="nav-link"
-              @click="nowPage = '全部產品'"
+              @click="changeNowPage('全部產品')"
               :class="{ 'active':nowPage === '全部產品' }"
               aria-current="page"
               >全部產品
@@ -92,11 +92,12 @@
             <RouterLink
             :to="{ name: 'about' }"
             class="nav-link"
-            @click="nowPage = '關於我們'"
+            @click="changeNowPage('關於我們')"
             :class="{ 'active':nowPage === '關於我們' }"
             aria-current="page"
-              >關於我們</RouterLink
             >
+              關於我們
+            </RouterLink>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -123,7 +124,7 @@
               :to="{ name: 'checkout' }"
               class="nav-link position-relative"
               :class="{ 'active':nowPage === 'checkout' }"
-              @click="nowPage = 'checkout'"
+              @click="changeNowPage('checkout')"
               aria-current="page"
             >
               <span class="material-icons-outlined fs-3 mt-1">shopping_bag</span>
@@ -146,12 +147,13 @@
 import { mapState, mapActions } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import productsStore from '../../stores/productsStore';
+import pageStore from '../../stores/pageStore';
+
 import SearchModal from './SearchModal.vue';
 
 export default {
   data() {
     return {
-      nowPage: '',
       // result model
       serverMessage: {
         message: '',
@@ -163,6 +165,7 @@ export default {
     SearchModal,
   },
   computed: {
+    ...mapState(pageStore, ['nowPage']),
     ...mapState(cartsStore, ['cartProductQuantity']),
     ...mapState(productsStore, [
       'isLoading',
@@ -199,7 +202,7 @@ export default {
       }
     },
     goToFilterCandles(key, content) {
-      this.nowPage = '香氛蠟燭';
+      this.changeNowPage('香氛蠟燭');
       this.$router.push({
         name: 'products',
         query: {
@@ -208,9 +211,10 @@ export default {
       });
     },
     goToProductsCategoryPage(category) {
-      this.nowPage = category;
+      this.changeNowPage(category);
       this.$router.push({ name: 'products', query: { category, page: 1 } });
     },
+    ...mapActions(pageStore, ['changeNowPage']),
     ...mapActions(cartsStore, ['getCart']),
     ...mapActions(productsStore, ['getProducts', 'getProductsAll', 'filterCandles', 'initializePage']),
   },
