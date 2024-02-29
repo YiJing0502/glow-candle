@@ -30,7 +30,7 @@
             <li class="nav-item">
               <RouterLink
               :to="{ name: 'about' }"
-              class="nav-link"
+              class="nav-link p-0"
               @click="changeNowPage('關於我們')"
               :class="{ 'active':nowPage === '關於我們' }"
               aria-current="page"
@@ -40,11 +40,21 @@
             </li>
             <li class="nav-item">蠟燭使用方式</li>
             <li class="nav-item">購物說明</li>
-            <li class="nav-item">退換貨政策</li>
+            <li class="nav-item">
+              <RouterLink
+              :to="{ name: 'return' }"
+              class="nav-link p-0"
+              @click="changeNowPage('退換貨政策')"
+              :class="{ 'active':nowPage === '退換貨政策' }"
+              aria-current="page"
+              >
+              退換貨政策
+              </RouterLink>
+            </li>
             <li class="nav-item">
               <RouterLink
               :to="{ name: 'collaborate' }"
-              class="nav-link"
+              class="nav-link p-0"
               @click="changeNowPage('企業採購/異業合作')"
               :class="{ 'active':nowPage === '企業採購/異業合作' }"
               aria-current="page"
@@ -62,7 +72,7 @@
             <li class="nav-item">
               <RouterLink
               :to="{ name: 'contact' }"
-              class="nav-link"
+              class="nav-link p-0"
               @click="changeNowPage('聯絡我們')"
               :class="{ 'active':nowPage === '聯絡我們' }"
               aria-current="page"
