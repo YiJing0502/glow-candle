@@ -112,7 +112,9 @@
           </li>
           <li class="nav-item">
             <RouterLink
-            :to="{ name: 'about' }"
+            :to="{ name: 'contact' }"
+            @click="changeNowPage('聯絡我們')"
+            :class="{ 'active':nowPage === '聯絡我們' }"
             class="nav-link"
             aria-current="page"
             >

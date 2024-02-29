@@ -54,6 +54,11 @@ const router = createRouter({
           name: 'about',
           component: () => import('../views/frontend/AboutView.vue'),
         },
+        {
+          path: 'contact',
+          name: 'contact',
+          component: () => import('../views/frontend/ContactView.vue'),
+        },
       ],
     },
     // 後台 backend routes
