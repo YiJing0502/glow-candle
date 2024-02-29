@@ -77,7 +77,7 @@
     </section>
   </div>
   <!-- 品牌介紹 -->
-  <div class="container-fluid bg-main-medium ">
+  <div class="container-fluid bg-main-medium">
     <section class="container">
       <!-- 品牌介紹 -->
       <div class="py-3 mb-5">
@@ -103,20 +103,8 @@
   </div>
   <div class="container">
     <section class="">
-      <!-- 社群媒體 -->
-      <div class="container d-flex flex-column social-img mb-5">
-        <div class="row justify-content-center my-auto">
-          <div class="col-md-4 text-center d-flex flex-column align-items-center">
-            <h2 class="text-main-light">#光輝蠟燭 <br> 在 <br> INSTAGRAM</h2>
-            <h6 class="mb-3 text-main-light">加入我們，了解更多有關於我們的產品、發佈會以及活動！</h6>
-            <button type="button" class="btn btn-lg btn-solid-main d-flex align-items-center">追蹤我們
-              <span class="material-icons">chevron_right</span>
-            </button>
-          </div>
-        </div>
-      </div>
       <!-- 服務保障 -->
-      <div class="border-bottom border-1 border-dark mb-5 pb-3">
+      <div class="border-bottom border-1 border-main-color mb-5 pb-3">
         <div class="row row-cols-md-4 row-cols-2">
           <div class="col">
             <span class="material-icons-round fs-1 mb-3"> local_shipping </span>
@@ -169,12 +157,6 @@ export default {
   background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1708936810913.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=coIMN4vj%2FhT9ywSbS%2FZF%2BjM1CZTewhhkDlR05aXEyCYbAHIn6wP2Zrj2q2yd444z%2BRwOHKFzU423mqF3MjTwpFfx%2Bh4achbHPfhr%2F78GE3rT7P30lNaVL6V9%2BbhDs0yk8CJC%2F86M2x2xBjq8ue%2Bga2DYOLvun1ki16osdhAiTYWrHuPmQyzewyuEmkNNB6eAygVFq2qtpaDtmalPgCcKYladrg5etlxtFfGGzXr8q9ga0CwPym6Vt3nYE9YG7A5t5D7seR4e%2FwRUsxHRWyOJkW7Oro%2BA%2FW0N%2BSIb%2B9R0kludYwZQGnHD5UFhMFmnhGdNua5Rx24nTXvesHfck2mo4A%3D%3D);
   background-position: center center;
   height: 80vh;
-}
-.social-img {
-  background-image: url(https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1709002297226.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=K9HTO3SVRrruyAnwfGde6rKMjzqsdWUeQwewzeLqE342vcHJoPQFyHyCIM%2B8eLqZWB%2FempcMHMoGy%2Bh8jLJUnKaJ8y3TKNWr2kcqUHYH%2BdNlFGg5sVVRqVG5Juhca1XJGh0voUWy%2BeyDzpM6RGYycrhgDLzl88m0xA9guewAO16YO8xI2dnetZMINlBEcyvsaDJrxUk3Ys3v%2B2GNjR3eWaq0eh0Izh%2BBBDTRyfK7mxJj7qV7ApSeJ%2FM%2FznI%2BTpLsKPDIfxoZ1cav%2BCT%2Brkp2ShuaavztLaSoMdY98tmpupx6uEmOfivLYqUKPwx0mpwIh09AAPpP63DItXyF%2FgX9tg%3D%3D);
-  /* background-position: center center; */
-  background-size: cover;
-  height: 40vh;
 }
 .bundle-image {
   transform:scale(1,1);transition: all 1s ease-out;display: block;
