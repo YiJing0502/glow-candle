@@ -1,8 +1,8 @@
 $lightMainColor: #fbfaf4;
 $mediumMainColor: #ebeae4;
 $specialMainColor: #984b4b;
-$lightGrayColor: #f5f5f5;
-$mediumGrayColor: #d9d9d9;
+$lightGrayColor: #EBEAE4;
+$mediumGrayColor: #7D7C77;
 $deepGrayColor: #52504b;
 $whiteColor: #fff;
 $focusBoxShadow: rgba(130, 130, 130, 0.25);
@@ -13,8 +13,14 @@ $focusBoxShadow: rgba(130, 130, 130, 0.25);
 .text-main-spec {
   color: $specialMainColor;
 }
+.text-medium-gray {
+  color: $mediumGrayColor;
+}
 .text-deep-gray {
   color: $deepGrayColor;
+}
+.bg-light-gray {
+  background-color: $lightGrayColor;
 }
 .bg-medium-gray {
   background-color: $mediumGrayColor;
@@ -30,4 +36,7 @@ $focusBoxShadow: rgba(130, 130, 130, 0.25);
 }
 .bg-main-light {
   background-color: $lightMainColor;
+}
+.border-main-color {
+  border-color: $mediumGrayColor;
 }

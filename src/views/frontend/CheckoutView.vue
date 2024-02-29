@@ -389,7 +389,7 @@
                     </label>
                   </div>
                   <!-- 小提醒 -->
-                  <div class="bg-medium-gray text-deep-gray px-3 py-2 mb-3">
+                  <div class="bg-light-gray text-deep-gray px-3 py-2 mb-3">
                     <h6>免運服務</h6>
                     <span
                       >我們的產品付款採用「線上信用卡」付款後出貨，運送採用「宅配到府」免運服務，讓您輕鬆購買、安心收貨。</span

@@ -56,13 +56,13 @@
                   <p>總金額</p>
                   <p>NT$ {{ parseInt(showData.total) }}</p>
                 </div>
-                <div v-if="!showData.is_paid" class="bg-medium-gray text-deep-gray px-3 py-2 mb-3">
+                <div v-if="!showData.is_paid" class="bg-light-gray text-deep-gray px-3 py-2 mb-3">
                   <h6>修改訂單問題？</h6>
                   <span
                     >若您於已下單後想修改您的訂單，請您先不要付款，請先聯絡客服人員修改您的訂單後，再搜尋您的訂單前往付款😄</span
                   >
                 </div>
-                <div v-else class="bg-medium-gray text-deep-gray px-3 py-2 mb-3">
+                <div v-else class="bg-light-gray text-deep-gray px-3 py-2 mb-3">
                   <h6>到貨時間？</h6>
                   <span
                     >在確認收到您訂單和款項之後我們約有1~2天備貨期，您最多可以指定3天後作為預期收到貨的日期。

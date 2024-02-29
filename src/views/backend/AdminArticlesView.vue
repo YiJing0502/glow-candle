@@ -39,7 +39,7 @@
           <td>{{ item.title }}</td>
           <td>
             <span
-              class="badge bg-medium-gray text-deep-gray me-1"
+              class="badge bg-light-gray text-deep-gray me-1"
               v-for="(tag, index) in item.tag"
               :key="index"
               >{{ tag }}</span
