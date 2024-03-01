@@ -38,8 +38,28 @@
               關於我們
               </RouterLink>
             </li>
-            <li class="nav-item">蠟燭使用方式</li>
-            <li class="nav-item">購物說明</li>
+            <li class="nav-item">
+              <RouterLink
+              :to="{ name: 'usage' }"
+              class="nav-link p-0"
+              @click="changeNowPage('蠟燭使用方式')"
+              :class="{ 'active':nowPage === '蠟燭使用方式' }"
+              aria-current="page"
+              >
+              蠟燭使用方式
+              </RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink
+              :to="{ name: 'shopping' }"
+              class="nav-link p-0"
+              @click="changeNowPage('購物說明')"
+              :class="{ 'active':nowPage === '購物說明' }"
+              aria-current="page"
+              >
+              購物說明
+              </RouterLink>
+            </li>
             <li class="nav-item">
               <RouterLink
               :to="{ name: 'return' }"
@@ -68,7 +88,6 @@
         <div class="col mb-5">
           <h5>聯絡我們</h5>
           <ul class="navbar-nav lh-lg">
-            <li class="nav-item">LINE 訂單客服</li>
             <li class="nav-item">
               <RouterLink
               :to="{ name: 'contact' }"
@@ -80,8 +99,30 @@
               聯絡我們
               </RouterLink>
             </li>
-            <li class="nav-item">INSTAGRAM</li>
-            <li class="nav-item">FACEBOOK</li>
+            <li class="nav-item">
+              <button
+              type="button"
+              class="nav-link p-0"
+              >
+              LINE 訂單客服
+              </button>
+            </li>
+            <li class="nav-item">
+              <button
+              type="button"
+              class="nav-link p-0"
+              >
+              INSTAGRAM
+              </button>
+            </li>
+            <li class="nav-item">
+              <button
+              type="button"
+              class="nav-link p-0"
+              >
+              FACEBOOK
+              </button>
+            </li>
           </ul>
         </div>
         <!-- 品牌 -->
@@ -96,9 +137,24 @@
       <!-- social -->
       <div class="row pt-5">
         <div class="col  d-flex justify-content-center">
-          <img class="px-3" width="52" :src="facebook" alt="">
-          <img class="px-3" width="52" :src="instagram" alt="">
-          <img class="px-3" width="52" :src="line" alt="">
+          <button
+          type="button"
+          class="nav-link myImage"
+          >
+            <img class="px-3" width="52" :src="facebook" alt="">
+          </button>
+          <button
+          type="button"
+          class="nav-link myImage"
+          >
+            <img class="px-3" width="52" :src="instagram" alt="">
+          </button>
+          <button
+          type="button"
+          class="nav-link myImage"
+          >
+            <img class="px-3" width="52" :src="line" alt="">
+          </button>
         </div>
       </div>
     </section>
@@ -150,4 +206,6 @@ export default {
   background-size: cover;
   height: 40vh;
 }
+.myImage img{transform:scale(1,1);transition: all 1s ease-out;}
+.myImage img:hover{transform:scale(1.2,1.2);}
 </style>
