@@ -16,7 +16,6 @@ export default defineStore('articlesStore', {
         axios.get(url, { params: { page } })
           .then((res) => {
             this.articlesData = res.data;
-            console.log(this.articlesData);
             resolve(res);
             this.isLoading = false;
           })

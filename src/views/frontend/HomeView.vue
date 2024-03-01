@@ -101,9 +101,9 @@
       </div>
     </section>
   </div>
+  <!-- 服務保障 -->
   <div class="container">
     <section class="">
-      <!-- 服務保障 -->
       <div class="border-bottom border-1 border-main-color mb-5 pb-3">
         <div class="row row-cols-md-4 row-cols-2">
           <div class="col">
@@ -130,17 +130,54 @@
       </div>
     </section>
   </div>
+  <!-- 動態消息 -->
+  <div class="container-fluid bg-main-medium py-5">
+    <section class="container">
+      <!-- 動態消息 -->
+      <div class="">
+        <h2 class="mb-5">動態消息</h2>
+        <div class="row row-cols-md-3 row-cols-1" role="button">
+          <div
+          v-for="item in homeArticles"
+          :key="item.id"
+          class="col">
+            <ArticleCard :article="item"></ArticleCard>
+          </div>
+        </div>
+        <div class="row"></div>
+        <div class="row justify-content-center my-auto">
+          <div class="col-md-4 text-center d-flex flex-column align-items-center">
+            <RouterLink
+            :to="{ name: 'articles' }"
+            type="button" class="btn btn-lg btn-solid-dpgray d-flex align-items-center">查看更多
+              <span class="material-icons">chevron_right</span>
+            </RouterLink>
+          </div>
+        </div>
+      </div>
+    </section>
+    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
+  </div>
 </template>
 <script>
 import { RouterLink } from 'vue-router';
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import productsStore from '../../stores/productsStore';
+import articlesStore from '../../stores/articlesStore';
 import ProductCard from '../../components/frontend/ProductCard.vue';
+import ArticleCard from '../../components/frontend/ArticleCard.vue';
 
 export default {
   data() {
     return {
       spaceBetween: 10,
+      // 放置首頁的文章
+      homeArticles: [],
+      // result model
+      serverMessage: {
+        message: '',
+        success: true,
+      },
     };
   },
   computed: {
@@ -149,6 +186,26 @@ export default {
   components: {
     ProductCard,
     RouterLink,
+    ArticleCard,
+  },
+  methods: {
+    async goToGetHomeArticles() {
+      try {
+        const res = await this.getArticles();
+        for (let index = 0; index < 3; index += 1) {
+          const element = res.data.articles[index];
+          this.homeArticles.push(element);
+        }
+      } catch (err) {
+        this.serverMessage.message = err.response.data.message;
+        this.serverMessage.success = err.response.data.success;
+        this.$refs.resultModal.openModal();
+      }
+    },
+    ...mapActions(articlesStore, ['getArticles']),
+  },
+  mounted() {
+    this.goToGetHomeArticles();
   },
 };
 </script>
