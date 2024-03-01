@@ -69,6 +69,16 @@ const router = createRouter({
           name: 'return',
           component: () => import('../views/frontend/ReturnView.vue'),
         },
+        {
+          path: 'shopping',
+          name: 'shopping',
+          component: () => import('../views/frontend/ShoppingView.vue'),
+        },
+        {
+          path: 'usage',
+          name: 'usage',
+          component: () => import('../views/frontend/UsageView.vue'),
+        },
       ],
     },
     // 後台 backend routes
