@@ -40,6 +40,17 @@
             </li>
             <li class="nav-item">
               <RouterLink
+              :to="{ name: 'articles' }"
+              class="nav-link p-0"
+              @click="changeNowPage('動態消息')"
+              :class="{ 'active':nowPage === '動態消息' }"
+              aria-current="page"
+              >
+              動態消息
+              </RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink
               :to="{ name: 'usage' }"
               class="nav-link p-0"
               @click="changeNowPage('蠟燭使用方式')"
