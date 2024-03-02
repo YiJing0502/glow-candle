@@ -89,7 +89,7 @@
                           <button
                             type="button"
                             class="btn btn-normal-spec"
-                            @click="updatedShowData.tag.splice(inex, 1)"
+                            @click="updatedShowData.tag.splice(index, 1)"
                             v-if="index !== 0"
                           >
                             x
