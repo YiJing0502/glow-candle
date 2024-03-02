@@ -12,6 +12,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <vee-form
+          ref="form"
           @submit="inEditArticleMode ? putAdminArticle() : postAdminArticle()"
           v-slot="{ errors }"
         >
@@ -286,6 +287,10 @@ export default {
     TwoTabs,
   },
   methods: {
+    resetAddForm() {
+      // 使用 VeeValidate 提供的 resetForm 方法來重設表單的驗證狀態
+      this.$refs.form.resetForm();
+    },
     openModal() {
       this.modal.show();
     },

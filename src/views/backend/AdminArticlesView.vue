@@ -146,6 +146,7 @@ export default {
         create_at: this.currentDate,
         isPublic: false,
       };
+      this.$refs.articleModal.resetAddForm();
       this.$refs.articleModal.openModal();
     },
     // modal, 打開刪除文章modal
@@ -191,7 +192,7 @@ export default {
     // ajax, 新增 articles
     postAdminArticle(updatedData) {
       const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/admin/article`;
-      const data = { data: updatedData };
+      const data = { data: { ...updatedData } };
       data.data.create_at = this.dayToTimestamp10Code(updatedData.create_at);
       this.$http
         .post(url, data)
