@@ -27,6 +27,7 @@
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                @click="cancelChangeOrder"
               ></button>
             </div>
           </div>
