@@ -129,6 +129,7 @@ export default {
     getAdminAddCouponModal() {
       this.inEditCouponMode = false;
       this.showData = {};
+      this.$refs.couponModal.resetAddForm();
       this.$refs.couponModal.openModal();
     },
     // modal, 打開編輯優惠券modal
