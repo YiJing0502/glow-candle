@@ -22,19 +22,19 @@
   border-radius: 100%;
 }
 .first-dot {
-  animation-duration: 3s;
+  animation-duration: 1s;
   animation-name: first-dot;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
 .second-dot {
-  animation-duration: 3s;
+  animation-duration: 1s;
   animation-name: second-dot;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
 .third-dot {
-  animation-duration: 3s;
+  animation-duration: 1s;
   animation-name: third-dot;
   animation-iteration-count: infinite;
   animation-direction: alternate;
