@@ -5,13 +5,10 @@
       <div>
         <h2 class="mb-5">動態消息</h2>
         <div role="button" class="row">
-          <div
-          v-for="item in articlesData.articles"
-          :key="item.id"
-          class="col">
+          <div v-for="item in articlesData.articles" :key="item.id" class="col">
             <ArticleCard :article="item">
               <!-- 選擇性內容 -->
-              <h6 class="mb-3"> 由 {{ item.author }} 發布</h6>
+              <h6 class="mb-3">由 {{ item.author }} 發布</h6>
               <div class="mb-3">
                 <span
                   class="badge bg-main-light text-deep-gray me-1"
@@ -94,7 +91,16 @@ export default {
 };
 </script>
 <style scoped>
-.myImage{width:100%;overflow:hidden;}
-.myImage img{transform:scale(1,1);transition: all 1s ease-out;display: block;}
-.myImage img:hover{transform:scale(1.2,1.2);}
+.myImage {
+  width: 100%;
+  overflow: hidden;
+}
+.myImage img {
+  transform: scale(1, 1);
+  transition: all 1s ease-out;
+  display: block;
+}
+.myImage img:hover {
+  transform: scale(1.2, 1.2);
+}
 </style>

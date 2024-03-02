@@ -233,7 +233,8 @@
                 <div class="d-flex justify-content-between">
                   <p>聯絡信箱</p>
                   <p>
-                    <a class="text-deep-gray" href="mailto:glow.2023@gmail.com">glow.2023@gmail.com
+                    <a class="text-deep-gray" href="mailto:glow.2023@gmail.com"
+                      >glow.2023@gmail.com
                     </a>
                   </p>
                 </div>

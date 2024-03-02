@@ -46,17 +46,14 @@
         <!-- 產品描述 -->
         <p>{{ showData.description }}</p>
         <!-- 產品價格 -->
-        <h4
-        v-if="showData.price === showData.origin_price"
-        class="mt-3 mb-3">NT$ {{ showData.price }}
+        <h4 v-if="showData.price === showData.origin_price" class="mt-3 mb-3">
+          NT$ {{ showData.price }}
         </h4>
-        <div
-        v-else
-        class="d-flex align-items-end">
-        <h4
-        class="me-3 text-decoration-line-through text-deep-gray">NT${{ showData.origin_price }}
-        </h4>
-        <h2 class="text-main-spec fw-bolder">NT${{ showData.price }}</h2>
+        <div v-else class="d-flex align-items-end">
+          <h4 class="me-3 text-decoration-line-through text-deep-gray">
+            NT${{ showData.origin_price }}
+          </h4>
+          <h2 class="text-main-spec fw-bolder">NT${{ showData.price }}</h2>
         </div>
         <!-- 購物車增減按鈕與庫存 -->
         <div class="d-flex">
@@ -141,15 +138,8 @@
   </div>
   <div class="container">
     <h4>或許你會喜歡</h4>
-    <div
-    class="row row-cols-lg-4 row-cols-2"
-    role="button"
-    >
-      <div
-      class="col"
-      v-for="item in recommendationsData"
-      :key="item.id"
-      >
+    <div class="row row-cols-lg-4 row-cols-2" role="button">
+      <div class="col" v-for="item in recommendationsData" :key="item.id">
         <ProductCard :product="item"></ProductCard>
       </div>
     </div>

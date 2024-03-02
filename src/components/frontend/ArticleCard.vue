@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="myImage rounded">
-      <img :src="item.imageUrl" class="card-img-top" :alt="item.title">
+      <img :src="item.imageUrl" class="card-img-top" :alt="item.title" />
     </div>
     <div class="card-body">
       <h5 class="card-title">{{ item.title }}</h5>
@@ -37,7 +37,16 @@ export default {
 };
 </script>
 <style scoped>
-.myImage{width:100%;overflow:hidden;}
-.myImage img{transform:scale(1,1);transition: all 1s ease-out;display: block;}
-.myImage img:hover{transform:scale(1.2,1.2);}
+.myImage {
+  width: 100%;
+  overflow: hidden;
+}
+.myImage img {
+  transform: scale(1, 1);
+  transition: all 1s ease-out;
+  display: block;
+}
+.myImage img:hover {
+  transform: scale(1.2, 1.2);
+}
 </style>

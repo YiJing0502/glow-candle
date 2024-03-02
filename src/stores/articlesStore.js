@@ -13,7 +13,8 @@ export default defineStore('articlesStore', {
       return new Promise((resolve, reject) => {
         this.isLoading = true;
         const url = `${VITE_BASE_URL}/v2/api/${VITE_API_PATH}/articles`;
-        axios.get(url, { params: { page } })
+        axios
+          .get(url, { params: { page } })
           .then((res) => {
             this.articlesData = res.data;
             resolve(res);

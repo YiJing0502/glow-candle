@@ -1,35 +1,37 @@
 <template>
-  <div class="modal fade"
-  ref="modal"
-  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    ref="modal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            搜尋產品
-          </h1>
-          <button type="button"
-          class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">搜尋產品</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <div class="">
             <label for="exampleDataList" class="form-label">請在此輸入「產品名稱」</label>
             <input
-            @input="searchProduct(keyword)"
-            v-model="keyword"
-            class="form-control mb-3"
-            list="datalistOptions"
-            id="exampleDataList"
-            placeholder="輸入即搜索...">
+              @input="searchProduct(keyword)"
+              v-model="keyword"
+              class="form-control mb-3"
+              list="datalistOptions"
+              id="exampleDataList"
+              placeholder="輸入即搜索..."
+            />
             <datalist id="datalistOptions">
-              <option
-              v-for="item in showProductsData"
-              :key="item.id"
-              :value="item.title"/>
+              <option v-for="item in showProductsData" :key="item.id" :value="item.title" />
             </datalist>
-            <table
-            v-if="showProductsData.length !== 0 && keyword !== ''"
-            class="table">
+            <table v-if="showProductsData.length !== 0 && keyword !== ''" class="table">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -37,29 +39,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr
-                v-for="(item, index) in showProductsData"
-                :key="item.id"
-                >
-                  <th
-                  class="py-3"
-                  scope="row">{{ index + 1 }}</th>
+                <tr v-for="(item, index) in showProductsData" :key="item.id">
+                  <th class="py-3" scope="row">{{ index + 1 }}</th>
                   <td>
-                    <button
-                    @click="goToPage(item.id, 'product')"
-                    class="btn btn-normal-dpgray"
-                    >{{ item.title }}
+                    <button @click="goToPage(item.id, 'product')" class="btn btn-normal-dpgray">
+                      {{ item.title }}
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
             <div
-            class="d-flex flex-column align-items-center"
-            v-if="showProductsData.length === 0 && keyword !== ''"
+              class="d-flex flex-column align-items-center"
+              v-if="showProductsData.length === 0 && keyword !== ''"
             >
-            <span class="material-icons-round fs-1">announcement</span>
-            <p>找不到與「{{ keyword }}」相符的結果。請檢查拼字或使用其他字詞。</p>
+              <span class="material-icons-round fs-1">announcement</span>
+              <p>找不到與「{{ keyword }}」相符的結果。請檢查拼字或使用其他字詞。</p>
             </div>
           </div>
         </div>
@@ -100,7 +95,6 @@ export default {
       this.keyword = '';
     },
     ...mapActions(productsStore, ['searchProduct']),
-
   },
   mounted() {
     // 獲取 bsResultModal DOM

@@ -24,8 +24,18 @@ export default defineStore('productsStore', {
     // candle data
     candlesData: [],
     // 首頁需要的產品資料
-    calmSeriesProducts: ['-NoLTSCPuUQGarWezIAl', '-NoLWB8MDGIYr9flJ0Pb', '-NoLWTOY-q1QXZOnQmEN', '-NoLWnut3G93WzfuedRW'],
-    bestsellers: ['-NoLXYH97x33NA7DUGnQ', '-NoLY64ZdZ5tKG0MYgXk', '-NoL_80KGaePj1gdr6Gp', '-NoLRz5ol1emgz6xq7j0'],
+    calmSeriesProducts: [
+      '-NoLTSCPuUQGarWezIAl',
+      '-NoLWB8MDGIYr9flJ0Pb',
+      '-NoLWTOY-q1QXZOnQmEN',
+      '-NoLWnut3G93WzfuedRW',
+    ],
+    bestsellers: [
+      '-NoLXYH97x33NA7DUGnQ',
+      '-NoLY64ZdZ5tKG0MYgXk',
+      '-NoL_80KGaePj1gdr6Gp',
+      '-NoLRz5ol1emgz6xq7j0',
+    ],
     calmSeriesBundle: {},
     bestsellersData: [],
     calmSeriesData: [],
@@ -47,16 +57,16 @@ export default defineStore('productsStore', {
               this.getCandlesData();
               this.getCandleFilterArray();
               this.getCategory();
-              Promise.all(this.calmSeriesProducts
-                .map((product) => this.getParticularProduct(product)))
-                .then((calmSeriesData) => {
-                  this.calmSeriesData = calmSeriesData;
-                });
-              Promise.all(this.bestsellers
-                .map((bestseller) => this.getParticularProduct(bestseller)))
-                .then((bestsellerData) => {
-                  this.bestsellersData = bestsellerData;
-                });
+              Promise.all(
+                this.calmSeriesProducts.map((product) => this.getParticularProduct(product)),
+              ).then((calmSeriesData) => {
+                this.calmSeriesData = calmSeriesData;
+              });
+              Promise.all(
+                this.bestsellers.map((bestseller) => this.getParticularProduct(bestseller)),
+              ).then((bestsellerData) => {
+                this.bestsellersData = bestsellerData;
+              });
             } else {
               this.productsPageStatus = '全部產品';
               this.showProductsData = res.data.products;
@@ -236,50 +246,52 @@ export default defineStore('productsStore', {
     },
     recommendations(id) {
       this.recommendationsData = [];
-      Promise.all([this.getParticularProduct(id)])
-        .then(([data]) => {
-          const { title } = data;
-          const serious = title.split('｜')[2];
-          const { category } = data;
-          const categoryData = this.productsData.filter((product) => product.category === category);
-          if (category === '香氛蠟燭') {
-            const seriousData = categoryData.filter((product) => product.title.split('｜')[2] === serious);
-            const filteredData = seriousData.filter((product) => product.id !== id);
-            if (filteredData.length < 4) {
-              this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T')
-                .then((product) => {
-                  filteredData.push(product);
-                  this.recommendationsData = filteredData;
-                });
-            }
-            if (filteredData.length === 4) {
+      Promise.all([this.getParticularProduct(id)]).then(([data]) => {
+        const { title } = data;
+        const serious = title.split('｜')[2];
+        const { category } = data;
+        const categoryData = this.productsData.filter((product) => product.category === category);
+        if (category === '香氛蠟燭') {
+          const seriousData = categoryData.filter(
+            (product) => product.title.split('｜')[2] === serious,
+          );
+          const filteredData = seriousData.filter((product) => product.id !== id);
+          if (filteredData.length < 4) {
+            this.getParticularProduct('-NoLX8ZL10JiBTlwGN6T').then((product) => {
+              filteredData.push(product);
               this.recommendationsData = filteredData;
+            });
+          }
+          if (filteredData.length === 4) {
+            this.recommendationsData = filteredData;
+          }
+        }
+        if (category === '送禮搭配') {
+          while (this.recommendationsData.length < 4) {
+            const randomProduct = this.getRandomProduct(categoryData);
+            const result = this.recommendationsData.findIndex(
+              (product) => product.id === randomProduct.id,
+            );
+            if (result === -1 && randomProduct.id !== id) {
+              this.recommendationsData.push(randomProduct);
             }
           }
-          if (category === '送禮搭配') {
-            while (this.recommendationsData.length < 4) {
-              const randomProduct = this.getRandomProduct(categoryData);
-              const result = this.recommendationsData
-                .findIndex((product) => product.id === randomProduct.id);
-              if (result === -1 && randomProduct.id !== id) {
-                this.recommendationsData.push(randomProduct);
-              }
+        }
+        if (category === '蠟燭配件') {
+          while (this.recommendationsData.length < 4) {
+            let randomProduct = this.getRandomProduct(categoryData);
+            if (this.recommendationsData.length >= categoryData.length - 1) {
+              randomProduct = this.getRandomProduct(this.candlesData);
+            }
+            const result = this.recommendationsData.findIndex(
+              (product) => product.id === randomProduct.id,
+            );
+            if (result === -1 && randomProduct.id !== id) {
+              this.recommendationsData.push(randomProduct);
             }
           }
-          if (category === '蠟燭配件') {
-            while (this.recommendationsData.length < 4) {
-              let randomProduct = this.getRandomProduct(categoryData);
-              if (this.recommendationsData.length >= categoryData.length - 1) {
-                randomProduct = this.getRandomProduct(this.candlesData);
-              }
-              const result = this.recommendationsData
-                .findIndex((product) => product.id === randomProduct.id);
-              if (result === -1 && randomProduct.id !== id) {
-                this.recommendationsData.push(randomProduct);
-              }
-            }
-          }
-        });
+        }
+      });
     },
     getRandomProduct(categoryData) {
       const randomIndex = Math.floor(Math.random() * categoryData.length);

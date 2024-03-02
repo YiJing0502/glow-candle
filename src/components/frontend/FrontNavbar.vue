@@ -2,10 +2,10 @@
   <nav class="navbar sticky-top navbar-expand-lg bg-main-light p-0">
     <div class="container">
       <RouterLink
-      :to="{ name: 'home' }"
-      class="navbar-brand d-flex"
-      :class="{ 'active':nowPage === '首頁' }"
-      @click="changeNowPage('首頁')"
+        :to="{ name: 'home' }"
+        class="navbar-brand d-flex"
+        :class="{ active: nowPage === '首頁' }"
+        @click="changeNowPage('首頁')"
       >
         <img class="p-1" src="/glow-logo.png" alt="glow-logo" width="50" />
       </RouterLink>
@@ -24,13 +24,13 @@
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item">
             <RouterLink
-            :to="{ name: 'home' }"
-            class="nav-link"
-            :class="{ 'active':nowPage === '首頁' }"
-            @click="changeNowPage('首頁')"
-            aria-current="page"
+              :to="{ name: 'home' }"
+              class="nav-link"
+              :class="{ active: nowPage === '首頁' }"
+              @click="changeNowPage('首頁')"
+              aria-current="page"
             >
-            首頁
+              首頁
             </RouterLink>
           </li>
           <li class="nav-item">
@@ -38,7 +38,7 @@
               :to="{ name: 'products', query: { category: '全部產品', page: 1 } }"
               class="nav-link"
               @click="changeNowPage('全部產品')"
-              :class="{ 'active':nowPage === '全部產品' }"
+              :class="{ active: nowPage === '全部產品' }"
               aria-current="page"
               >全部產品
             </RouterLink>
@@ -47,7 +47,7 @@
             <button
               type="button"
               class="nav-link"
-              :class="{ 'active':nowPage === item }"
+              :class="{ active: nowPage === item }"
               aria-current="page"
               @click="goToProductsCategoryPage(item)"
             >
@@ -90,11 +90,11 @@
           </li>
           <li class="nav-item">
             <RouterLink
-            :to="{ name: 'about' }"
-            class="nav-link"
-            @click="changeNowPage('關於我們')"
-            :class="{ 'active':nowPage === '關於我們' }"
-            aria-current="page"
+              :to="{ name: 'about' }"
+              class="nav-link"
+              @click="changeNowPage('關於我們')"
+              :class="{ active: nowPage === '關於我們' }"
+              aria-current="page"
             >
               關於我們
             </RouterLink>
@@ -112,11 +112,11 @@
           </li>
           <li class="nav-item">
             <RouterLink
-            :to="{ name: 'contact' }"
-            @click="changeNowPage('聯絡我們')"
-            :class="{ 'active':nowPage === '聯絡我們' }"
-            class="nav-link"
-            aria-current="page"
+              :to="{ name: 'contact' }"
+              @click="changeNowPage('聯絡我們')"
+              :class="{ active: nowPage === '聯絡我們' }"
+              class="nav-link"
+              aria-current="page"
             >
               <span class="material-icons fs-4 mt-1">forum</span>
             </RouterLink>
@@ -125,7 +125,7 @@
             <RouterLink
               :to="{ name: 'checkout' }"
               class="nav-link position-relative"
-              :class="{ 'active':nowPage === 'checkout' }"
+              :class="{ active: nowPage === 'checkout' }"
               @click="changeNowPage('checkout')"
               aria-current="page"
             >
@@ -208,7 +208,10 @@ export default {
       this.$router.push({
         name: 'products',
         query: {
-          category: '香氛蠟燭', key, content, page: 1,
+          category: '香氛蠟燭',
+          key,
+          content,
+          page: 1,
         },
       });
     },
@@ -218,7 +221,12 @@ export default {
     },
     ...mapActions(pageStore, ['changeNowPage']),
     ...mapActions(cartsStore, ['getCart']),
-    ...mapActions(productsStore, ['getProducts', 'getProductsAll', 'filterCandles', 'initializePage']),
+    ...mapActions(productsStore, [
+      'getProducts',
+      'getProductsAll',
+      'filterCandles',
+      'initializePage',
+    ]),
   },
   mounted() {
     this.goToGetCart(false);

@@ -1,15 +1,20 @@
 <template>
   <div class="container py-5">
-    <h2 class="text-center"> ✦ 讓光輝照亮生活的每一刻 ✦ </h2>
+    <h2 class="text-center">✦ 讓光輝照亮生活的每一刻 ✦</h2>
     <h6 class="text-center">為您的生活注入光輝是我們的使命</h6>
   </div>
   <!-- 社群媒體 -->
   <div class="container d-flex flex-column social-img mb-5">
     <div class="row justify-content-center my-auto">
       <div class="col-md-4 text-center d-flex flex-column align-items-center">
-        <h2 class="text-main-light">#光輝蠟燭 <br> 在 <br> INSTAGRAM</h2>
+        <h2 class="text-main-light">
+          #光輝蠟燭 <br />
+          在 <br />
+          INSTAGRAM
+        </h2>
         <h6 class="mb-3 text-main-light">加入我們，了解更多有關於我們的產品、發佈會以及活動！</h6>
-        <button type="button" class="btn btn-lg btn-solid-main d-flex align-items-center">追蹤我們
+        <button type="button" class="btn btn-lg btn-solid-main d-flex align-items-center">
+          追蹤我們
           <span class="material-icons">chevron_right</span>
         </button>
       </div>
@@ -29,68 +34,68 @@
           <ul class="navbar-nav lh-lg">
             <li class="nav-item">
               <RouterLink
-              :to="{ name: 'about' }"
-              class="nav-link p-0"
-              @click="changeNowPage('關於我們')"
-              :class="{ 'active':nowPage === '關於我們' }"
-              aria-current="page"
+                :to="{ name: 'about' }"
+                class="nav-link p-0"
+                @click="changeNowPage('關於我們')"
+                :class="{ active: nowPage === '關於我們' }"
+                aria-current="page"
               >
-              關於我們
+                關於我們
               </RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink
-              :to="{ name: 'articles' }"
-              class="nav-link p-0"
-              @click="changeNowPage('動態消息')"
-              :class="{ 'active':nowPage === '動態消息' }"
-              aria-current="page"
+                :to="{ name: 'articles' }"
+                class="nav-link p-0"
+                @click="changeNowPage('動態消息')"
+                :class="{ active: nowPage === '動態消息' }"
+                aria-current="page"
               >
-              動態消息
+                動態消息
               </RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink
-              :to="{ name: 'usage' }"
-              class="nav-link p-0"
-              @click="changeNowPage('蠟燭使用方式')"
-              :class="{ 'active':nowPage === '蠟燭使用方式' }"
-              aria-current="page"
+                :to="{ name: 'usage' }"
+                class="nav-link p-0"
+                @click="changeNowPage('蠟燭使用方式')"
+                :class="{ active: nowPage === '蠟燭使用方式' }"
+                aria-current="page"
               >
-              蠟燭使用方式
+                蠟燭使用方式
               </RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink
-              :to="{ name: 'shopping' }"
-              class="nav-link p-0"
-              @click="changeNowPage('購物說明')"
-              :class="{ 'active':nowPage === '購物說明' }"
-              aria-current="page"
+                :to="{ name: 'shopping' }"
+                class="nav-link p-0"
+                @click="changeNowPage('購物說明')"
+                :class="{ active: nowPage === '購物說明' }"
+                aria-current="page"
               >
-              購物說明
+                購物說明
               </RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink
-              :to="{ name: 'return' }"
-              class="nav-link p-0"
-              @click="changeNowPage('退換貨政策')"
-              :class="{ 'active':nowPage === '退換貨政策' }"
-              aria-current="page"
+                :to="{ name: 'return' }"
+                class="nav-link p-0"
+                @click="changeNowPage('退換貨政策')"
+                :class="{ active: nowPage === '退換貨政策' }"
+                aria-current="page"
               >
-              退換貨政策
+                退換貨政策
               </RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink
-              :to="{ name: 'collaborate' }"
-              class="nav-link p-0"
-              @click="changeNowPage('企業採購/異業合作')"
-              :class="{ 'active':nowPage === '企業採購/異業合作' }"
-              aria-current="page"
+                :to="{ name: 'collaborate' }"
+                class="nav-link p-0"
+                @click="changeNowPage('企業採購/異業合作')"
+                :class="{ active: nowPage === '企業採購/異業合作' }"
+                aria-current="page"
               >
-              企業採購/異業合作
+                企業採購/異業合作
               </RouterLink>
             </li>
           </ul>
@@ -101,70 +106,48 @@
           <ul class="navbar-nav lh-lg">
             <li class="nav-item">
               <RouterLink
-              :to="{ name: 'contact' }"
-              class="nav-link p-0"
-              @click="changeNowPage('聯絡我們')"
-              :class="{ 'active':nowPage === '聯絡我們' }"
-              aria-current="page"
+                :to="{ name: 'contact' }"
+                class="nav-link p-0"
+                @click="changeNowPage('聯絡我們')"
+                :class="{ active: nowPage === '聯絡我們' }"
+                aria-current="page"
               >
-              聯絡我們
+                聯絡我們
               </RouterLink>
             </li>
             <li class="nav-item">
-              <button
-              type="button"
-              class="nav-link p-0"
-              >
-              LINE 訂單客服
-              </button>
+              <button type="button" class="nav-link p-0">LINE 訂單客服</button>
             </li>
             <li class="nav-item">
-              <button
-              type="button"
-              class="nav-link p-0"
-              >
-              INSTAGRAM
-              </button>
+              <button type="button" class="nav-link p-0">INSTAGRAM</button>
             </li>
             <li class="nav-item">
-              <button
-              type="button"
-              class="nav-link p-0"
-              >
-              FACEBOOK
-              </button>
+              <button type="button" class="nav-link p-0">FACEBOOK</button>
             </li>
           </ul>
         </div>
         <!-- 品牌 -->
         <div class="col mb-5">
           <h5 class="lh-base">
-            光輝時刻<br>
+            光輝時刻<br />
             台灣原創香氛品牌
           </h5>
-          <p class="lh-base">「自創立以來，光輝的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」</p>
+          <p class="lh-base">
+            「自創立以來，光輝的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」
+          </p>
         </div>
       </div>
       <!-- social -->
       <div class="row pt-5">
-        <div class="col  d-flex justify-content-center">
-          <button
-          type="button"
-          class="nav-link myImage"
-          >
-            <img class="px-3" width="52" :src="facebook" alt="">
+        <div class="col d-flex justify-content-center">
+          <button type="button" class="nav-link myImage">
+            <img class="px-3" width="52" :src="facebook" alt="" />
           </button>
-          <button
-          type="button"
-          class="nav-link myImage"
-          >
-            <img class="px-3" width="52" :src="instagram" alt="">
+          <button type="button" class="nav-link myImage">
+            <img class="px-3" width="52" :src="instagram" alt="" />
           </button>
-          <button
-          type="button"
-          class="nav-link myImage"
-          >
-            <img class="px-3" width="52" :src="line" alt="">
+          <button type="button" class="nav-link myImage">
+            <img class="px-3" width="52" :src="line" alt="" />
           </button>
         </div>
       </div>
@@ -174,7 +157,7 @@
   <div class="container-fluid bg-main-medium py-5">
     <section class="container">
       <div class="row pt-5">
-        <div class="col  d-flex flex-column justify-content-center align-items-center">
+        <div class="col d-flex flex-column justify-content-center align-items-center">
           <p class="text-center text-medium-gray">
             相關產品圖片使用來自 Unsplash 所提供的免費圖片，網站本身無任何商業用途
           </p>
@@ -217,6 +200,11 @@ export default {
   background-size: cover;
   height: 40vh;
 }
-.myImage img{transform:scale(1,1);transition: all 1s ease-out;}
-.myImage img:hover{transform:scale(1.2,1.2);}
+.myImage img {
+  transform: scale(1, 1);
+  transition: all 1s ease-out;
+}
+.myImage img:hover {
+  transform: scale(1.2, 1.2);
+}
 </style>

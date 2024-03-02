@@ -8,15 +8,16 @@
   />
   <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
     <div
-    class="d-flex align-items-center justify-content-center flex-column"
-    v-if="productPagesData.products?.length === 0">
+      class="d-flex align-items-center justify-content-center flex-column"
+      v-if="productPagesData.products?.length === 0"
+    >
       <div>
         <span class="material-icons-round fs-1">announcement</span>
       </div>
       <h2>很抱歉，沒有相符的產品資料</h2>
       <button class="btn btn-outline-dpgray fs-5 mt-3" @click="this.$router.go(-1)">
-      返回上一頁
-    </button>
+        返回上一頁
+      </button>
     </div>
     <div v-else>
       <div class="d-flex align-items-center justify-content-center flex-column mb-3">
@@ -110,8 +111,9 @@
       </div>
       <!-- product card -->
       <div
-      class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mt-3 mb-3"
-      role="button">
+        class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mt-3 mb-3"
+        role="button"
+      >
         <div class="col mb-3" v-for="item in productPagesData.products" :key="item.id">
           <ProductCard :product="item"></ProductCard>
         </div>
@@ -185,7 +187,10 @@ export default {
       this.$router.push({
         name: 'products',
         query: {
-          category: '香氛蠟燭', key, content, page: 1,
+          category: '香氛蠟燭',
+          key,
+          content,
+          page: 1,
         },
       });
     },
@@ -210,12 +215,10 @@ export default {
       'initializePage',
     ]),
   },
-  watch: {
-  },
+  watch: {},
   mounted() {
     this.initializePage(this.$route.query);
   },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
