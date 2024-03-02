@@ -1,10 +1,5 @@
 <template>
-  <VueLoading
-    v-if="!getRemoteData"
-    :active="!getRemoteData"
-    :background-color="'#FBFAF4'"
-    :color="'#52504B'"
-  />
+  <PageLoading v-if="!getRemoteData"></PageLoading>
   <div v-else class="container">
     <div class="row mt-4">
       <div class="col d-flex justify-content-end">

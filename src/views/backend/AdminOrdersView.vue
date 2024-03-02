@@ -1,10 +1,5 @@
 <template>
-  <VueLoading
-    v-if="isLoading"
-    :active="isLoading"
-    :background-color="'#FBFAF4'"
-    :color="'#52504B'"
-  />
+  <PageLoading v-if="isLoading"></PageLoading>
   <div v-else class="container">
     <StatusMessage class="mt-4" v-if="adminOrdersData.orders?.length === 0">{{
       '需等待訂單進入。'

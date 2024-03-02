@@ -1,10 +1,5 @@
 <template>
-  <VueLoading
-    v-if="!loginSuccess"
-    :active="!loginSuccess"
-    :background-color="'#FBFAF4'"
-    :color="'#52504B'"
-  />
+  <PageLoading v-if="!loginSuccess"></PageLoading>
   <div v-else class="d-flex">
     <ToastMessages></ToastMessages>
     <AdminNavbar></AdminNavbar>
