@@ -1,11 +1,5 @@
 <template>
-  <VueLoading
-    v-if="isLoading"
-    :active="isLoading"
-    :background-color="'#EBEAE4'"
-    :is-full-page="true"
-    :color="'#52504B'"
-  />
+  <PageLoading v-if="isLoading"></PageLoading>
   <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
     <div
       class="d-flex align-items-center justify-content-center flex-column"
