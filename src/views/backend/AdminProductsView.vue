@@ -166,6 +166,7 @@ export default {
     getAdminAddProductModal() {
       this.inEditProductMode = false;
       this.showData = {};
+      this.$refs.productModal.resetAddForm();
       this.$refs.productModal.openModal();
     },
     // modal, 打開刪除產品modal

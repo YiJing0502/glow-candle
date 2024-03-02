@@ -11,6 +11,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <vee-form
+          ref="form"
           @submit="inEditProductMode ? putAdminProduct() : postAdminProduct()"
           v-slot="{ errors }"
         >
@@ -340,6 +341,8 @@ export default {
       tabs: [{ label: '產品內容' }, { label: '產品圖片' }],
     };
   },
+  props: ['showData', 'inEditProductMode'],
+  emits: ['put-admin-product', 'post-admin-product'],
   components: {
     TwoTabs,
   },
@@ -355,6 +358,10 @@ export default {
     },
   },
   methods: {
+    resetAddForm() {
+      // 使用 VeeValidate 提供的 resetForm 方法來重設表單的驗證狀態
+      this.$refs.form.resetForm();
+    },
     openModal() {
       this.modal.show();
     },
@@ -418,7 +425,5 @@ export default {
     ...mapActions(uploadImagesStore, ['uploadImages']),
     ...mapActions(toastsStore, ['pushToast']),
   },
-  props: ['showData', 'inEditProductMode'],
-  emits: ['put-admin-product', 'post-admin-product'],
 };
 </script>
