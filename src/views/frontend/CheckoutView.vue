@@ -289,7 +289,7 @@
               aria-labelledby="RecipientInformationSection"
             >
               <div class="accordion-body">
-                <vee-form @submit="goToPostOrder" v-slot="{ errors }">
+                <vee-form ref="form" @submit="goToPostOrder" v-slot="{ errors }">
                   <!-- 收件人名稱 -->
                   <div class="mb-3">
                     <label for="user" class="form-label"
@@ -528,6 +528,8 @@ export default {
         });
         // 送出訂單時重新取得最新購物車狀態
         await this.goToGetCart(false);
+        // 重置表單
+        this.$refs.form.resetForm();
       } catch (err) {
         this.showErrMessage(err);
       }
