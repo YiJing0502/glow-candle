@@ -30,8 +30,10 @@
     <!-- 暢銷單品 -->
     <div class="container-fluid bg-main-medium py-5">
       <section class="container">
-        <h2 class="text-center text-main-spec">✦ 暢銷單品 ✦</h2>
-        <p class="text-center">不知道該選哪種香氛蠟燭？以下是我們的回購率最高的商品：）</p>
+        <div class="mb-5">
+          <h2 class="text-center text-main-spec">✦ 暢銷單品 ✦</h2>
+          <p class="text-center">不知道該選哪種香氛蠟燭？以下是我們的回購率最高的商品：）</p>
+        </div>
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" role="button">
           <div class="col" v-for="item in bestsellersData" :key="item.id">
             <ProductCard :product="item"></ProductCard>
@@ -42,10 +44,12 @@
     <!-- 經典系列 -->
     <div class="container py-5">
       <section class="">
-        <h2 class="text-center text-main-spec">✦ 我們的經典 ✦</h2>
-        <p class="text-center">
-          「平日中的靜謐時刻，溫暖的光輝將您包裹，帶來安詳的平靜。在平靜日系列裡，您可以找到簡單而美好的生活瞬間」
-        </p>
+        <div class="mb-5">
+          <h2 class="text-center text-main-spec">✦ 我們的經典 ✦</h2>
+          <p class="text-center">
+            「平日中的靜謐時刻，溫暖的光輝將您包裹，帶來安詳的平靜。在平靜日系列裡，您可以找到簡單而美好的生活瞬間」
+          </p>
+        </div>
         <!-- 平靜日卡片 -->
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 mb-5" role="button">
           <div class="col" v-for="item in calmSeriesData" :key="item.id">
@@ -117,7 +121,7 @@
     <!-- 服務保障 -->
     <div class="container">
       <section class="">
-        <div class="border-bottom border-1 border-main-color mb-5 pb-3">
+        <div class="mb-5 pb-3">
           <div class="row row-cols-md-4 row-cols-2">
             <div class="col">
               <span class="material-icons-round fs-1 mb-3"> local_shipping </span>
@@ -156,7 +160,12 @@
       <section class="container">
         <!-- 動態消息 -->
         <div class="">
-          <h2 class="mb-5">動態消息</h2>
+          <div class="mb-5">
+            <h2 class="text-center text-main-spec">✦ 動態消息 ✦</h2>
+            <p class="text-center">
+              關於我們的最新動態，我們積極地提供更多有趣而富有深度的內容，與您分享。
+          </p>
+          </div>
           <div class="row row-cols-md-3 row-cols-1" role="button">
             <div v-for="item in homeArticles" :key="item.id" class="col">
               <ArticleCard :article="item"></ArticleCard>
