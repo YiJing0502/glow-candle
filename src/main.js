@@ -38,7 +38,7 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import router from './router';
 import App from './App.vue';
 import ResultModal from './components/ResultModal.vue';
-// Define the rule globally
+
 defineRule('required', required);
 defineRule('email', email);
 defineRule('max', max);
