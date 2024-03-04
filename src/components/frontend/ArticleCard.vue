@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" @click="changeToArticlePage(item.id)">
     <div class="myImage rounded">
       <img :src="item.imageUrl" class="card-img-top" :alt="item.title" />
     </div>
@@ -29,6 +29,13 @@ export default {
     },
   },
   methods: {
+    // 跳轉至文章詳細頁面
+    changeToArticlePage(id) {
+      this.$router.push({
+        name: 'article',
+        params: { id },
+      });
+    },
     ...mapActions(timeStore, ['timestamp10CodeToDay']),
   },
   mounted() {
