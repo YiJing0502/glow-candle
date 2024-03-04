@@ -16,6 +16,7 @@
                 焦糖蘋果塔、南瓜派、雲朵蛋糕，在家也能享受宛如待在咖啡館的下午茶時光
               </h6>
               <RouterLink
+                @click="changeNowPage('香氛蠟燭')"
                 to="/products?category=香氛蠟燭&key=2&content=愜意花園系列&page=1"
                 type="button"
                 class="btn btn-lg btn-solid-main d-flex align-items-center"
@@ -36,7 +37,7 @@
         </div>
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" role="button">
           <div class="col" v-for="item in bestsellersData" :key="item.id">
-            <ProductCard :product="item"></ProductCard>
+            <ProductCard :product="item" @click="changeNowPage('香氛蠟燭')"></ProductCard>
           </div>
         </div>
       </section>
@@ -53,7 +54,7 @@
         <!-- 平靜日卡片 -->
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 mb-5" role="button">
           <div class="col" v-for="item in calmSeriesData" :key="item.id">
-            <ProductCard :product="item"></ProductCard>
+            <ProductCard :product="item" @click="changeNowPage('香氛蠟燭')"></ProductCard>
           </div>
         </div>
         <!-- 收藏套組 -->
@@ -75,6 +76,7 @@
             <h4 class="text-center text-main-light">平靜日系列210g四入香氛蠟燭收藏套組</h4>
             <h6 class="text-center text-main-light">現正特價中</h6>
             <RouterLink
+              @click="changeNowPage('香氛蠟燭')"
               to="/product/-NoLX8ZL10JiBTlwGN6T"
               type="button"
               class="btn btn-lg btn-solid-main d-flex align-items-center"
@@ -100,7 +102,9 @@
               <p class="w-75">
                 「自創立以來，光輝的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」
               </p>
-              <RouterLink :to="{ name: 'about' }" class="btn btn-solid-dpgray btn-lg w-75 mb-3"
+              <RouterLink
+              @click="changeNowPage('關於我們')"
+              :to="{ name: 'about' }" class="btn btn-solid-dpgray btn-lg w-75 mb-3"
                 >關於我們</RouterLink
               >
             </div>
@@ -168,7 +172,7 @@
           </div>
           <div class="row row-cols-md-3 row-cols-1" role="button">
             <div v-for="item in homeArticles" :key="item.id" class="col">
-              <ArticleCard :article="item"></ArticleCard>
+              <ArticleCard :article="item" @click="changeNowPage('動態消息')"></ArticleCard>
             </div>
           </div>
           <div class="row"></div>
@@ -176,6 +180,7 @@
             <div class="col-md-4 text-center d-flex flex-column align-items-center">
               <RouterLink
                 :to="{ name: 'articles' }"
+                @click="changeNowPage('動態消息')"
                 type="button"
                 class="btn btn-lg btn-solid-dpgray d-flex align-items-center"
                 >查看更多
@@ -192,8 +197,11 @@
 <script>
 import { RouterLink } from 'vue-router';
 import { mapState, mapActions } from 'pinia';
+// store
 import productsStore from '../../stores/productsStore';
 import articlesStore from '../../stores/articlesStore';
+import pageStore from '../../stores/pageStore';
+// component
 import ProductCard from '../../components/frontend/ProductCard.vue';
 import ArticleCard from '../../components/frontend/ArticleCard.vue';
 
@@ -233,6 +241,7 @@ export default {
       }
     },
     ...mapActions(articlesStore, ['getArticles']),
+    ...mapActions(pageStore, ['changeNowPage']),
   },
   mounted() {
     this.goToGetHomeArticles();
