@@ -43,7 +43,7 @@ export default {
     changeImage(ref, imageUrl) {
       this.$refs[ref].src = imageUrl;
     },
-    // 跳轉至產品頁面
+    // 跳轉至產品詳細頁面
     changeToProductPage(id) {
       this.$router.push({
         name: 'product',
