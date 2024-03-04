@@ -4,7 +4,7 @@
       <!-- 專欄文章 -->
       <div>
         <h2 class="mb-5">動態消息</h2>
-        <div role="button" class="row">
+        <div role="button" class="row row-cols-md-3 row-cols-1">
           <div v-for="item in articlesData.articles" :key="item.id" class="col">
             <ArticleCard :article="item">
               <!-- 選擇性內容 -->
