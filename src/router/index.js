@@ -84,6 +84,11 @@ const router = createRouter({
           name: 'articles',
           component: () => import('../views/frontend/ArticleListView.vue'),
         },
+        {
+          path: 'article/:id',
+          name: 'article',
+          component: () => import('../views/frontend/ArticleDetail.vue'),
+        },
       ],
     },
     // 後台 backend routes
