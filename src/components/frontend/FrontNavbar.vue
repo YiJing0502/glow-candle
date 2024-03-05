@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar sticky-top navbar-expand-lg bg-main-light p-0">
+  <nav
+  ref="nav"
+  :class="{ 'navbar-hidden': isHidden }"
+  class="navbar navbar-expand-lg bg-main-light p-0 navbar-animation sticky-top">
     <div class="container">
       <RouterLink
         :to="{ name: 'home' }"
@@ -20,29 +23,33 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <div
+      :class="{ collapse: !isNavExpanded}"
+      class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item">
             <RouterLink
               :to="{ name: 'home' }"
               class="nav-link"
               :class="{ active: nowPage === '首頁' }"
-              @click="changeNowPage('首頁')"
+              @click="goToChangeNowPage('首頁')"
               aria-current="page"
             >
               首頁
             </RouterLink>
           </li>
+          <!-- 全部產品 -->
           <li class="nav-item">
             <RouterLink
               :to="{ name: 'products', query: { category: '全部產品', page: 1 } }"
               class="nav-link"
-              @click="changeNowPage('全部產品')"
+              @click="goToChangeNowPage('全部產品')"
               :class="{ active: nowPage === '全部產品' }"
               aria-current="page"
               >全部產品
             </RouterLink>
           </li>
+          <!-- 類別區 -->
           <li class="nav-item" v-for="(item, key) in productsCategory" :key="key">
             <button
               type="button"
@@ -54,6 +61,7 @@
               {{ item }}
             </button>
           </li>
+          <!-- 從系列選擇 -->
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -71,6 +79,7 @@
               </li>
             </ul>
           </li>
+          <!-- 從調性選擇 -->
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -88,48 +97,52 @@
               </li>
             </ul>
           </li>
+          <!-- 關於我們 -->
           <li class="nav-item">
             <RouterLink
               :to="{ name: 'about' }"
               class="nav-link"
-              @click="changeNowPage('關於我們')"
+              @click="goToChangeNowPage('關於我們')"
               :class="{ active: nowPage === '關於我們' }"
               aria-current="page"
             >
               關於我們
             </RouterLink>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              @click="goToSearchProduct"
-              class="nav-link dropdown-toggle"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span class="material-icons-outlined fs-3 mt-1">search</span>
-            </a>
-          </li>
-          <li class="nav-item">
+          <!-- 聯絡我們 -->
+          <li class="nav-item d-none d-lg-block">
             <RouterLink
               :to="{ name: 'contact' }"
               @click="changeNowPage('聯絡我們')"
               :class="{ active: nowPage === '聯絡我們' }"
-              class="nav-link"
+              class="nav-link d-flex justify-content-center"
               aria-current="page"
             >
-              <span class="material-icons fs-4 mt-1">forum</span>
+              <span class="material-icons fs-4">forum</span>
             </RouterLink>
           </li>
-          <li class="nav-item">
+          <!-- 產產品搜尋 -->
+          <li class="nav-item d-none d-lg-block">
+            <a
+              @click="goToSearchProduct"
+              class="nav-link d-flex justify-content-center"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="material-icons-outlined fs-3">search</span>
+            </a>
+          </li>
+          <!-- 購物車 -->
+          <li class="nav-item d-none d-lg-block">
             <RouterLink
               :to="{ name: 'checkout' }"
-              class="nav-link position-relative"
+              class="nav-link position-relative  d-flex justify-content-center"
               :class="{ active: nowPage === 'checkout' }"
               @click="changeNowPage('checkout')"
               aria-current="page"
             >
-              <span class="material-icons-outlined fs-3 mt-1">shopping_bag</span>
+              <span class="material-icons-outlined fs-3">shopping_bag</span>
               <span
                 v-if="cartProductQuantity !== 0"
                 class="badge rounded-pill bg-main-spec position-absolute top-50 start-50 fw-bold"
@@ -156,6 +169,10 @@ import SearchModal from './SearchModal.vue';
 export default {
   data() {
     return {
+      isSticky: true,
+      lastScrollPosition: 0,
+      isNavExpanded: false,
+      isHidden: false, // 新增的變數，用來判斷Navbar是否隱藏
       // result model
       serverMessage: {
         message: '',
@@ -214,10 +231,22 @@ export default {
           page: 1,
         },
       });
+      this.isNavExpanded = !this.isNavExpanded;
     },
     goToProductsCategoryPage(category) {
       this.changeNowPage(category);
       this.$router.push({ name: 'products', query: { category, page: 1 } });
+      this.isNavExpanded = !this.isNavExpanded;
+    },
+    goToChangeNowPage(name) {
+      this.changeNowPage(name);
+      this.isNavExpanded = !this.isNavExpanded;
+    },
+    handleScroll() {
+      const currentScrollPosition = window.scrollY;
+      // 往下滑 true，往上滑 false
+      this.isHidden = currentScrollPosition > this.lastScrollPosition;
+      this.lastScrollPosition = currentScrollPosition;
     },
     ...mapActions(pageStore, ['changeNowPage']),
     ...mapActions(cartsStore, ['getCart']),
@@ -231,6 +260,18 @@ export default {
   mounted() {
     this.goToGetCart(false);
     this.goToGetProductsAll(true);
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
 };
 </script>
+<style scoped>
+.navbar-hidden {
+  transform: translateY(-100%);
+}
+.navbar-animation {
+  transition: transform .4s;
+}
+</style>
