@@ -9,10 +9,12 @@
 // 定義字體大小
 @import './frontSize.scss';
 
-body {
+html, body {
   background-color: $lightMainColor;
   font-family: 'Optima nova', sans-serif;
   color: $deepGrayColor;
+  margin: 0;
+  height: 100%;
 }
 
 // 自定義 bootstrap
