@@ -23,7 +23,7 @@
       <h5 v-if="item.price === item.origin_price" class="card-text fw-bolder">
         NT${{ item.price }}
       </h5>
-      <div class="d-flex align-items-end" v-else>
+      <div class="d-flex align-items-end flex-wrap" v-else>
         <h6 class="me-3 text-decoration-line-through text-deep-gray">NT${{ item.origin_price }}</h6>
         <h5 class="text-main-spec fw-bolder">NT${{ item.price }}</h5>
       </div>
