@@ -56,4 +56,7 @@ export default {
 .myImage img:hover {
   transform: scale(1.2, 1.2);
 }
+.card:hover img {
+  transform: scale(1.2, 1.2);
+}
 </style>

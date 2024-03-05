@@ -1,6 +1,6 @@
 <template>
   <div class="card" @click="changeToProductPage(item.id)">
-    <div class="myImage">
+    <div class="myImage rounded">
       <img
         v-if="item.imagesUrl === undefined"
         :src="item.imageUrl"
@@ -72,6 +72,9 @@ export default {
   display: block;
 }
 .myImage img:hover {
+  transform: scale(1.2, 1.2);
+}
+.card:hover img {
   transform: scale(1.2, 1.2);
 }
 </style>
