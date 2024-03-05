@@ -35,7 +35,7 @@
           <h2 class="text-center text-main-spec">✦ 暢銷單品 ✦</h2>
           <p class="text-center">不知道該選哪種香氛蠟燭？以下是我們的回購率最高的商品：）</p>
         </div>
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" role="button">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-2" role="button">
           <div class="col" v-for="item in bestsellersData" :key="item.id">
             <ProductCard :product="item" @click="changeNowPage('香氛蠟燭')"></ProductCard>
           </div>
@@ -52,14 +52,14 @@
           </p>
         </div>
         <!-- 平靜日卡片 -->
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1 mb-5" role="button">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-2 mb-5" role="button">
           <div class="col" v-for="item in calmSeriesData" :key="item.id">
             <ProductCard :product="item" @click="changeNowPage('香氛蠟燭')"></ProductCard>
           </div>
         </div>
         <!-- 收藏套組 -->
         <div class="row row-cols-sm-2 row-cols-1">
-          <div class="col px-0">
+          <div class="col px-0 d-flex align-items-center">
             <div class="overflow-hidden w-100">
               <img
                 src="https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1708418706132.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Tu33qbf%2FVBJxXSudzGvKGsnMgL5%2FnenSjGrDErVDdjRm0q4KXAKOZrwSx01TLcOnkuK1EACMDfTeQa0QHDxrYMZlZSa%2B4ik%2BQHB4%2FuWSrazLFzP2FhqdoZkqSw585cxt8FOifbaX2yGJ%2BEPtRi5RhVUqPLS02sS7m2KQtd%2FT0CIKe6LsF4hTTqU6A1kKeSCTxPyIr1S6jEuaTrmrMGiWbpC9G7kA6IK8t9jb1Ax3pavPXyYVq2GDkOa5C84OU2aunQSJc365GGknAPap0Zl9JUv7NXLhaFVMc%2BrmbziebTYGlhaTnVqgtw4rtS9hC%2FsfN%2FnE2klqZQloxiDa3LOn1w%3D%3D"
