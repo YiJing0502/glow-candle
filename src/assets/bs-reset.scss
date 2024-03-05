@@ -44,10 +44,18 @@
 .nav-link.active {
   text-decoration: underline;
   text-underline-offset: 0.3rem;
+  color: $specialMainColor;
 }
 .nav-link:focus-visible {
   outline: 0;
   box-shadow: 0 0 0 0.25rem $focusBoxShadow;
+}
+// navbar-toggle
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0;
+  box-shadow: 0 0 0 .08rem $focusBoxShadow;
+  
 }
 // bs-btn-close
 .btn-close {
