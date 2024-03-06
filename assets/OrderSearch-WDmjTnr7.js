@@ -1,1 +1,0 @@
-import{_ as e,c as o,o as r,b as s}from"./index-nBPxgtNM.js";const t={},c=s("h2",null,"order search",-1),a=[c];function n(_,d,l,p,i,f){return r(),o("div",null,a)}const u=e(t,[["render",n]]);export{u as default};
