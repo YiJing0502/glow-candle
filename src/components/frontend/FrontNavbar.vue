@@ -115,7 +115,7 @@
               :to="{ name: 'contact' }"
               @click="changeNowPage('聯絡我們')"
               :class="{ active: nowPage === '聯絡我們' }"
-              class="nav-link d-flex justify-content-center"
+              class="nav-link d-flex justify-content-center text-decoration-none"
               aria-current="page"
             >
               <span class="material-icons fs-4">forum</span>
@@ -137,12 +137,14 @@
           <li class="nav-item d-none d-lg-block">
             <RouterLink
               :to="{ name: 'checkout' }"
-              class="nav-link position-relative  d-flex justify-content-center"
+              class="nav-link position-relative d-flex justify-content-center text-decoration-none"
               :class="{ active: nowPage === 'checkout' }"
               @click="changeNowPage('checkout')"
               aria-current="page"
             >
-              <span class="material-icons-outlined fs-3">shopping_bag</span>
+              <span v-if="cartProductQuantity === 0"
+              class="material-icons-outlined fs-3">shopping_bag</span>
+              <span v-else class="material-icons-round fs-3">shopping_bag</span>
               <span
                 v-if="cartProductQuantity !== 0"
                 class="badge rounded-pill bg-main-spec position-absolute top-50 start-50 fw-bold"
