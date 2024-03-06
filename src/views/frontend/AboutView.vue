@@ -76,7 +76,7 @@
         </p>
         <p class="text-center text-main-light">歡迎您與我們一起共同創作。</p>
         <RouterLink
-          to="/product/-NoLX8ZL10JiBTlwGN6T"
+          :to="{ name: 'collaborate' }"
           type="button"
           class="btn btn-lg btn-solid-main d-flex align-items-center"
           >成為合作夥伴
