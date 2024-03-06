@@ -48,7 +48,9 @@
             @click="changeNowPage('checkout')"
             aria-current="page"
           >
-            <span class="material-icons-outlined fs-1 mt-1">shopping_bag</span>
+            <span v-if="cartProductQuantity === 0"
+            class="material-icons-outlined fs-1 mt-1">shopping_bag</span>
+            <span v-else class="material-icons-round fs-1 mt-1">shopping_bag</span>
             <span
               v-if="cartProductQuantity !== 0"
               class="badge rounded-pill bg-main-spec position-absolute top-30 start-50 fw-bold"
