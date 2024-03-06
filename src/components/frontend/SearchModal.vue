@@ -42,7 +42,9 @@
                 <tr v-for="(item, index) in showProductsData" :key="item.id">
                   <th class="py-3" scope="row">{{ index + 1 }}</th>
                   <td>
-                    <button @click="goToPage(item.id, 'product')" class="btn btn-normal-dpgray">
+                    <button
+                    @click="goToPage(item.id, 'product', item.category)"
+                    class="btn btn-normal-dpgray">
                       {{ item.title }}
                     </button>
                   </td>
@@ -69,6 +71,7 @@
 import { Modal } from 'bootstrap';
 import { mapActions, mapState } from 'pinia';
 import productsStore from '../../stores/productsStore';
+import pageStore from '../../stores/pageStore';
 
 export default {
   data() {
@@ -86,7 +89,8 @@ export default {
     hideModal() {
       this.modal.hide();
     },
-    goToPage(id, name) {
+    goToPage(id, name, category) {
+      this.changeNowPage(category);
       this.$router.push({
         name,
         params: { id },
@@ -95,6 +99,7 @@ export default {
       this.keyword = '';
     },
     ...mapActions(productsStore, ['searchProduct']),
+    ...mapActions(pageStore, ['changeNowPage']),
   },
   mounted() {
     // 獲取 bsResultModal DOM
