@@ -61,6 +61,8 @@
                         class="col col-sm-2 col-lg-3 d-flex align-items-center justify-content-center"
                       >
                         <img
+                          role="button"
+                          @click="changeToProductPage(item.product.id, item.product.category)"
                           :src="item.product.imageUrl"
                           :alt="item.product.title"
                           class="img-fluid"
@@ -69,7 +71,12 @@
                       </div>
                       <div class="col col-sm-10 col-lg-9">
                         <div class="d-flex justify-content-between">
-                          <h6>{{ item.product.title }}</h6>
+                          <h6
+                            role="button"
+                            @click="changeToProductPage(item.product.id, item.product.category)"
+                          >
+                            {{ item.product.title }}
+                          </h6>
                           <button
                             type="button"
                             class="btn-close"
@@ -447,6 +454,7 @@ import { mapActions, mapState } from 'pinia';
 import ordersStore from '../../stores/ordersStore';
 import cartsStore from '../../stores/cartsStore';
 import toastsStore from '../../stores/toastsStore';
+import pageStore from '../../stores/pageStore';
 // component
 import QuantityControlButtons from '../../components/QuantityControlButtons.vue';
 
@@ -471,6 +479,8 @@ export default {
           message: null,
         },
       },
+      // 是否送出訂單 用來控制 sessionStorage
+      doesPostCart: false,
       // result model
       serverMessage: {
         message: '',
@@ -485,6 +495,14 @@ export default {
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
       return phoneNumber.test(value) ? true : '請輸入正確的行動電話號碼';
+    },
+    // 跳轉至產品詳細頁面
+    changeToProductPage(id, category) {
+      this.changeNowPage(category);
+      this.$router.push({
+        name: 'product',
+        params: { id },
+      });
     },
     async goToGetCart(boolean = true) {
       try {
@@ -542,16 +560,22 @@ export default {
       }
     },
     async goToPostOrder() {
+      // 用來控制 sessionStorage
+      this.doesPostCart = true;
       try {
         const res = await this.postOrder(this.orderData);
         this.$router.push({
           name: 'payment',
           params: { id: res.data.orderId },
         });
-        // 送出訂單時重新取得最新購物車狀態
-        await this.goToGetCart(false);
-        // 重置表單
-        this.$refs.form.resetForm();
+        // 確保你的邏輯在下一次 DOM 更新之後執行，避免潛在的並發問題
+        // 我的這些邏輯有關於 dom的更新 所以需要確保 我的操作要在DOM更新之後執行
+        this.$nextTick(() => {
+          // 送出訂單時重新取得最新購物車狀態
+          this.goToGetCart(false);
+          // 重置表單
+          this.$refs.form.resetForm();
+        });
       } catch (err) {
         this.showErrMessage(err);
       }
@@ -570,12 +594,25 @@ export default {
     ...mapActions(cartsStore, ['getCart', 'putCart', 'deleteCart', 'deleteCarts', 'postCoupon']),
     ...mapActions(ordersStore, ['postOrder']),
     ...mapActions(toastsStore, ['pushToast']),
+    ...mapActions(pageStore, ['changeNowPage']),
   },
   computed: {
     ...mapState(cartsStore, ['isLoading', 'isSmLoading', 'cartsData', 'allCartsData']),
   },
   mounted() {
     this.goToGetCart();
+    if (window.sessionStorage.getItem('orderData')) {
+      const orderData = window.sessionStorage.getItem('orderData');
+      this.orderData = JSON.parse(orderData);
+    }
+  },
+  beforeUnmount() {
+    if (this.doesPostCart) {
+      window.sessionStorage.removeItem('orderData');
+    } else {
+      const orderData = JSON.stringify(this.orderData);
+      window.sessionStorage.setItem('orderData', orderData);
+    }
   },
 };
 </script>
