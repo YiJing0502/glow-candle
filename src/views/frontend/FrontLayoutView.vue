@@ -34,9 +34,8 @@ export default {
   watch: {
     $route() {
       this.isLoading = true; // 啟動 loading 動畫
+      this.path = this.$route.path;
       this.$nextTick(() => {
-        // this.$router.push({ path: this.$route.path });
-        this.path = this.$route.path;
         this.isLoading = false;
       });
     },
