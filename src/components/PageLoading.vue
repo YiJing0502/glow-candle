@@ -1,7 +1,7 @@
 <template>
   <VueLoading
     :active="true"
-    :background-color="'#EBEAE4'"
+    :background-color="'#fbfaf4'"
     :is-full-page="true"
     :color="'#52504B'"
     :opacity="1"
@@ -40,24 +40,54 @@
   animation-direction: alternate;
 }
 @keyframes first-dot {
-  0%   {background-color: #fff;}
-  25%  {background-color: #fff;}
-  50%  {background-color: #984b4b;}
-  75%  {background-color: #984b4b;}
-  100% {background-color: #984b4b;}
+  0% {
+    background-color: #fff;
+  }
+  25% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #984b4b;
+  }
+  75% {
+    background-color: #984b4b;
+  }
+  100% {
+    background-color: #984b4b;
+  }
 }
 @keyframes second-dot {
-  0%   {background-color: #fff;}
-  25%  {background-color: #fff;}
-  50%  {background-color: #fff;}
-  75%  {background-color: #984b4b}
-  100% {background-color: #984b4b}
+  0% {
+    background-color: #fff;
+  }
+  25% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #fff;
+  }
+  75% {
+    background-color: #984b4b;
+  }
+  100% {
+    background-color: #984b4b;
+  }
 }
 @keyframes third-dot {
-  0%   {background-color: #fff;}
-  25%  {background-color: #fff;}
-  50%  {background-color: #fff;}
-  75%  {background-color: #fff;}
-  100% {background-color: #984b4b}
+  0% {
+    background-color: #fff;
+  }
+  25% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #fff;
+  }
+  75% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: #984b4b;
+  }
 }
 </style>

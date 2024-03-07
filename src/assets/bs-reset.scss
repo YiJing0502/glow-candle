@@ -54,8 +54,7 @@
 .navbar-toggler:focus {
   text-decoration: none;
   outline: 0;
-  box-shadow: 0 0 0 .08rem $focusBoxShadow;
-  
+  box-shadow: 0 0 0 0.08rem $focusBoxShadow;
 }
 // bs-btn-close
 .btn-close {

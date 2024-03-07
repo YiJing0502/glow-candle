@@ -1,8 +1,9 @@
 <template>
   <nav
-  ref="nav"
-  :class="{ 'navbar-hidden': isHidden }"
-  class="navbar navbar-expand-lg bg-main-light p-0 navbar-animation sticky-top">
+    ref="nav"
+    :class="{ 'navbar-hidden': isHidden }"
+    class="navbar navbar-expand-lg bg-main-light p-0 navbar-animation sticky-top"
+  >
     <div class="container">
       <RouterLink
         :to="{ name: 'home' }"
@@ -24,8 +25,10 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
-      :class="{ collapse: !isNavExpanded}"
-      class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        :class="{ collapse: !isNavExpanded }"
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarNavDropdown"
+      >
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item">
             <RouterLink
@@ -142,8 +145,9 @@
               @click="changeNowPage('checkout')"
               aria-current="page"
             >
-              <span v-if="cartProductQuantity === 0"
-              class="material-icons-outlined fs-3">shopping_bag</span>
+              <span v-if="cartProductQuantity === 0" class="material-icons-outlined fs-3"
+                >shopping_bag</span
+              >
               <span v-else class="material-icons-round fs-3">shopping_bag</span>
               <span
                 v-if="cartProductQuantity !== 0"
@@ -274,6 +278,6 @@ export default {
   transform: translateY(-100%);
 }
 .navbar-animation {
-  transition: transform .4s;
+  transition: transform 0.4s;
 }
 </style>

@@ -2,36 +2,49 @@
   <div class="col-2 bg-main-medium side-bar-height px-3">
     <div class="d-flex justify-content-center my-3">
       <RouterLink
-      :class="{ active: nowPage === '首頁' }"
-      @click="changeNowPage('首頁')"
-      :to="{ name: 'home' }">
+        :class="{ active: nowPage === '首頁' }"
+        @click="changeNowPage('首頁')"
+        :to="{ name: 'home' }"
+      >
         <img src="/glow-logo.png" alt="" width="70" />
       </RouterLink>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
-        <RouterLink class="list-group-item"
-        :class="{ active: nowPage === '訂單管理' }"
-        @click="changeNowPage('訂單管理')"
-        :to="{ name: 'adminOrders' }">訂單管理</RouterLink>
+        <RouterLink
+          class="list-group-item"
+          :class="{ active: nowPage === '訂單管理' }"
+          @click="changeNowPage('訂單管理')"
+          :to="{ name: 'adminOrders' }"
+          >訂單管理</RouterLink
+        >
       </li>
       <li class="list-group-item">
-        <RouterLink class="list-group-item"
-        :class="{ active: nowPage === '產品管理' }"
-        @click="changeNowPage('產品管理')"
-        :to="{ name: 'adminProducts' }">產品管理</RouterLink>
+        <RouterLink
+          class="list-group-item"
+          :class="{ active: nowPage === '產品管理' }"
+          @click="changeNowPage('產品管理')"
+          :to="{ name: 'adminProducts' }"
+          >產品管理</RouterLink
+        >
       </li>
       <li class="list-group-item">
-        <RouterLink class="list-group-item"
-        :class="{ active: nowPage === '優惠券管理' }"
-        @click="changeNowPage('優惠券管理')"
-        :to="{ name: 'adminCoupons' }">優惠券管理</RouterLink>
+        <RouterLink
+          class="list-group-item"
+          :class="{ active: nowPage === '優惠券管理' }"
+          @click="changeNowPage('優惠券管理')"
+          :to="{ name: 'adminCoupons' }"
+          >優惠券管理</RouterLink
+        >
       </li>
       <li class="list-group-item">
-        <RouterLink class="list-group-item"
-        :class="{ active: nowPage === '文章管理' }"
-        @click="changeNowPage('文章管理')"
-        :to="{ name: 'adminArticles' }">文章管理</RouterLink>
+        <RouterLink
+          class="list-group-item"
+          :class="{ active: nowPage === '文章管理' }"
+          @click="changeNowPage('文章管理')"
+          :to="{ name: 'adminArticles' }"
+          >文章管理</RouterLink
+        >
       </li>
     </ul>
     <div class="m-3 d-flex justify-content-center align-items-center">

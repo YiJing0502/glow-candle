@@ -11,7 +11,8 @@
 // 定義字體大小
 @import './frontSize.scss';
 
-html, body {
+html,
+body {
   background-color: $lightMainColor;
   font-family: 'Optima nova', sans-serif;
   color: $deepGrayColor;

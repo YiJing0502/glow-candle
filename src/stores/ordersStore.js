@@ -70,9 +70,7 @@ export default defineStore('ordersStore', {
     },
     // fn, 處理訂單
     processOrderData(orderData) {
-      const {
-        create_at, id, is_paid, message, paid_date, products, total, user,
-      } = orderData;
+      const { create_at, id, is_paid, message, paid_date, products, total, user } = orderData;
 
       this.showData = {
         create_at,
@@ -110,9 +108,7 @@ export default defineStore('ordersStore', {
       // 新增檢查，確保 products 不是 undefined 或 null
       if (products && typeof products === 'object') {
         Object.keys(products).forEach((item) => {
-          const {
-            final_total, id, product, product_id, qty, total,
-          } = products[item];
+          const { final_total, id, product, product_id, qty, total } = products[item];
           const newProductData = {
             final_total,
             id,

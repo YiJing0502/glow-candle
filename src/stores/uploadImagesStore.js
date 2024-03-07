@@ -16,9 +16,9 @@ export default defineStore('uploadImagesStore', {
           return false;
         }
         if (
-          element.type !== 'image/jpeg'
-          && element.type !== 'image/jpg'
-          && element.type !== 'image/png'
+          element.type !== 'image/jpeg' &&
+          element.type !== 'image/jpg' &&
+          element.type !== 'image/png'
         ) {
           return false;
         }

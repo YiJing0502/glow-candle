@@ -17,9 +17,7 @@ import VueAxios from 'vue-axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 // 載入 vee-validation
-import {
-  Field, Form, ErrorMessage, defineRule, configure,
-} from 'vee-validate';
+import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
 import {
   required,
   email,

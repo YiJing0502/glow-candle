@@ -1,8 +1,9 @@
 <template>
   <nav class="navbar fixed-bottom p-0 d-lg-none">
     <div class="container-fluid justify-content-center bg-main-light">
-      <ul class="d-flex align-items-center container
-       justify-content-between list-style-none w-100 m-0">
+      <ul
+        class="d-flex align-items-center container justify-content-between list-style-none w-100 m-0"
+      >
         <li class="nav-item px-1">
           <RouterLink
             :to="{ name: 'home' }"
@@ -42,14 +43,14 @@
         <li class="nav-item">
           <RouterLink
             :to="{ name: 'checkout' }"
-            class="nav-link d-flex flex-column
-             align-items-center position-relative text-decoration-none"
+            class="nav-link d-flex flex-column align-items-center position-relative text-decoration-none"
             :class="{ active: nowPage === 'checkout' }"
             @click="changeNowPage('checkout')"
             aria-current="page"
           >
-            <span v-if="cartProductQuantity === 0"
-            class="material-icons-outlined fs-1 mt-1">shopping_bag</span>
+            <span v-if="cartProductQuantity === 0" class="material-icons-outlined fs-1 mt-1"
+              >shopping_bag</span
+            >
             <span v-else class="material-icons-round fs-1 mt-1">shopping_bag</span>
             <span
               v-if="cartProductQuantity !== 0"

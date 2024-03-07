@@ -1,11 +1,12 @@
 <template>
-  <PageLoading v-if="isLoading"></PageLoading>
-  <div v-else class="container py-5 bg-main-medium container-rounded">
-    <div class="d-flex align-items-center justify-content-center flex-column">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <RouterLink
+  <div>
+    <PageLoading v-if="isLoading"></PageLoading>
+    <div v-else class="container py-5 bg-main-medium container-rounded">
+      <div class="d-flex align-items-center justify-content-center flex-column">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <RouterLink
                 :to="{ name: 'articles' }"
                 class="nav-link p-0"
                 @click="changeNowPage('動態消息')"
@@ -13,34 +14,35 @@
               >
                 動態消息
               </RouterLink>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">消息內容</li>
-        </ol>
-      </nav>
-      <h2>{{ articleData.title }}</h2>
-      <p>{{ timestamp10CodeToDay(articleData.create_at) }}  由 {{ articleData.author }} 發布</p>
-      <div class="row d-flex align-items-center justify-content-center">
-        <div class="col-6">
-          <img :src="articleData.imageUrl" alt="" class="img-fluid mb-5">
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">消息內容</li>
+          </ol>
+        </nav>
+        <h2>{{ articleData.title }}</h2>
+        <p>{{ timestamp10CodeToDay(articleData.create_at) }} 由 {{ articleData.author }} 發布</p>
+        <div class="row d-flex align-items-center justify-content-center">
+          <div class="col-6">
+            <img :src="articleData.imageUrl" alt="" class="img-fluid mb-5" />
+          </div>
         </div>
-      </div>
-      <div class="row d-flex align-items-center justify-content-center">
-        <div class="col-6">
-          <div v-html="articleData.content"></div>
-          <RouterLink
-            :to="{ name: 'articles' }"
-            class="nav-link p-0 d-flex align-items-center"
-            @click="changeNowPage('動態消息')"
-            aria-current="page"
-          >
-          <span class="material-icons-round">arrow_back_ios</span>
-            返回動態消息
-          </RouterLink>
+        <div class="row d-flex align-items-center justify-content-center">
+          <div class="col-6">
+            <div v-html="articleData.content"></div>
+            <RouterLink
+              :to="{ name: 'articles' }"
+              class="nav-link p-0 d-flex align-items-center"
+              @click="changeNowPage('動態消息')"
+              aria-current="page"
+            >
+              <span class="material-icons-round">arrow_back_ios</span>
+              返回動態消息
+            </RouterLink>
+          </div>
         </div>
       </div>
     </div>
+    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapActions } from 'pinia';

@@ -1,144 +1,154 @@
 <template>
-  <PageLoading v-if="isLoading"></PageLoading>
-  <div v-else class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3">
-    <div class="row row-cols-1 row-cols-lg-2">
-      <div class="col">
-        <swiper
-          v-if="!isBootstrapLarge"
-          :navigation="true"
-          :pagination="true"
-          :modules="modules"
-          class="mySwiper d-lg-none mb-3"
-        >
-          <swiper-slide>
+  <div>
+    <PageLoading v-if="isLoading"></PageLoading>
+    <div
+      v-else
+      class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3"
+    >
+      <div class="row row-cols-1 row-cols-lg-2">
+        <div class="col">
+          <swiper
+            v-if="!isBootstrapLarge"
+            :navigation="true"
+            :pagination="true"
+            :modules="modules"
+            class="mySwiper d-lg-none mb-3"
+          >
+            <swiper-slide>
+              <img :src="showData.imageUrl" alt="" class="img-fluid" />
+            </swiper-slide>
+            <swiper-slide v-for="(item, index) in showData.imagesUrl" :key="index">
+              <img :src="item" alt="" class="img-fluid" />
+            </swiper-slide>
+          </swiper>
+          <div v-if="isBootstrapLarge" class="d-none d-lg-block">
             <img :src="showData.imageUrl" alt="" class="img-fluid" />
-          </swiper-slide>
-          <swiper-slide v-for="(item, index) in showData.imagesUrl" :key="index">
-            <img :src="item" alt="" class="img-fluid" />
-          </swiper-slide>
-        </swiper>
-        <div v-if="isBootstrapLarge" class="d-none d-lg-block">
-          <img :src="showData.imageUrl" alt="" class="img-fluid" />
-          <img
-            v-for="(item, index) in showData.imagesUrl"
-            :key="index"
-            :src="item"
-            alt=""
-            class="img-fluid"
-          />
-        </div>
-      </div>
-      <div class="col">
-        <!-- 產品分類與單位 -->
-        <div class="d-flex justify-content-between">
-          <p>{{ showData.category }}</p>
-          <p>{{ showData.unit }}</p>
-        </div>
-        <!-- 產品標題 -->
-        <h4>{{ showData.title }}</h4>
-        <hr />
-        <!-- 產品描述 -->
-        <p>{{ showData.description }}</p>
-        <!-- 產品價格 -->
-        <h4 v-if="showData.price === showData.origin_price" class="mt-3 mb-3">
-          NT$ {{ showData.price }}
-        </h4>
-        <div v-else class="d-flex align-items-end">
-          <h4 class="me-3 text-decoration-line-through text-deep-gray">
-            NT${{ showData.origin_price }}
-          </h4>
-          <h2 class="text-main-spec fw-bolder">NT${{ showData.price }}</h2>
-        </div>
-        <!-- 購物車增減按鈕與庫存 -->
-        <div class="d-flex">
-          <div class="bg-white d-flex w-50 mb-3 border">
-            <button :disabled="currentNum === 1" type="button" class="btn btn-lg" @click="minusNum">
-              -
-            </button>
-            <input
-              type="number"
-              class="form-control border-white shadow-none text-center fw-bold"
-              v-model.number="currentNum"
-              @blur="blurNum"
+            <img
+              v-for="(item, index) in showData.imagesUrl"
+              :key="index"
+              :src="item"
+              alt=""
+              class="img-fluid"
             />
-            <button
-              :disabled="currentNum === showData.inventory"
-              type="button"
-              class="btn btn-lg"
-              @click="plusNum"
+          </div>
+        </div>
+        <div class="col">
+          <!-- 產品分類與單位 -->
+          <div class="d-flex justify-content-between">
+            <p>{{ showData.category }}</p>
+            <p>{{ showData.unit }}</p>
+          </div>
+          <!-- 產品標題 -->
+          <h4>{{ showData.title }}</h4>
+          <hr />
+          <!-- 產品描述 -->
+          <p>{{ showData.description }}</p>
+          <!-- 產品價格 -->
+          <h4 v-if="showData.price === showData.origin_price" class="mt-3 mb-3">
+            NT$ {{ showData.price }}
+          </h4>
+          <div v-else class="d-flex align-items-end">
+            <h4 class="me-3 text-decoration-line-through text-deep-gray">
+              NT${{ showData.origin_price }}
+            </h4>
+            <h2 class="text-main-spec fw-bolder">NT${{ showData.price }}</h2>
+          </div>
+          <!-- 購物車增減按鈕與庫存 -->
+          <div class="d-flex">
+            <div class="bg-white d-flex w-50 mb-3 border">
+              <button
+                :disabled="currentNum === 1"
+                type="button"
+                class="btn btn-lg"
+                @click="minusNum"
+              >
+                -
+              </button>
+              <input
+                type="number"
+                class="form-control border-white shadow-none text-center fw-bold"
+                v-model.number="currentNum"
+                @blur="blurNum"
+              />
+              <button
+                :disabled="currentNum === showData.inventory"
+                type="button"
+                class="btn btn-lg"
+                @click="plusNum"
+              >
+                +
+              </button>
+            </div>
+            <p class="d-flex align-items-end ms-3">目前庫存：{{ showData.inventory }}</p>
+          </div>
+          <!-- 加入購物車 -->
+          <div v-if="isSmLoading === showData.id" class="d-flex mb-3 position-relative">
+            <VueLoading
+              :active="isSmLoading === showData.id"
+              :is-full-page="false"
+              :color="'#52504B'"
+              :width="30"
+              :height="30"
             >
-              +
+            </VueLoading>
+            <button type="button" class="btn btn-solid-spec w-100 btn-lg">正在加入購物車</button>
+          </div>
+          <div v-else class="d-flex mb-3">
+            <button
+              type="button"
+              class="btn btn-solid-spec w-100 btn-lg"
+              @click="goToPostCart(showData.id, currentNum, showData.inventory)"
+            >
+              加入購物車
             </button>
           </div>
-          <p class="d-flex align-items-end ms-3">目前庫存：{{ showData.inventory }}</p>
-        </div>
-        <!-- 加入購物車 -->
-        <div v-if="isSmLoading === showData.id" class="d-flex mb-3 position-relative">
-          <VueLoading
-            :active="isSmLoading === showData.id"
-            :is-full-page="false"
-            :color="'#52504B'"
-            :width="30"
-            :height="30"
-          >
-          </VueLoading>
-          <button type="button" class="btn btn-solid-spec w-100 btn-lg">正在加入購物車</button>
-        </div>
-        <div v-else class="d-flex mb-3">
-          <button
-            type="button"
-            class="btn btn-solid-spec w-100 btn-lg"
-            @click="goToPostCart(showData.id, currentNum, showData.inventory)"
-          >
-            加入購物車
-          </button>
-        </div>
-        <hr />
-        <!-- 手風琴組 -->
-        <div class="accordion">
-          <!-- 產品內容 -->
-          <div class="accordion-item">
-            <!-- ProductContentSection -->
-            <h2 class="accordion-header" id="ProductContentSection">
-              <button
-                class="accordion-button collapsed fs-5 fw-semibold"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#ProductContentDetails"
-                aria-expanded="false"
-                aria-controls="ProductContentDetails"
+          <hr />
+          <!-- 手風琴組 -->
+          <div class="accordion">
+            <!-- 產品內容 -->
+            <div class="accordion-item">
+              <!-- ProductContentSection -->
+              <h2 class="accordion-header" id="ProductContentSection">
+                <button
+                  class="accordion-button collapsed fs-5 fw-semibold"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#ProductContentDetails"
+                  aria-expanded="false"
+                  aria-controls="ProductContentDetails"
+                >
+                  內容
+                </button>
+              </h2>
+              <!-- ProductContentDetails -->
+              <div
+                id="ProductContentDetails"
+                class="accordion-collapse collapse show"
+                aria-labelledby="ProductContentSection"
               >
-                內容
-              </button>
-            </h2>
-            <!-- ProductContentDetails -->
-            <div
-              id="ProductContentDetails"
-              class="accordion-collapse collapse show"
-              aria-labelledby="ProductContentSection"
-            >
-              <div class="accordion-body">
-                <p>
-                  <span v-for="(item, index) in showData.content" :key="index"
-                    >{{ item }}<br
-                  /></span>
-                </p>
+                <div class="accordion-body">
+                  <p>
+                    <span v-for="(item, index) in showData.content" :key="index"
+                      >{{ item }}<br
+                    /></span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container">
-    <h4>或許你會喜歡</h4>
-    <div class="row row-cols-lg-4 row-cols-2" role="button">
-      <div class="col" v-for="item in recommendationsData" :key="item.id">
-        <ProductCard :product="item"></ProductCard>
+    <div class="container">
+      <h4>或許你會喜歡</h4>
+      <div class="row row-cols-lg-4 row-cols-2" role="button">
+        <div class="col" v-for="item in recommendationsData" :key="item.id">
+          <ProductCard :product="item"></ProductCard>
+        </div>
       </div>
     </div>
+    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 // eslint-disable-next-line import/no-unresolved
@@ -259,8 +269,8 @@ export default {
         // 取得最新購物車結果，最新數量
         await this.goToGetCart(false);
         if (
-          this.validateQuantity(currentNum, inventory)
-          && this.validateCartQuantity(productId, currentNum, inventory)
+          this.validateQuantity(currentNum, inventory) &&
+          this.validateCartQuantity(productId, currentNum, inventory)
         ) {
           const res = await this.postCart(productId, parseInt(currentNum, 10));
           // 顯示成功的加入結果

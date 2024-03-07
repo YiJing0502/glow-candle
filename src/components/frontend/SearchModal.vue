@@ -43,8 +43,9 @@
                   <th class="py-3" scope="row">{{ index + 1 }}</th>
                   <td>
                     <button
-                    @click="goToPage(item.id, 'product', item.category)"
-                    class="btn btn-normal-dpgray">
+                      @click="goToPage(item.id, 'product', item.category)"
+                      class="btn btn-normal-dpgray"
+                    >
                       {{ item.title }}
                     </button>
                   </td>

@@ -1,8 +1,15 @@
 <template>
   <FrontNavbar></FrontNavbar>
-  <RouterView :key="$route.fullPath"></RouterView>
+  <RouterView v-slot="{ Component }">
+    <transition name="page-opacity" mode="out-in">
+      <PageLoading v-if="isLoading"></PageLoading>
+      <div v-else>
+        <component :is="Component" :key="$route.fullPath"> </component>
+        <FrontFooter></FrontFooter>
+      </div>
+    </transition>
+  </RouterView>
   <ToastMessages></ToastMessages>
-  <FrontFooter></FrontFooter>
   <StickyFooter></StickyFooter>
 </template>
 <script>
@@ -14,6 +21,7 @@ import StickyFooter from '../../components/frontend/StickyFooter.vue';
 export default {
   data() {
     return {
+      isLoading: false,
       path: '/',
     };
   },
@@ -25,9 +33,23 @@ export default {
   },
   watch: {
     $route() {
-      this.path = this.$route.path;
+      this.isLoading = true; // 啟動 loading 動畫
+      this.$nextTick(() => {
+        // this.$router.push({ path: this.$route.path });
+        this.path = this.$route.path;
+        this.isLoading = false;
+      });
     },
   },
 };
 </script>
-<style></style>
+<style>
+.page-opacity-enter-active,
+.page-opacity-leave-active {
+  transition: 500ms ease all;
+}
+.page-opacity-enter-from,
+.page-opacity-leave-to {
+  opacity: 0;
+}
+</style>

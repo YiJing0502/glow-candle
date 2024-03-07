@@ -408,11 +408,15 @@ export default {
       this.updatedShowData.imagesUrl = this.updatedShowData.imagesUrl || [];
       if (imagesResultObject.successfulUploads.length > 0) {
         // eslint-disable-next-line max-len
-        imagesResultObject.successfulUploads.map((element) => this.updatedShowData.imagesUrl.push(element.value.imageUrl));
+        imagesResultObject.successfulUploads.map((element) =>
+          this.updatedShowData.imagesUrl.push(element.value.imageUrl),
+        );
       }
       if (imagesResultObject.failedUploads.length > 0) {
         // eslint-disable-next-line max-len
-        imagesResultObject.failedUploads.map((element) => this.handleServerResponse(false, element.value.error));
+        imagesResultObject.failedUploads.map((element) =>
+          this.handleServerResponse(false, element.value.error),
+        );
       }
     },
     handleServerResponse(success, message) {
