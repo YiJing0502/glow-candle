@@ -7,19 +7,27 @@
         <div class="container d-flex flex-column main-img container-rounded">
           <div class="row justify-content-center my-auto">
             <div class="col-md-4 text-center d-flex flex-column align-items-center">
-              <h2 class="text-main-light">
+              <h2
+              data-wow-duration="2s"
+              class="wow animate__animated animate__fadeInUp text-main-light">
                 愜意花園系列 <br />
                 x <br />
                 甜點香氛
               </h2>
-              <h6 class="mb-3 text-main-light">
+              <h6
+              data-wow-duration="2s"
+              data-wow-delay=".5s"
+              class="wow animate__animated animate__fadeInUp mb-3 text-main-light">
                 焦糖蘋果塔、南瓜派、雲朵蛋糕，在家也能享受宛如待在咖啡館的下午茶時光
               </h6>
               <RouterLink
+                data-wow-duration="2s"
+                data-wow-delay="1s"
                 @click="changeNowPage('香氛蠟燭')"
                 to="/products?category=香氛蠟燭&key=2&content=愜意花園系列&page=1"
                 type="button"
-                class="btn btn-lg btn-solid-main d-flex align-items-center"
+                class="wow animate__animated animate__fadeInUp
+                btn btn-lg btn-solid-main d-flex align-items-center"
                 >立即購買
                 <span class="material-icons">chevron_right</span>
               </RouterLink>
@@ -29,13 +37,21 @@
       </section>
     </div>
     <!-- 暢銷單品 -->
-    <div class="container-fluid bg-main-medium py-5">
-      <section class="container">
+    <div
+     class="container-fluid bg-main-medium py-5">
+      <section
+      class="container">
         <div class="mb-5">
-          <h2 class="text-center text-main-spec">✦ 暢銷單品 ✦</h2>
+          <h2
+          data-wow-duration="1s"
+          class="wow animate__animated animate__fadeInUp text-center text-main-spec">✦ 暢銷單品 ✦</h2>
           <p class="text-center">不知道該選哪種香氛蠟燭？以下是我們的回購率最高的商品：）</p>
         </div>
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-2" role="button">
+        <div
+        data-wow-delay=".5s"
+        data-wow-duration="2s"
+        class="wow animate__animated animate__fadeIn
+         row row-cols-lg-4 row-cols-sm-2 row-cols-2" role="button">
           <div class="col" v-for="item in bestsellersData" :key="item.id">
             <ProductCard :product="item" @click="changeNowPage('香氛蠟燭')"></ProductCard>
           </div>
@@ -46,13 +62,19 @@
     <div class="container py-5">
       <section class="">
         <div class="mb-5">
-          <h2 class="text-center text-main-spec">✦ 我們的經典 ✦</h2>
+          <h2
+          data-wow-duration="1s"
+          class="wow animate__animated animate__fadeInUp text-center text-main-spec">✦ 我們的經典 ✦</h2>
           <p class="text-center">
             「平日中的靜謐時刻，溫暖的光輝將您包裹，帶來安詳的平靜。在平靜日系列裡，您可以找到簡單而美好的生活瞬間」
           </p>
         </div>
         <!-- 平靜日卡片 -->
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-2 mb-5" role="button">
+        <div
+        data-wow-delay=".5s"
+        data-wow-duration="2s"
+        class="wow animate__animated animate__fadeIn
+        row row-cols-lg-4 row-cols-sm-2 row-cols-2 mb-5" role="button">
           <div class="col" v-for="item in calmSeriesData" :key="item.id">
             <ProductCard :product="item" @click="changeNowPage('香氛蠟燭')"></ProductCard>
           </div>
@@ -72,14 +94,26 @@
             class="col bg-main-spec d-flex flex-column
             justify-content-center align-items-center p-5"
           >
-            <h2 class="text-center text-main-light">最佳的送禮選擇</h2>
-            <h4 class="text-center text-main-light">平靜日系列210g四入香氛蠟燭收藏套組</h4>
-            <h6 class="text-center text-main-light">現正特價中</h6>
+            <h2
+            data-wow-duration="2s"
+            class="wow animate__animated animate__fadeInUp
+            text-center text-main-light">最佳的送禮選擇</h2>
+            <div
+            data-wow-duration="2s"
+            data-wow-delay=".5s"
+            class="wow animate__animated animate__fadeInUp">
+              <h4
+              class="text-center text-main-light">平靜日系列210g四入香氛蠟燭收藏套組</h4>
+              <h6 class="text-center text-main-light">現正特價中</h6>
+            </div>
             <RouterLink
+              data-wow-duration="2s"
+              data-wow-delay="1s"
               @click="changeNowPage('香氛蠟燭')"
               to="/product/-NoLX8ZL10JiBTlwGN6T"
               type="button"
-              class="btn btn-lg btn-solid-main d-flex align-items-center"
+              class="wow animate__animated animate__fadeInUp
+              btn btn-lg btn-solid-main d-flex align-items-center"
               >立即購買
               <span class="material-icons">chevron_right</span>
             </RouterLink>
@@ -97,14 +131,24 @@
               class="col d-flex flex-column px-0
                justify-content-center align-items-center align-items-md-start"
             >
-              <h2 class="">光輝時刻</h2>
-              <h2 class="mb-4">台灣原創香氛品牌</h2>
-              <p class="w-75">
+              <h2
+              data-wow-duration="1s"
+              class="wow animate__animated animate__fadeInUp">光輝時刻</h2>
+              <h2
+              data-wow-delay=".5s"
+              data-wow-duration="1s"
+              class="wow animate__animated animate__fadeInUp mb-4">台灣原創香氛品牌</h2>
+              <p
+              class="w-75">
                 「自創立以來，光輝的使命一直是在日常生活中營造一種平靜、舒適、和諧的氛圍，為您的生活注入光輝，讓每個時刻都充滿愉悅與寧靜。」
               </p>
               <RouterLink
               @click="changeNowPage('關於我們')"
-              :to="{ name: 'about' }" class="btn btn-solid-dpgray btn-lg w-75 mb-3"
+              :to="{ name: 'about' }"
+              data-wow-delay="1s"
+              data-wow-duration="1s"
+              class="wow animate__animated animate__fadeIn
+              btn btn-solid-dpgray btn-lg w-75 mb-3"
                 >關於我們</RouterLink
               >
             </div>
@@ -123,32 +167,40 @@
       </section>
     </div>
     <!-- 服務保障 -->
-    <div class="container">
+    <div
+    class="container">
       <section class="">
         <div class="mb-5 pb-3">
           <div class="row row-cols-md-4 row-cols-2">
-            <div class="col">
+            <div
+            class="wow animate__animated animate__zoomIn col">
               <span class="material-icons-round fs-1 mb-3"> local_shipping </span>
               <p class="fs-2">交貨快速</p>
               <p>
                 在商品庫存充足下，我們允諾下單三天內會出貨，如您所訂購的商品庫存不足，我們將盡快以E-mail通知您。
               </p>
             </div>
-            <div class="col">
+            <div
+            data-wow-delay="0.5s"
+            class="wow animate__animated animate__zoomIn col">
               <span class="material-icons-round fs-1 mb-3"> verified_user </span>
               <p class="fs-2">售後服務</p>
               <p>
                 依照消費者保護法規定，消費者享有商品到貨七天鑑賞期之權益，但若商品如經拆封、使用，恕無法退貨。
               </p>
             </div>
-            <div class="col">
+            <div
+            data-wow-delay="1s"
+            class="wow animate__animated animate__zoomIn col">
               <span class="material-icons-round fs-1 mb-3"> phone </span>
               <p class="fs-2">客服服務</p>
               <p>
                 如購買過程及收到商品有任何問題，歡迎 來電、E-mail 聯繫我們的客服， 我們會盡快回覆您。
               </p>
             </div>
-            <div class="col">
+            <div
+            data-wow-delay="1.5s"
+            class="wow animate__animated animate__zoomIn col">
               <span class="material-icons-round fs-1 mb-3"> enhanced_encryption </span>
               <p class="fs-2">免運服務</p>
               <p>
@@ -160,22 +212,27 @@
       </section>
     </div>
     <!-- 動態消息 -->
-    <div class="container-fluid bg-main-medium py-5">
+    <div
+    class="container-fluid bg-main-medium py-5">
       <section class="container">
         <!-- 動態消息 -->
         <div class="">
           <div class="mb-5">
-            <h2 class="text-center text-main-spec">✦ 動態消息 ✦</h2>
+            <h2
+            data-wow-duration="1s"
+            class="wow animate__animated animate__fadeInUp text-center text-main-spec">✦ 動態消息 ✦</h2>
             <p class="text-center">
               關於我們的最新動態，我們積極地提供更多有趣而富有深度的內容，與您分享。
           </p>
           </div>
-          <div class="row row-cols-md-3 row-cols-1" role="button">
+          <div
+          data-wow-delay=".5s"
+          data-wow-duration="2s"
+          class="wow animate__animated animate__fadeIn row row-cols-md-3 row-cols-1" role="button">
             <div v-for="item in homeArticles" :key="item.id" class="col">
               <ArticleCard :article="item" @click="changeNowPage('動態消息')"></ArticleCard>
             </div>
           </div>
-          <div class="row"></div>
           <div class="row justify-content-center my-auto">
             <div class="col-md-4 text-center d-flex flex-column align-items-center">
               <RouterLink

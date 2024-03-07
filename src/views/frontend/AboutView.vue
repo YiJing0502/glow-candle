@@ -4,8 +4,15 @@
   <!-- 介紹 -->
   <div class="container">
     <div class="text-center py-5">
-      <h2 class="text-main-spec fs-1">點亮屬於你的時刻</h2>
-      <h6 class="lh-lg">
+      <h2
+      data-wow-duration="2s"
+      data-wow-delay=".5s"
+      class="wow animate__animated animate__fadeInUp
+      text-main-spec fs-1">點亮屬於你的時刻</h2>
+      <h6
+      data-wow-duration="2s"
+      data-wow-delay=".5s"
+      class="wow animate__animated animate__fadeIn lh-lg">
         「光輝」是一個專注於製作高品質蠟燭的品牌，致力於為客戶營造溫馨、浪漫和舒適的氛圍。<br />以下是我們的堅持的品牌理念：
       </h6>
     </div>
@@ -13,7 +20,11 @@
   <!-- 理念 -->
   <div class="container-fluid bg-main-medium">
     <section class="container py-5">
-      <div class="row row-cols-md-3 row-cols-2">
+      <div
+      data-wow-duration="2s"
+      data-wow-delay=".5s"
+      class="wow animate__animated animate__fadeIn
+      row row-cols-md-3 row-cols-2">
         <div class="col">
           <span class="material-icons-round fs-1 mb-3 text-main-spec"> family_restroom </span>
           <p class="fs-2">愉悅的時刻</p>
@@ -78,7 +89,9 @@
         <RouterLink
           :to="{ name: 'collaborate' }"
           type="button"
-          class="btn btn-lg btn-solid-main d-flex align-items-center"
+          data-wow-duration="2s"
+          class="wow animate__animated animate__zoomIn
+          btn btn-lg btn-solid-main d-flex align-items-center"
           >成為合作夥伴
           <span class="material-icons">chevron_right</span>
         </RouterLink>
