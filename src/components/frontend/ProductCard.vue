@@ -41,7 +41,9 @@ export default {
   emits: [],
   methods: {
     changeImage(ref, imageUrl) {
-      this.$refs[ref].src = imageUrl;
+      if (this.$refs[ref] && this.$refs[ref].src) {
+        this.$refs[ref].src = imageUrl;
+      }
     },
     // 跳轉至產品詳細頁面
     changeToProductPage(id) {
