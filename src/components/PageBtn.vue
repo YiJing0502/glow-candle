@@ -3,11 +3,11 @@
   <li class="page-item">
     <button
       type="button"
-      class="page-link"
+      class="page-link d-flex align-items-center"
       :class="{ disabled: !prevIsEnabled }"
       @click="$emit('change-prev-page')"
     >
-      Previous
+      <span class="material-icons">chevron_left</span>
     </button>
   </li>
   <!-- 頁數 -->
@@ -26,11 +26,11 @@
   <li class="page-item">
     <button
       type="button"
-      class="page-link"
+      class="page-link d-flex align-items-center"
       :class="{ disabled: !nextIsEnabled }"
       @click="$emit('change-next-page')"
     >
-      Next
+      <span class="material-icons">chevron_right</span>
     </button>
   </li>
 </template>
