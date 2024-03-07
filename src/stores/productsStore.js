@@ -225,28 +225,33 @@ export default defineStore('productsStore', {
     // fn,使用 id 取得特定產品
     getParticularProduct(id) {
       // 如果仍在載入中，返回一個在載入完成時解析的 Promise
-      if (this.isLoading) {
-        return new Promise((resolve) => {
-          const checkLoading = () => {
-            // 當載入完成時
-            if (!this.isLoading) {
-              const data = this.productsData.find((product) => product.id === id);
-              resolve(data);
-            } else {
-              // 如果仍在載入中，稍後再次檢查
-              setTimeout(checkLoading, 100);
-            }
-          };
-          checkLoading();
-        });
-      }
+      return new Promise((resolve, reject) => {
+        const findData = () => {
+          const data = this.productsData.find((product) => product.id === id);
+          if (data === undefined) {
+            reject(data);
+          } else {
+            resolve(data);
+          }
+        };
+        const checkLoading = () => {
+          // 當載入完成時
+          if (!this.isLoading) {
+            findData();
+          } else {
+            // 如果仍在載入中，稍後再次檢查
+            setTimeout(checkLoading, 100);
+          }
+        };
+        checkLoading();
+      });
       // 如果不在載入中，直接找到對應的產品資料，並返回已解析的 Promise
-      const data = this.productsData.find((product) => product.id === id);
-      return Promise.resolve(data);
     },
-    recommendations(id) {
+    async recommendations(id) {
       this.recommendationsData = [];
-      Promise.all([this.getParticularProduct(id)]).then(([data]) => {
+      const result = { error: null };
+      try {
+        const data = await this.getParticularProduct(id);
         const { title } = data;
         const serious = title.split('｜')[2];
         const { category } = data;
@@ -291,7 +296,15 @@ export default defineStore('productsStore', {
             }
           }
         }
-      });
+      } catch (err) {
+        if (err === undefined) {
+          result.error = {
+            message: '找不到對應的資料',
+            success: false,
+          };
+        }
+      }
+      return result;
     },
     getRandomProduct(categoryData) {
       const randomIndex = Math.floor(Math.random() * categoryData.length);
@@ -308,7 +321,6 @@ export default defineStore('productsStore', {
         }
       });
       this.showProductsData = newData;
-      // this.pagination(1);
     },
   },
 });
