@@ -56,7 +56,6 @@ export default {
   },
   watch: {
     alertMessage(newMessage) {
-      console.log('newMessage', newMessage);
       if (newMessage) {
         this.openModal();
       }
