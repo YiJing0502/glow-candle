@@ -35,8 +35,15 @@
         <div class="col">
           <!-- 產品分類與單位 -->
           <div class="d-flex justify-content-between">
-            <p>{{ showData.category }}</p>
-            <p>{{ showData.unit }}</p>
+            <h6
+              class="d-flex align-items-center text-link-deep-gray"
+              role="button"
+              @click="goToProductsCategoryPage(showData.category)"
+            >
+              <span class="material-icons">chevron_left</span>
+              {{ showData.category }}
+            </h6>
+            <h6>{{ showData.unit }}</h6>
           </div>
           <!-- 產品標題 -->
           <h4>{{ showData.title }}</h4>
@@ -160,6 +167,7 @@ import stringStore from '../../stores/stringStore';
 import toastsStore from '../../stores/toastsStore';
 import productsStore from '../../stores/productsStore';
 import alertStore from '../../stores/alertStore';
+import pageStore from '../../stores/pageStore';
 
 import ProductCard from '../../components/frontend/ProductCard.vue';
 
@@ -321,10 +329,15 @@ export default {
       this.viewportWidth = window.innerWidth;
       this.isBootstrapLarge = this.viewportWidth > 992;
     },
+    goToProductsCategoryPage(category) {
+      this.changeNowPage(category);
+      this.$router.push({ name: 'products', query: { category, page: 1 } });
+    },
     ...mapActions(cartsStore, ['getCart', 'postCart']),
     ...mapActions(toastsStore, ['pushToast']),
     ...mapActions(productsStore, ['recommendations']),
     ...mapActions(alertStore, ['showAlertMessage']),
+    ...mapActions(pageStore, ['changeNowPage']),
   },
   watch: {
     $route(to) {

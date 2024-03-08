@@ -50,6 +50,7 @@
                     <div class="col col-sm-10 col-lg-9">
                       <div class="d-flex justify-content-between">
                         <h6
+                          class="text-link-deep-gray"
                           role="button"
                           @click="changeToProductPage(item.product.id, item.product.category)"
                         >
