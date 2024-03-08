@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="container-fluid bg-main-medium py-5">
+    <PageLoading v-if="isLoading"></PageLoading>
+    <div v-else class="container-fluid bg-main-medium py-5">
       <section class="container">
         <!-- 專欄文章 -->
         <div>
@@ -66,7 +67,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(articlesStore, ['articlesData']),
+    ...mapState(articlesStore, ['articlesData', 'isLoading']),
   },
   components: {
     PageBtn,
