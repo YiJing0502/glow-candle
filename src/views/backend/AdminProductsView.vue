@@ -112,12 +112,11 @@
   <!-- 刪除產品Modal -->
   <DeleteModal ref="deleteModal" :show-data="showData" @delete-function="deleteAdminProduct">
   </DeleteModal>
-  <!-- 結果modal -->
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapActions } from 'pinia';
 import toastsStore from '../../stores/toastsStore';
+import alertStore from '../../stores/alertStore';
 // components
 import DeleteModal from '../../components/backend/DeleteModal.vue';
 import ProductModal from '../../components/backend/ProductModal.vue';
@@ -136,10 +135,6 @@ export default {
       infoData: [],
       showData: {},
       inEditProductMode: true,
-      serverMessage: {
-        message: '',
-        success: true,
-      },
       productsCategory: [],
       searchInputValue: '',
     };
@@ -183,7 +178,8 @@ export default {
           }
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.getRemoteData = true;
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 新增特定產品資料
@@ -203,7 +199,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // // ajax, 更新特定產品資料
@@ -226,7 +222,7 @@ export default {
           }
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 刪除特定產品資料
@@ -247,7 +243,7 @@ export default {
         })
         .catch((err) => {
           this.$refs.deleteModal.hideModal();
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // fn, 分頁
@@ -330,19 +326,13 @@ export default {
         }
       });
       if (newData.length === 0) {
-        this.serverMessage.message = '很抱歉，沒有符合搜尋條件的產品';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, '很抱歉，沒有符合搜尋條件的產品');
       }
       this.paginationData = newData;
       this.pagination(1);
     },
-    handleServerResponse(success, message) {
-      this.serverMessage.success = success;
-      this.serverMessage.message = message;
-      this.$refs.resultModal.openModal();
-    },
     ...mapActions(toastsStore, ['pushToast']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {
     this.getAdminProductsAll();

@@ -90,14 +90,13 @@
   <!-- 刪除「所有」訂單Modal -->
   <DeleteModal ref="deleteOrdersModal" :show-data="showData" @delete-function="deleteAdminOrders">
   </DeleteModal>
-  <!-- 結果modal -->
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 
 <script>
 import { mapActions } from 'pinia';
 import timeStore from '../../stores/timeStore';
 import toastsStore from '../../stores/toastsStore';
+import alertStore from '../../stores/alertStore';
 
 import PageBtn from '../../components/PageBtn.vue';
 import OrderModal from '../../components/backend/OrderModal.vue';
@@ -113,11 +112,6 @@ export default {
       isLoading: false,
       // 所有訂單資料
       adminOrdersData: [],
-      // 提示訊息
-      serverMessage: {
-        message: '',
-        success: true,
-      },
       showData: {},
     };
   },
@@ -163,7 +157,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // fn, 打開刪除「單一筆」訂單的Modal
@@ -186,7 +180,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 取得訂單
@@ -204,17 +198,12 @@ export default {
           this.isLoading = false;
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
-    },
-    // 處理 伺服器 訊息
-    handleServerResponse(success, message) {
-      this.serverMessage.success = success;
-      this.serverMessage.message = message;
-      this.$refs.resultModal.openModal();
     },
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
     ...mapActions(toastsStore, ['pushToast']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {
     this.isLoading = true;

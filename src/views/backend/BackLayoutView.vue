@@ -5,25 +5,20 @@
     <AdminNavbar></AdminNavbar>
     <RouterView></RouterView>
   </div>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 // pinia
 import { mapState, mapActions } from 'pinia';
 import adminStore from '../../stores/adminStore';
 import toastsStore from '../../stores/toastsStore';
+import alertStore from '../../stores/alertStore';
 // components
 import AdminNavbar from '../../components/backend/AdminNavbar.vue';
 import ToastMessages from '../../components/ToastMessages.vue';
 
 export default {
   data() {
-    return {
-      serverMessage: {
-        message: '',
-        success: true,
-      },
-    };
+    return {};
   },
   components: {
     AdminNavbar,
@@ -35,6 +30,7 @@ export default {
   methods: {
     ...mapActions(toastsStore, ['pushToast']),
     ...mapActions(adminStore, ['initializeAdmin', 'postApiUserCheck']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {
     // 取得先前儲存在 cookie 中 adminAccount 的值
@@ -53,9 +49,7 @@ export default {
         if (!this.loginSuccess) {
           // 只有在使用者未登入時才重新導向
           this.$router.push({ name: 'login' });
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showAlertMessage(false, err.response.data.message);
         }
       });
   },

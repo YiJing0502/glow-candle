@@ -9,16 +9,12 @@
       </div>
     </transition>
   </RouterView>
-  <ToastMessages></ToastMessages>
   <StickyFooter></StickyFooter>
-  <AlertModal></AlertModal>
 </template>
 <script>
 import FrontNavbar from '../../components/frontend/FrontNavbar.vue';
-import ToastMessages from '../../components/ToastMessages.vue';
 import FrontFooter from '../../components/frontend/FrontFooter.vue';
 import StickyFooter from '../../components/frontend/StickyFooter.vue';
-import AlertModal from '../../components/AlertModal.vue';
 
 export default {
   data() {
@@ -29,10 +25,8 @@ export default {
   },
   components: {
     FrontNavbar,
-    ToastMessages,
     FrontFooter,
     StickyFooter,
-    AlertModal,
   },
   watch: {
     $route() {

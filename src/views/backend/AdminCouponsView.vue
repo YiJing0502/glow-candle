@@ -83,13 +83,12 @@
     :show-data="showData"
     @delete-function="deleteAdminCoupon"
   ></DeleteModal>
-  <!-- 結果modal -->
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 // pinia
 import { mapState, mapActions } from 'pinia';
 import timeStore from '../../stores/timeStore';
+import alertStore from '../../stores/alertStore';
 // components
 import StatusMessage from '../../components/backend/StatusMessage.vue';
 import DeleteModal from '../../components/backend/DeleteModal.vue';
@@ -107,10 +106,6 @@ export default {
       pagination: {},
       showData: {},
       inEditCouponMode: true,
-      serverMessage: {
-        message: '',
-        success: true,
-      },
     };
   },
   components: {
@@ -155,7 +150,7 @@ export default {
           this.pagination = res.data.pagination;
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 新增coupon
@@ -179,7 +174,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 修改coupon
@@ -201,7 +196,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 刪除coupon
@@ -219,14 +214,8 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
-    },
-    // 處理 伺服器 訊息
-    handleServerResponse(success, message) {
-      this.serverMessage.success = success;
-      this.serverMessage.message = message;
-      this.$refs.resultModal.openModal();
     },
     // fn, 處理coupon到期日的顯示狀態
     couponsDueDateMessage(dueDate) {
@@ -242,6 +231,7 @@ export default {
     },
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
     ...mapActions(toastsStore, ['pushToast']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   computed: {
     ...mapState(timeStore, ['currentDate']),

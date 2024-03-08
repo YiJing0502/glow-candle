@@ -36,27 +36,23 @@
       </form>
     </div>
   </div>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
+import { mapActions } from 'pinia';
+import alertStore from '../../stores/alertStore';
+
 const { VITE_BASE_URL } = import.meta.env;
 export default {
   data() {
     return {
       email: '',
       password: '',
-      serverMessage: {
-        message: '',
-        success: true,
-      },
     };
   },
   methods: {
     postAdminSignin() {
       if (this.email === '' && this.password === '') {
-        this.serverMessage.message = '信箱與密碼是必須的';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, '信箱與密碼為必填');
         return;
       }
       const obj = {
@@ -78,11 +74,10 @@ export default {
           }
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {},
 };

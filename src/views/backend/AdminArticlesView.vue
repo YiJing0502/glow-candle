@@ -95,17 +95,17 @@
     :show-data="showData"
     @delete-function="deleteAdminArticle(showData.id)"
   ></DeleteModal>
-  <!-- 結果modal -->
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
+import timeStore from '../../stores/timeStore';
+import toastsStore from '../../stores/toastsStore';
+import alertStore from '../../stores/alertStore';
+
 import PageBtn from '../../components/PageBtn.vue';
 import StatusMessage from '../../components/backend/StatusMessage.vue';
 import DeleteModal from '../../components/backend/DeleteModal.vue';
 import ArticleModal from '../../components/backend/ArticleModal.vue';
-import timeStore from '../../stores/timeStore';
-import toastsStore from '../../stores/toastsStore';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -116,10 +116,6 @@ export default {
       pagination: {},
       showData: {},
       inEditArticleMode: true,
-      serverMessage: {
-        message: '',
-        success: true,
-      },
     };
   },
   components: {
@@ -166,7 +162,7 @@ export default {
           this.getRemoteData = true;
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 取得 article（編輯文章）
@@ -181,7 +177,7 @@ export default {
           this.$refs.articleModal.openModal();
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 新增 articles
@@ -200,7 +196,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 修改 articles
@@ -219,7 +215,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     // ajax, 刪除 articles
@@ -236,17 +232,12 @@ export default {
           });
         })
         .catch((err) => {
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
-    },
-    // 處理 伺服器 訊息
-    handleServerResponse(success, message) {
-      this.serverMessage.message = message;
-      this.serverMessage.success = success;
-      this.$refs.resultModal.openModal();
     },
     ...mapActions(timeStore, ['dayToTimestamp10Code', 'timestamp10CodeToDay']),
     ...mapActions(toastsStore, ['pushToast']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {
     this.getAdminArticles();

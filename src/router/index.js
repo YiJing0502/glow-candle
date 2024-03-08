@@ -127,7 +127,7 @@ const router = createRouter({
     },
     // admin login
     {
-      path: '/glow/login',
+      path: '/login',
       name: 'login',
       component: () => import('../views/backend/LoginView.vue'),
     },
