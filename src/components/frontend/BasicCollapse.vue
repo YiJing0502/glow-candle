@@ -13,7 +13,12 @@
         <slot name="header"></slot>
       </button>
     </h2>
-    <div :id="uniqueId" class="accordion-collapse collapse">
+    <div v-if="open" :id="uniqueId" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+        <slot name="body"></slot>
+      </div>
+    </div>
+    <div v-else :id="uniqueId" class="accordion-collapse collapse">
       <div class="accordion-body">
         <slot name="body"></slot>
       </div>
@@ -27,6 +32,6 @@ export default {
       show: false,
     };
   },
-  props: ['uniqueId'],
+  props: ['uniqueId', 'open'],
 };
 </script>
