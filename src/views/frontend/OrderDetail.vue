@@ -20,11 +20,22 @@
               <template v-slot:body>
                 <div class="row mb-3" v-for="item in productData" :key="item.id">
                   <div class="col col-sm-2 col-lg-3 d-flex align-items-center">
-                    <img :src="item.product.imageUrl" :alt="item.product.title" class="img-fluid" />
+                    <img
+                      role="button"
+                      @click="changeToProductPage(item.product.id, item.product.category)"
+                      :src="item.product.imageUrl"
+                      :alt="item.product.title"
+                      class="img-fluid"
+                    />
                   </div>
                   <div class="col col-sm-10 col-lg-9">
                     <div class="d-flex">
-                      <h6>{{ item.product.title }}</h6>
+                      <h6
+                        role="button"
+                        @click="changeToProductPage(item.product.id, item.product.category)"
+                      >
+                        {{ item.product.title }}
+                      </h6>
                     </div>
                     <p>
                       單價NT$ {{ parseInt(item.product.price) }} / 小計NT$
@@ -152,6 +163,7 @@
 import { mapActions, mapState } from 'pinia';
 import ordersStore from '../../stores/ordersStore';
 import alertStore from '../../stores/alertStore';
+import pageStore from '../../stores/pageStore';
 
 import BasicCollapse from '../../components/frontend/BasicCollapse.vue';
 
@@ -182,6 +194,14 @@ export default {
     BasicCollapse,
   },
   methods: {
+    // 跳轉至產品詳細頁面
+    changeToProductPage(id, category) {
+      this.changeNowPage(category);
+      this.$router.push({
+        name: 'product',
+        params: { id },
+      });
+    },
     async goToGetOrder() {
       try {
         const res = await this.getOrder(this.$route.params.id);
@@ -203,6 +223,7 @@ export default {
     },
     ...mapActions(ordersStore, ['getOrder', 'postPayOrder']),
     ...mapActions(alertStore, ['showAlertMessage']),
+    ...mapActions(pageStore, ['changeNowPage']),
   },
   computed: {
     ...mapState(ordersStore, ['isLoading', 'showData', 'userData', 'productData', 'couponData']),
