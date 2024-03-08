@@ -159,22 +159,16 @@
         </div>
       </div>
     </div>
-    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
 import ordersStore from '../../stores/ordersStore';
+import alertStore from '../../stores/alertStore';
 
 export default {
   data() {
-    return {
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
-    };
+    return {};
   },
   methods: {
     async goToGetOrder() {
@@ -187,28 +181,22 @@ export default {
             query: this.$route.query,
             hash: this.$route.hash,
           });
+          this.showAlertMessage(false, '找不到此筆訂單');
         }
         if (!res.data.order.is_paid) {
-          this.serverMessage.message = '訂單已建立，請點擊付款按鈕付款';
-          this.serverMessage.success = res.data.success;
-          this.$refs.resultModal.openModal();
+          this.showAlertMessage(true, '訂單已建立，請點擊付款按鈕付款');
         }
       } catch (err) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     async goToPostPayOrder(orderId) {
       try {
         const res = await this.postPayOrder(orderId);
         await this.goToGetOrder();
-        this.serverMessage = res.data;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(true, res.data.message);
       } catch (err) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     goToOrderDetailPage(orderId) {
@@ -220,6 +208,7 @@ export default {
       });
     },
     ...mapActions(ordersStore, ['getOrder', 'postPayOrder', 'changeToIdPage']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   computed: {
     ...mapState(ordersStore, ['isLoading', 'showData']),

@@ -161,25 +161,19 @@
         </div>
       </div>
     </div>
-    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
 import productsStore from '../../stores/productsStore';
+import alertStore from '../../stores/alertStore';
 
 import PageBtn from '../../components/PageBtn.vue';
 import ProductCard from '../../components/frontend/ProductCard.vue';
 
 export default {
   data() {
-    return {
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
-    };
+    return {};
   },
   components: {
     PageBtn,
@@ -215,6 +209,7 @@ export default {
         },
       });
     },
+    ...mapActions(alertStore, ['showAlertMessage']),
     ...mapActions(productsStore, [
       'getProductsAll',
       'getProduct',

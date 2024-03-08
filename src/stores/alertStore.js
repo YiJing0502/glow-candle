@@ -1,7 +1,20 @@
 import { defineStore } from 'pinia';
 
 export default defineStore('alertStore', {
-  state: () => ({}),
+  state: () => ({
+    // alert model
+    alertMessage: {
+      message: '',
+      success: true,
+    },
+  }),
   getters: {},
-  actions: {},
+  actions: {
+    showAlertMessage(success, message) {
+      this.alertMessage = {
+        message,
+        success,
+      };
+    },
+  },
 });

@@ -252,7 +252,6 @@
             </div>
           </div>
         </section>
-        <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
       </div>
     </div>
   </div>
@@ -264,6 +263,7 @@ import { mapState, mapActions } from 'pinia';
 import productsStore from '../../stores/productsStore';
 import articlesStore from '../../stores/articlesStore';
 import pageStore from '../../stores/pageStore';
+import alertStore from '../../stores/alertStore';
 // component
 import ProductCard from '../../components/frontend/ProductCard.vue';
 import ArticleCard from '../../components/frontend/ArticleCard.vue';
@@ -274,11 +274,6 @@ export default {
       spaceBetween: 10,
       // 放置首頁的文章
       homeArticles: [],
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
     };
   },
   computed: {
@@ -303,13 +298,12 @@ export default {
           this.homeArticles.push(element);
         }
       } catch (err) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     ...mapActions(articlesStore, ['getArticles']),
     ...mapActions(pageStore, ['changeNowPage']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {
     this.goToGetHomeArticles();

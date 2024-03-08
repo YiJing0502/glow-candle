@@ -249,7 +249,7 @@ export default defineStore('productsStore', {
     },
     async recommendations(id) {
       this.recommendationsData = [];
-      const result = { error: null };
+      const errData = { error: null };
       try {
         const data = await this.getParticularProduct(id);
         const { title } = data;
@@ -298,13 +298,13 @@ export default defineStore('productsStore', {
         }
       } catch (err) {
         if (err === undefined) {
-          result.error = {
+          errData.error = {
             message: '找不到對應的資料',
             success: false,
           };
         }
       }
-      return result;
+      return errData;
     },
     getRandomProduct(categoryData) {
       const randomIndex = Math.floor(Math.random() * categoryData.length);

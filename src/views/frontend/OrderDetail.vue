@@ -211,6 +211,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import ordersStore from '../../stores/ordersStore';
+import alertStore from '../../stores/alertStore';
 
 export default {
   data() {
@@ -246,19 +247,17 @@ export default {
             query: this.$route.query,
             hash: this.$route.hash,
           });
+          this.showAlertMessage(false, '找不到此筆訂單');
         }
         if (!res.data.order.is_paid) {
-          this.serverMessage.message = '訂單已建立，請點擊付款按鈕付款';
-          this.serverMessage.success = res.data.success;
-          this.$refs.resultModal.openModal();
+          this.showAlertMessage(true, '訂單已建立，請點擊付款按鈕付款');
         }
       } catch (err) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     ...mapActions(ordersStore, ['getOrder', 'postPayOrder']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   computed: {
     ...mapState(ordersStore, ['isLoading', 'showData', 'userData', 'productData', 'couponData']),

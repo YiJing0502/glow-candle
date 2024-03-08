@@ -147,7 +147,6 @@
         </div>
       </div>
     </div>
-    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
 </template>
 <script>
@@ -160,6 +159,7 @@ import cartsStore from '../../stores/cartsStore';
 import stringStore from '../../stores/stringStore';
 import toastsStore from '../../stores/toastsStore';
 import productsStore from '../../stores/productsStore';
+import alertStore from '../../stores/alertStore';
 
 import ProductCard from '../../components/frontend/ProductCard.vue';
 
@@ -171,11 +171,6 @@ export default {
       isLoading: false,
       // 單筆產品詳細資料
       showData: {},
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
       modules: [Pagination, Navigation],
       viewportWidth: window.innerWidth,
       isBootstrapLarge: false,
@@ -199,7 +194,7 @@ export default {
         return;
       }
       if (this.currentNum >= this.showData.inventory) {
-        this.handleServerResponse(false, '很抱歉，不能超出此庫存量');
+        this.showAlertMessage(false, '很抱歉，不能超出此庫存量');
       }
     },
     // 減少數量
@@ -210,7 +205,7 @@ export default {
         return;
       }
       if (this.currentNum <= 1) {
-        this.handleServerResponse(false, '很抱歉，最低數量為1');
+        this.showAlertMessage(false, '很抱歉，最低數量為1');
       }
     },
     // 輸入, 自訂數量
@@ -218,26 +213,26 @@ export default {
       this.currentNum = parseInt(e.target.value, 10);
       if (this.currentNum > this.showData.inventory) {
         this.currentNum = this.showData.inventory;
-        this.handleServerResponse(false, '很抱歉，不能超出此庫存量');
+        this.showAlertMessage(false, '很抱歉，不能超出此庫存量');
       } else if (this.currentNum <= 0) {
         this.currentNum = 1;
-        this.handleServerResponse(false, '很抱歉，最低數量為1');
+        this.showAlertMessage(false, '很抱歉，最低數量為1');
       } else if (Number.isNaN(this.currentNum)) {
         this.currentNum = 1;
-        this.handleServerResponse(false, '請輸入有效的數字');
+        this.showAlertMessage(false, '請輸入有效的數字');
       }
     },
     validateQuantity(currentNum, inventory) {
       const parsedNum = parseInt(currentNum, 10);
       if (parsedNum > inventory) {
-        this.handleServerResponse(
+        this.showAlertMessage(
           false,
           `無法將所選的數量加入到購物車，因為已經超過庫存的${inventory}件產品`,
         );
         return false;
       }
       if (parsedNum < 0) {
-        this.handleServerResponse(false, '無法將所選的數量加入到購物車，因為產品數量不得低於1');
+        this.showAlertMessage(false, '無法將所選的數量加入到購物車，因為產品數量不得低於1');
         return false;
       }
       return true;
@@ -247,14 +242,14 @@ export default {
         const element = this.cartsData[index];
         if (element.product.id === productId) {
           if (element.qty >= inventory) {
-            this.handleServerResponse(
+            this.showAlertMessage(
               false,
               `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件產品，請至購物車頁面查看`,
             );
             return false;
           }
           if (element.qty + parseInt(currentNum, 10) >= inventory + 1) {
-            this.handleServerResponse(
+            this.showAlertMessage(
               false,
               `無法將所選的數量加入到購物車，因為購物車已經有${element.qty}件產品，加入所選的數量會超過庫存，請重新選擇後再送出`,
             );
@@ -282,7 +277,7 @@ export default {
           await this.goToGetCart(false);
         }
       } catch (err) {
-        this.handleServerResponse(false, err.response.data.message);
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     // 取得特定產品
@@ -305,21 +300,22 @@ export default {
             query: this.$route.query,
             hash: this.$route.hash,
           });
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     async goToGetCart(boolean = true) {
       try {
         await this.getCart(boolean);
       } catch (err) {
-        this.handleServerResponse(false, err.response.data.message);
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
-    // 處理 伺服器 訊息
-    handleServerResponse(success, message) {
-      this.serverMessage.success = success;
-      this.serverMessage.message = message;
-      this.$refs.resultModal.openModal();
+    async goToGetRecommendations(productId) {
+      try {
+        await this.recommendations(productId);
+      } catch (err) {
+        this.showAlertMessage(false, err.error.message);
+      }
     },
     handleResize() {
       this.viewportWidth = window.innerWidth;
@@ -328,6 +324,7 @@ export default {
     ...mapActions(cartsStore, ['getCart', 'postCart']),
     ...mapActions(toastsStore, ['pushToast']),
     ...mapActions(productsStore, ['recommendations']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   watch: {
     $route(to) {
@@ -336,10 +333,10 @@ export default {
   },
   mounted() {
     this.getProduct();
-    this.getCart(false);
+    this.goToGetCart(false);
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
-    this.recommendations(this.$route.params.id);
+    this.goToGetRecommendations(this.$route.params.id);
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize);

@@ -41,13 +41,13 @@
         </div>
       </div>
     </div>
-    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
 </template>
 <script>
 import { mapActions } from 'pinia';
 import timeStore from '../../stores/timeStore';
 import pageStore from '../../stores/pageStore';
+import alertStore from '../../stores/alertStore';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 
@@ -55,11 +55,6 @@ export default {
   data() {
     return {
       articleData: {},
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
       isLoading: false,
     };
   },
@@ -82,17 +77,12 @@ export default {
             query: this.$router.query,
             hash: this.$router.hash,
           });
-          this.handleServerResponse(false, err.response.data.message);
+          this.showAlertMessage(false, err.response.data.message);
         });
-    },
-    // 處理 伺服器 訊息
-    handleServerResponse(success, message) {
-      this.serverMessage.success = success;
-      this.serverMessage.message = message;
-      this.$refs.resultModal.openModal();
     },
     ...mapActions(timeStore, ['timestamp10CodeToDay']),
     ...mapActions(pageStore, ['changeNowPage']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {
     this.getArticle();

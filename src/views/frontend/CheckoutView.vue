@@ -446,7 +446,6 @@
         </div>
       </div>
     </div>
-    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
 </template>
 <script>
@@ -455,6 +454,7 @@ import ordersStore from '../../stores/ordersStore';
 import cartsStore from '../../stores/cartsStore';
 import toastsStore from '../../stores/toastsStore';
 import pageStore from '../../stores/pageStore';
+import alertStore from '../../stores/alertStore';
 // component
 import QuantityControlButtons from '../../components/QuantityControlButtons.vue';
 
@@ -481,11 +481,6 @@ export default {
       },
       // 是否送出訂單 用來控制 sessionStorage
       doesPostCart: false,
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
     };
   },
   components: {
@@ -508,7 +503,7 @@ export default {
       try {
         await this.getCart(boolean);
       } catch (err) {
-        this.showErrMessage(err);
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     async goToPutCart(productCartId, productId, qty) {
@@ -520,7 +515,7 @@ export default {
           style: 'bg-deep-gray',
         });
       } catch (err) {
-        this.showErrMessage(err);
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     async goToDeleteCart(productCartId) {
@@ -532,7 +527,7 @@ export default {
           style: 'bg-deep-gray',
         });
       } catch (err) {
-        this.showErrMessage(err);
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     async goToDeleteCarts() {
@@ -544,7 +539,7 @@ export default {
           style: 'bg-deep-gray',
         });
       } catch (err) {
-        this.showErrMessage(err);
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     async goToPostCoupon() {
@@ -556,7 +551,7 @@ export default {
           style: 'bg-deep-gray',
         });
       } catch (err) {
-        this.showErrMessage(err);
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     async goToPostOrder() {
@@ -577,24 +572,14 @@ export default {
           this.$refs.form.resetForm();
         });
       } catch (err) {
-        this.showErrMessage(err);
-      }
-    },
-    showErrMessage(err) {
-      if (err && err.response && err.response.data !== undefined) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
-      } else {
-        this.serverMessage.message = '未被定義的錯誤';
-        this.serverMessage.success = false;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     ...mapActions(cartsStore, ['getCart', 'putCart', 'deleteCart', 'deleteCarts', 'postCoupon']),
     ...mapActions(ordersStore, ['postOrder']),
     ...mapActions(toastsStore, ['pushToast']),
     ...mapActions(pageStore, ['changeNowPage']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   computed: {
     ...mapState(cartsStore, ['isLoading', 'isSmLoading', 'cartsData', 'allCartsData']),

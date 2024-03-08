@@ -52,7 +52,6 @@
         </div>
       </section>
     </div>
-    <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   </div>
 </template>
 <script>
@@ -64,13 +63,7 @@ import ArticleCard from '../../components/frontend/ArticleCard.vue';
 
 export default {
   data() {
-    return {
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
-    };
+    return {};
   },
   computed: {
     ...mapState(articlesStore, ['articlesData']),
