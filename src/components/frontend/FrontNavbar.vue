@@ -161,7 +161,6 @@
       </div>
     </div>
   </nav>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   <SearchModal ref="searchModal"></SearchModal>
 </template>
 <script>
@@ -169,6 +168,7 @@ import { mapState, mapActions } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import productsStore from '../../stores/productsStore';
 import pageStore from '../../stores/pageStore';
+import alertStore from '../../stores/alertStore';
 
 import SearchModal from './SearchModal.vue';
 
@@ -178,12 +178,7 @@ export default {
       isSticky: true,
       lastScrollPosition: 0,
       isNavExpanded: false,
-      isHidden: false, // 新增的變數，用來判斷Navbar是否隱藏
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
+      isHidden: false, // 用來判斷 Navbar 是否隱藏
     };
   },
   components: {
@@ -209,9 +204,7 @@ export default {
       try {
         await this.getCart(boolean);
       } catch (err) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     async goToGetProductsAll(boolean) {
@@ -221,9 +214,7 @@ export default {
           await this.initializePage(this.$route.query);
         }
       } catch (err) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     goToFilterCandles(key, content) {
@@ -254,6 +245,7 @@ export default {
       this.isHidden = currentScrollPosition > this.lastScrollPosition;
       this.lastScrollPosition = currentScrollPosition;
     },
+    ...mapActions(alertStore, ['showAlertMessage']),
     ...mapActions(pageStore, ['changeNowPage']),
     ...mapActions(cartsStore, ['getCart']),
     ...mapActions(productsStore, [

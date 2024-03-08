@@ -36,7 +36,6 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import router from './router';
 import App from './App.vue';
 // 全域元件
-import ResultModal from './components/ResultModal.vue';
 import PageLoading from './components/PageLoading.vue';
 
 defineRule('required', required);
@@ -68,7 +67,6 @@ app.component('VeeForm', Form);
 app.component('VeeField', Field);
 app.component('VeeErrorMessage', ErrorMessage);
 // 註冊全域元件
-app.component('ResultModal', ResultModal);
 app.component('PageLoading', PageLoading);
 // 使用pinia
 app.use(createPinia());

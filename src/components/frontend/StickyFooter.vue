@@ -64,25 +64,19 @@
       </ul>
     </div>
   </nav>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
   <SearchModal ref="searchModal"></SearchModal>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
 import cartsStore from '../../stores/cartsStore';
 import pageStore from '../../stores/pageStore';
+import alertStore from '../../stores/alertStore';
 
 import SearchModal from './SearchModal.vue';
 
 export default {
   data() {
-    return {
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
-    };
+    return {};
   },
   components: {
     SearchModal,
@@ -99,13 +93,12 @@ export default {
       try {
         await this.getCart(boolean);
       } catch (err) {
-        this.serverMessage.message = err.response.data.message;
-        this.serverMessage.success = err.response.data.success;
-        this.$refs.resultModal.openModal();
+        this.showAlertMessage(false, err.response.data.message);
       }
     },
     ...mapActions(pageStore, ['changeNowPage']),
     ...mapActions(cartsStore, ['getCart']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   mounted() {
     this.goToGetCart(false);

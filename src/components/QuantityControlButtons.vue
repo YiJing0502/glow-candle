@@ -14,19 +14,16 @@
     </div>
     <p class="d-flex align-items-end">目前庫存：{{ inventory }}</p>
   </div>
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
+import { mapActions } from 'pinia';
+import alertStore from '../stores/alertStore';
+
 export default {
   data() {
     return {
       currentNum: 1,
       currentQty: 1,
-      // result model
-      serverMessage: {
-        message: '',
-        success: true,
-      },
     };
   },
   props: ['inventory', 'id', 'qty', 'productCartId'],
@@ -41,7 +38,7 @@ export default {
         return;
       }
       if (this.currentNum >= this.inventory) {
-        this.showErrMessage('很抱歉，不能超出此庫存量');
+        this.showAlertMessage(false, '很抱歉，不能超出此庫存量');
       }
     },
     // 按鈕, 減少數量
@@ -53,7 +50,7 @@ export default {
         return;
       }
       if (this.currentNum <= 1) {
-        this.showErrMessage('很抱歉，最低數量為1');
+        this.showAlertMessage(false, '很抱歉，最低數量為1');
       }
     },
     // 輸入, 自訂數量
@@ -62,30 +59,26 @@ export default {
       if (this.currentNum > this.inventory) {
         this.currentNum = this.inventory;
         this.$emit('putNum', this.productCartId, this.id, this.currentNum);
-        this.showErrMessage('很抱歉，不能超出此庫存量');
+        this.showAlertMessage(false, '很抱歉，不能超出此庫存量');
         return;
       }
       if (this.currentNum <= 0) {
         this.currentNum = 1;
         this.$emit('putNum', this.productCartId, this.id, this.currentNum);
-        this.showErrMessage('很抱歉，最低數量為1');
+        this.showAlertMessage(false, '很抱歉，最低數量為1');
         return;
       }
       if (this.currentNum === this.currentQty) {
         return;
       }
       if (Number.isNaN(this.currentNum)) {
-        this.showErrMessage('請輸入有效的數字');
+        this.showAlertMessage(false, '請輸入有效的數字');
         this.currentNum = this.currentQty;
         return;
       }
       this.$emit('putNum', this.productCartId, this.id, this.currentNum);
     },
-    showErrMessage(str) {
-      this.serverMessage.message = str;
-      this.serverMessage.success = false;
-      this.$refs.resultModal.openModal();
-    },
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
   watch: {
     qty(newQty) {

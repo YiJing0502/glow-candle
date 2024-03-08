@@ -440,7 +440,7 @@ export default {
     ...mapState(timeStore, ['currentDate']),
   },
   mounted() {
-    // 獲取 bsResultModal DOM
+    // 獲取  DOM
     // 建立 bootstrap modal 實體
     this.modal = new Modal(this.$refs.modal);
   },

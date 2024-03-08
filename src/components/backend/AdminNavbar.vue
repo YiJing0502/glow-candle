@@ -58,22 +58,16 @@
       </button>
     </div>
   </div>
-  <!-- 結果modal -->
-  <ResultModal ref="resultModal" :server-message="serverMessage"></ResultModal>
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
 import pageStore from '../../stores/pageStore';
+import alertStore from '../../stores/alertStore';
 
 const { VITE_BASE_URL } = import.meta.env;
 export default {
   data() {
-    return {
-      serverMessage: {
-        message: '',
-        success: true,
-      },
-    };
+    return {};
   },
   computed: {
     ...mapState(pageStore, ['nowPage']),
@@ -94,17 +88,14 @@ export default {
           // 將當前 Date 物件轉換為 UTC 時間的字串 (瀏覽器通常期望這個時間是以 UTC 時間格式提供)
           document.cookie = `adminAccount=; expires=${now.toUTCString()}`;
           this.$router.push({ name: 'login' });
-          this.serverMessage.message = res.data.message;
-          this.serverMessage.success = res.data.success;
-          this.$refs.resultModal.openModal();
+          this.showAlertMessage(true, res.data.message);
         })
         .catch((err) => {
-          this.serverMessage.message = err.response.data.message;
-          this.serverMessage.success = err.response.data.success;
-          this.$refs.resultModal.openModal();
+          this.showAlertMessage(false, err.response.data.message);
         });
     },
     ...mapActions(pageStore, ['changeNowPage']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
 };
 </script>
