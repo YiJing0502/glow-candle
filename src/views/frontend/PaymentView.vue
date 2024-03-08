@@ -19,26 +19,9 @@
           <div class="accordion">
             <!-- 訂單資訊 -->
             <div class="accordion-item">
-              <!-- OrderInformationSection -->
-              <h2 class="accordion-header" id="OrderInformationSection">
-                <button
-                  class="accordion-button collapsed fs-5 fw-semibold"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#OrderInformationDetails"
-                  aria-expanded="false"
-                  aria-controls="OrderInformationDetails"
-                >
-                  訂單資訊
-                </button>
-              </h2>
-              <!-- OrderInformationDetails -->
-              <div
-                id="OrderInformationDetails"
-                class="accordion-collapse collapse show"
-                aria-labelledby="OrderInformationSection"
-              >
-                <div class="accordion-body">
+              <BasicCollapse :uniqueId="'OrderInformationSection'" :open="true">
+                <template v-slot:header> 訂單資訊 </template>
+                <template v-slot:body>
                   <!-- 訂單編號 -->
                   <div class="d-flex justify-content-between">
                     <p>訂單編號</p>
@@ -86,8 +69,8 @@
                       點擊查看此筆訂單
                     </button>
                   </div>
-                </div>
-              </div>
+                </template>
+              </BasicCollapse>
             </div>
           </div>
         </div>
@@ -95,66 +78,7 @@
         <div class="col">
           <div class="accordion">
             <!-- 聯絡我們 -->
-            <div class="accordion-item">
-              <!-- ContactUsSection -->
-              <h2 class="accordion-header" id="ContactUsSection">
-                <button
-                  class="accordion-button collapsed fs-5 fw-semibold"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#ContactUsDetails"
-                  aria-expanded="false"
-                  aria-controls="ContactUsDetails"
-                >
-                  聯絡我們
-                </button>
-              </h2>
-              <!-- ContactUsDetails -->
-              <div
-                id="ContactUsDetails"
-                class="accordion-collapse collapse show"
-                aria-labelledby="ContactUsSection"
-              >
-                <div class="accordion-body">
-                  <!-- 聯絡信箱 -->
-                  <div class="d-flex justify-content-between">
-                    <p>聯絡信箱</p>
-                    <p>
-                      <a class="text-deep-gray" href="mailto:glow.2023@gmail.com">
-                        glow.2023@gmail.com
-                      </a>
-                    </p>
-                  </div>
-                  <!-- 聯絡電話 -->
-                  <div class="d-flex justify-content-between">
-                    <p>聯絡電話</p>
-                    <p>
-                      <a class="text-deep-gray" href="tel:0988000999">0988000999</a>
-                    </p>
-                  </div>
-                  <!-- 營業時間 -->
-                  <div class="d-flex justify-content-between mb-3">
-                    <p>營業時間</p>
-                    <p>週一至週五 09:00~17:00</p>
-                  </div>
-                  <!-- 購物保證 -->
-                  <div class="row mb-3">
-                    <div class="col d-flex flex-column align-items-center">
-                      <span class="material-icons-outlined fs-1 mb-3"> local_shipping </span>
-                      <span>免費標準配送</span>
-                    </div>
-                    <div class="col d-flex flex-column align-items-center">
-                      <span class="material-icons-outlined fs-1 mb-3"> redeem </span>
-                      <span>七日內免費退貨</span>
-                    </div>
-                    <div class="col d-flex flex-column align-items-center">
-                      <span class="material-icons-outlined fs-1 mb-3"> enhanced_encryption </span>
-                      <span>安全購物</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ContactUsDetails></ContactUsDetails>
           </div>
         </div>
       </div>
@@ -166,9 +90,16 @@ import { mapActions, mapState } from 'pinia';
 import ordersStore from '../../stores/ordersStore';
 import alertStore from '../../stores/alertStore';
 
+import BasicCollapse from '../../components/frontend/BasicCollapse.vue';
+import ContactUsDetails from '../../components/frontend/ContactUsDetails.vue';
+
 export default {
   data() {
     return {};
+  },
+  components: {
+    BasicCollapse,
+    ContactUsDetails,
   },
   methods: {
     async goToGetOrder() {
