@@ -1,1 +1,0 @@
-import{J as t}from"./index-vSMGsHVG.js";const o=t("pageStore",{state:()=>({nowPage:localStorage.getItem("currentPage")||""}),actions:{changeNowPage(e){this.nowPage=e,localStorage.setItem("currentPage",e)}}});export{o as p};
