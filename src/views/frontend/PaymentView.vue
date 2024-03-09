@@ -88,6 +88,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import ordersStore from '../../stores/ordersStore';
+import pageStore from '../../stores/pageStore';
 import alertStore from '../../stores/alertStore';
 
 import BasicCollapse from '../../components/frontend/BasicCollapse.vue';
@@ -131,6 +132,7 @@ export default {
       }
     },
     goToOrderDetailPage(orderId) {
+      this.changeNowPage('order');
       this.$router.push({
         name: 'order',
         params: {
@@ -138,6 +140,7 @@ export default {
         },
       });
     },
+    ...mapActions(pageStore, ['changeNowPage']),
     ...mapActions(ordersStore, ['getOrder', 'postPayOrder', 'changeToIdPage']),
     ...mapActions(alertStore, ['showAlertMessage']),
   },
