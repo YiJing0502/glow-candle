@@ -1,7 +1,6 @@
 <template>
   <PageLoading v-if="!loginSuccess"></PageLoading>
   <div v-else class="d-flex">
-    <ToastMessages></ToastMessages>
     <AdminNavbar></AdminNavbar>
     <RouterView></RouterView>
   </div>
@@ -14,7 +13,6 @@ import toastsStore from '../../stores/toastsStore';
 import alertStore from '../../stores/alertStore';
 // components
 import AdminNavbar from '../../components/backend/AdminNavbar.vue';
-import ToastMessages from '../../components/ToastMessages.vue';
 
 export default {
   data() {
@@ -22,7 +20,6 @@ export default {
   },
   components: {
     AdminNavbar,
-    ToastMessages,
   },
   computed: {
     ...mapState(adminStore, ['loginSuccess']),
