@@ -33,7 +33,6 @@
           <RouterLink
             :to="{ name: 'home' }"
             class="btn btn-lg btn-solid-dpgray w-100 mt-3"
-            :class="{ active: nowPage === '首頁' }"
             @click="changeNowPage('首頁')"
           >
             回首頁
@@ -79,6 +78,7 @@ export default {
             this.email = '';
             this.password = '';
             this.$router.push({ name: 'adminOrders' });
+            this.changeNowPage('訂單管理');
           }
         })
         .catch((err) => {
