@@ -1,46 +1,108 @@
-# glow-candle
+![TV - 1](https://hackmd.io/_uploads/HJsO7TY6p.png)
+# 光輝時刻｜GLOW CANDLE
+> 香氛蠟燭電商網站
+## 作品簡介
+### 創作動機
+在大一的時候，我曾親手製作石頭造型的蠟燭為材料作為作品，並對蠟燭材料感到的熟悉，以此作為電商販售的主要商品。
+### 創作理念
+無論是大還是小的蠟燭，在點亮的時刻都能感受到燃燒所帶來的光和熱。因此，我以蠟燭點亮的時刻象徵光輝，期許我們不論身處何時何地，都能散發出自己獨特的光芒。
+### 色系規劃
+![截圖 2024-03-09 19.14.03](https://hackmd.io/_uploads/rk15Vpt6T.png)
+### 圖片來源
+所有圖片使用 [Unsplash](https://unsplash.com/) 由世界各地的創作者所提供的免費圖片
 
-This template should help get you started developing with Vue 3 in Vite.
+## 專案說明
+### 使用技術
+1. **技術堆疊：** 
+這是一個使用 `Vue.js` 和 `Vite` 技術堆疊的網站，以提供高效的前端開發和更好的性能。
+2. **路由管理：** 
+專案使用 `Vue Router` 來管理前端應用程式的路由，以確保流暢的頁面切換。
+3. **狀態管理：** 
+利用 `pinia` 來有效地管理和共享應用程式中的狀態。
+4. **UI庫和組件：** 
+整合了 `Material Icons`、`Swiper`和`Vue Loading Overlay`，以實現漂亮的UI和提升使用者體驗。
+5. **表單驗證和編輯器：** 
+使用 `vee-validate` 實現表單驗證，`ckeditor` 供豐富的文字編輯功能，確保用戶輸入的有效性和更好的編輯體驗。
+6. **後台管理系統：** 
+開發了一個基礎的後台管理系統，用於查看和管理訂單、產品、文章、優惠券等功能。
+7. **代碼品質：** 
+遵循 `ESLint Airbnb` 風格，以確保程式碼的一致性和高品質。
+8. **API路徑統一管理：** 
+通過統一的配置 `.env` 文件，有效地管理整個應用程式中的API路徑，以提高程式碼的可維護性。
+9. **布局和樣式：** 
+使用 `Bootstrap 5` 和 `Sass` 實現網站的布局，以及進行樣式的擴展和自定義。前台有 `RWD` ，最小可支援320px。
+10. **動畫效果：** 使用 `animate.css` 搭配 `wow.js`
+### 前台
+*  **電商展示：** 首頁、商品列表、商品介紹等
+*  **品牌簡介：** 關於我們、動態消息、企業採購 / 異業合作
+*  **電商購物簡介：** 蠟燭使用方式、購物說明、退換貨政策
+*  **電商購物車：** 刪除、修改商品、使用優惠券、結帳、下訂單、查看訂單
+*  **搜索：** 產品查詢、訂單查詢
 
-## Recommended IDE Setup
+### 後台
+* 管理者登入
+*  **商品管理：** 新增、刪除、編輯、查閱（多圖上傳）
+*  **優惠券管理：** 新增、刪除、編輯、查閱
+*  **訂單管理：** 刪除、編輯、查閱
+*  **文章管理：** 新增、刪除、編輯、查閱（單圖上傳）
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## 前台介紹
 
-## Customize configuration
+### 導覽列往下滑時消失、往上滑時出現
+![螢幕錄影 2024-03-09 20.26.50](https://hackmd.io/_uploads/HkvuLCKaa.gif)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### 中小型螢幕尺寸使用者提供固定底部的便捷選單
+![截圖 2024-03-09 20.33.34](https://hackmd.io/_uploads/ByoQv0tT6.png)
 
-## About This Project 
+### 頁面Loading動畫
+![頁面Loading動畫](https://hackmd.io/_uploads/SJefcRFpp.gif)
+### 產品搜尋
+![產品搜尋](https://hackmd.io/_uploads/HJP-hAFpp.gif)
+### 訂單搜尋（按下enter也可以開始搜尋）
+![訂單搜尋](https://hackmd.io/_uploads/rJYXJ19aa.gif)
+### 庫存限制
+![庫存限制](https://hackmd.io/_uploads/SJVR1k9aa.gif)
 
-- Material design icons are created by [Google](https://github.com/google/material-design-icons#license).
+## 後台介紹
 
+## 訂單管理
+### 觀看狀態
+![訂單管理2](https://hackmd.io/_uploads/HyCTS15Ta.png)
+### 編輯狀態
+![截圖 2024-03-09 21.43.00](https://hackmd.io/_uploads/r1M9vyc6a.png)
 
-## Project Setup
+1. 後台可以打勾更新付款狀態，如果打勾已付款會標註為當天日期
+2. 後台可以修正訂單中的商品數量、訂單資訊，並提供基本的驗證
 
-```sh
-npm install
-```
+## 產品管理
+### 產品列表
+1. 使用者可以篩選類別
+2. 使用者可以搜尋產品
 
-### Compile and Hot-Reload for Development
+![產品管理產品列表](https://hackmd.io/_uploads/B1mStycTT.png)
+### 單一產品內容
+![產品管理產品內容](https://hackmd.io/_uploads/ry2BY19a6.png)
+### 單一產品圖片
+1. 使用者可以多圖上傳
+2. 使用者可以手動填網址新增圖片
 
-```sh
-npm run dev
-```
+![產品管理產品圖片](https://hackmd.io/_uploads/HJTqtk5TT.jpg)
 
-### Compile and Minify for Production
+## 優惠券管理
+### 優惠券列表
+1. 使用者可以接收優惠券到期提醒
 
-```sh
-npm run build
-```
+![優惠券管理優惠券列表](https://hackmd.io/_uploads/ByktoJcap.png)
+### 單一優惠券編輯狀態
+1. 使用者可以接收驗證提醒
+2. 到期日不可選填過去之日期
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+![優惠券編輯狀態](https://hackmd.io/_uploads/rky7nJ96p.png)
 
-```sh
-npm run test:unit
-```
+## 文章管理
+### 單一文章資料
+1. 使用者可以單一圖上傳
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+![文章管理文章資料](https://hackmd.io/_uploads/ByQOpJqTp.png)
+### 單一文章內容
+![文章管理文章內容](https://hackmd.io/_uploads/rysOaJcp6.png)
