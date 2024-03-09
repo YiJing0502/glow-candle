@@ -28,6 +28,20 @@
             <span>聯絡我們</span>
           </RouterLink>
         </li>
+        <!-- 訂單搜尋 -->
+        <li class="nav-item px-1">
+          <a
+            @click="goToSearchOrder"
+            class="nav-link d-flex flex-column align-items-center text-decoration-none"
+            role="button"
+            :class="{ active: nowPage === 'order' }"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="material-icons-outlined fs-1">text_snippet</span>
+            <span>訂單</span>
+          </a>
+        </li>
         <li class="nav-item px-1">
           <a
             @click="goToSearchProduct"
@@ -65,6 +79,7 @@
     </div>
   </nav>
   <SearchModal ref="searchModal"></SearchModal>
+  <OrderSearchModal ref="orderSearchModal"></OrderSearchModal>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
@@ -73,6 +88,7 @@ import pageStore from '../../stores/pageStore';
 import alertStore from '../../stores/alertStore';
 
 import SearchModal from './SearchModal.vue';
+import OrderSearchModal from './OrderSearchModal.vue';
 
 export default {
   data() {
@@ -80,6 +96,7 @@ export default {
   },
   components: {
     SearchModal,
+    OrderSearchModal,
   },
   computed: {
     ...mapState(pageStore, ['nowPage']),
@@ -88,6 +105,9 @@ export default {
   methods: {
     goToSearchProduct() {
       this.$refs.searchModal.openModal();
+    },
+    goToSearchOrder() {
+      this.$refs.orderSearchModal.openModal();
     },
     async goToGetCart(boolean = true) {
       try {
