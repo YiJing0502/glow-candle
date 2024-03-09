@@ -164,7 +164,7 @@
                       :class="{ 'is-invalid': errors['描述'] }"
                       rules="max:800|required"
                       id="description"
-                      rows="3"
+                      rows="7"
                       v-model="updatedShowData.description"
                     ></vee-field>
                     <vee-error-message class="invalid-feedback" name="描述"></vee-error-message>
