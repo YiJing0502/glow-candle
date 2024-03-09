@@ -5,12 +5,15 @@
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">搜尋產品</h1>
           <button
+            @click="keyword = ''"
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
@@ -57,12 +60,21 @@
               v-if="showProductsData.length === 0 && keyword !== ''"
             >
               <span class="material-icons-round fs-1">announcement</span>
-              <p>找不到與「{{ keyword }}」相符的結果。請檢查拼字或使用其他字詞。</p>
+              <p class="text-center">
+                找不到與「{{ keyword }}」相符的結果。<br />請檢查拼字或使用其他字詞。
+              </p>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-normal-dpgray" data-bs-dismiss="modal">關閉</button>
+          <button
+            @click="keyword = ''"
+            type="button"
+            class="btn btn-normal-dpgray"
+            data-bs-dismiss="modal"
+          >
+            關閉
+          </button>
         </div>
       </div>
     </div>
