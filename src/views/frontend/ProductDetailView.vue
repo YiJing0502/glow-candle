@@ -89,16 +89,11 @@
             <p class="d-flex align-items-end ms-3">目前庫存：{{ showData.inventory }}</p>
           </div>
           <!-- 加入購物車 -->
-          <div v-if="isSmLoading === showData.id" class="d-flex mb-3 position-relative">
-            <VueLoading
-              :active="isSmLoading === showData.id"
-              :is-full-page="false"
-              :color="'#52504B'"
-              :width="30"
-              :height="30"
-            >
-            </VueLoading>
-            <button type="button" class="btn btn-solid-spec w-100 btn-lg">正在加入購物車</button>
+          <div
+            v-if="isSmLoading === showData.id"
+            class="d-flex mx-3 my-4 align-items-center justify-content-center"
+          >
+            <DotLoading></DotLoading>
           </div>
           <div v-else class="d-flex mb-3">
             <button
@@ -170,6 +165,7 @@ import alertStore from '../../stores/alertStore';
 import pageStore from '../../stores/pageStore';
 
 import ProductCard from '../../components/frontend/ProductCard.vue';
+import DotLoading from '../../components/DotLoading.vue';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -188,6 +184,7 @@ export default {
     Swiper,
     SwiperSlide,
     ProductCard,
+    DotLoading,
   },
   computed: {
     ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),
