@@ -30,7 +30,14 @@
           <label for="password" class="text-deep-gray"> 輸入您的密碼 </label>
         </div>
         <div class="d-flex">
-          <button type="button" class="btn btn-lg btn-solid-dpgray w-100 mt-3">回首頁</button>
+          <RouterLink
+            :to="{ name: 'home' }"
+            class="btn btn-lg btn-solid-dpgray w-100 mt-3"
+            :class="{ active: nowPage === '首頁' }"
+            @click="changeNowPage('首頁')"
+          >
+            回首頁
+          </RouterLink>
           <button class="btn btn-lg w-100 mt-3 btn-solid-spec" type="submit">登入</button>
         </div>
       </form>
@@ -40,6 +47,7 @@
 <script>
 import { mapActions } from 'pinia';
 import alertStore from '../../stores/alertStore';
+import pageStore from '../../stores/pageStore';
 
 const { VITE_BASE_URL } = import.meta.env;
 export default {
@@ -78,6 +86,7 @@ export default {
         });
     },
     ...mapActions(alertStore, ['showAlertMessage']),
+    ...mapActions(pageStore, ['changeNowPage']),
   },
   mounted() {},
 };
