@@ -7,7 +7,7 @@
 ### 創作理念
 無論是大還是小的蠟燭，在點亮的時刻都能感受到燃燒所帶來的光和熱。因此，我以蠟燭點亮的時刻象徵光輝，期許我們不論身處何時何地，都能散發出自己獨特的光芒。
 ### 色系規劃
-![截圖 2024-03-09 19.14.03](https://hackmd.io/_uploads/rk15Vpt6T.png)
+![色系規劃](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1709994311121.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=dsNHWlB51TvPvKHZRp13r9cW1%2FDgg6c%2B9qvcu%2BAoATLzQouN5oG97InyuTh6cJ3IkEnNU4bPhE%2B0fZ%2BQLCae45bvS0w1bAVPu8%2FQf79XG9WhycruN9XjuGhBzuaASxOk94J7pC6K4v57yM%2BoqbbJvbS5U158xgi0NoJyLipTF3t%2FBKgnEb2Kpl%2F6W%2Bzw0QBjMCdS%2FbUHH0R0Brd4ppG8lduiP99d15jQ1fEh6Te0FR4Sy1493jQVb8cM7ndI%2BWpwVLA81%2FZvbDF87EsIHizt4kFEkzrQWYEboTwCKek04ayuyO9ypmTMMdcEtBJUazOoI96sS4UBXHQejR2fZd7EGQ%3D%3D)
 ### 圖片來源
 所有圖片使用 [Unsplash](https://unsplash.com/) 由世界各地的創作者所提供的免費圖片
 
@@ -49,7 +49,7 @@
 ## 前台介紹
 
 ### 導覽列往下滑時消失、往上滑時出現
-![螢幕錄影 2024-03-09 20.26.50](https://hackmd.io/_uploads/HkvuLCKaa.gif)
+![導覽列往下滑時消失、往上滑時出現](https://imgur.com/rIrEIXu)
 
 ### 中小型螢幕尺寸使用者提供固定底部的便捷選單
 ![截圖 2024-03-09 20.33.34](https://hackmd.io/_uploads/ByoQv0tT6.png)
