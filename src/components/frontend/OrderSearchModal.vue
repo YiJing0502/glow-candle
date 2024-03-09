@@ -29,7 +29,7 @@
                 <div class="w-100">
                   <label for="orderList" class="form-label">請在此輸入「訂單編號」</label>
                   <vee-field
-                    @input="notFoundOrder = false"
+                    @keyup.enter="searchOrder(keyword)"
                     v-model="keyword"
                     id="orderList"
                     rules="required"
@@ -155,8 +155,6 @@ export default {
           .then((res) => {
             this.orders = res.data.orders;
             this.totalPages = res.data.pagination.total_pages;
-            const currentPage = res.data.pagination.current_page;
-            console.log(this.orders, this.totalPages, currentPage);
             resolve(true);
           })
           .catch((err) => {
