@@ -16,6 +16,12 @@ $focusBoxShadow: rgba(130, 130, 130, 0.25);
 .text-medium-gray {
   color: $mediumGrayColor;
 }
+.text-link-medium-gray {
+  color: $mediumGrayColor;
+  &:hover {
+    color: $deepGrayColor;
+  }
+}
 .text-deep-gray {
   color: $deepGrayColor;
 }

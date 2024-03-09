@@ -9,6 +9,11 @@ export default defineStore('timeStore', {
       const day = String(today.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
     },
+    currentYear() {
+      const today = new Date();
+      const year = today.getFullYear();
+      return `${year}`;
+    },
   },
   actions: {
     dayToTimestamp10Code(dateString) {

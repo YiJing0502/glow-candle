@@ -159,10 +159,26 @@
       <div class="row pt-5">
         <div class="col d-flex flex-column justify-content-center align-items-center">
           <p class="text-center text-medium-gray">
-            相關產品圖片使用來自 Unsplash 所提供的免費圖片，網站本身無任何商業用途
+            此網站所使用的圖片均來自
+            <a target="_blank" href="https://unsplash.com/" class="text-link-medium-gray">
+              Unsplash
+            </a>
+            由世界各地的創作者所提供的免費圖片，網站本身無任何商業用途
           </p>
           <p class="text-center text-medium-gray">
-            © 2024, 光輝時刻 由 六角學院－後端API 與 YiJing－前端畫面 技術支援
+            © {{ currentYear }} 光輝時刻 由
+            <a target="_blank" href="https://www.hexschool.com/" class="text-link-medium-gray">
+              六角學院
+            </a>
+            －後端API 與
+            <a
+              target="_blank"
+              href="https://github.com/YiJing0502/glow-candle/tree/main"
+              class="text-link-medium-gray"
+            >
+              YiJing
+            </a>
+            －前端畫面 技術支援
           </p>
         </div>
       </div>
@@ -172,6 +188,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import pageStore from '../../stores/pageStore';
+import timeStore from '../../stores/timeStore';
 
 import facebook from '../../assets/svg/facebook.svg';
 import instagram from '../../assets/svg/instagram.svg';
@@ -187,6 +204,7 @@ export default {
   },
   computed: {
     ...mapState(pageStore, ['nowPage']),
+    ...mapState(timeStore, ['currentYear']),
   },
   methods: {
     ...mapActions(pageStore, ['changeNowPage']),
