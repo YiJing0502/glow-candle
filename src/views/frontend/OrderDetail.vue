@@ -70,7 +70,8 @@
                 <!-- 訂單付款日期 -->
                 <div class="d-flex justify-content-between">
                   <p>訂單付款日期</p>
-                  <p>{{ showData.paid_date }}</p>
+                  <p v-if="!showData.paid_date">尚未付款</p>
+                  <p v-else>{{ showData.paid_date }}</p>
                 </div>
                 <!-- 運費 -->
                 <div class="d-flex justify-content-between">
@@ -97,7 +98,7 @@
                   <button
                     type="button"
                     class="btn btn-solid-spec w-100 btn-lg"
-                    @click="postPayOrder(showData.id)"
+                    @click="goToPostPayOrder(showData.id)"
                   >
                     點我付款
                   </button>
@@ -146,7 +147,7 @@
                 <div class="mb-3">
                   <p>訂單備註</p>
                   <p>
-                    <span v-if="showData.message === undefined">無</span>
+                    <span v-if="showData.message === undefined">無訂單備註</span>
                     <span v-for="(item, index) in showData.message" :key="index"
                       >{{ item }}<br />
                     </span>
@@ -218,6 +219,15 @@ export default {
         if (!res.data.order.is_paid) {
           this.showAlertMessage(true, '訂單已建立，請點擊付款按鈕付款');
         }
+      } catch (err) {
+        this.showAlertMessage(false, err.response.data.message);
+      }
+    },
+    async goToPostPayOrder(orderId) {
+      try {
+        const res = await this.postPayOrder(orderId);
+        await this.goToGetOrder();
+        this.showAlertMessage(true, res.data.message);
       } catch (err) {
         this.showAlertMessage(false, err.response.data.message);
       }
