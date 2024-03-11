@@ -13,6 +13,15 @@
       <li class="list-group-item">
         <RouterLink
           class="list-group-item"
+          :class="{ active: nowPage === '後台管理' }"
+          @click="changeNowPage('後台管理')"
+          :to="{ name: 'admin' }"
+          >後台管理</RouterLink
+        >
+      </li>
+      <li class="list-group-item">
+        <RouterLink
+          class="list-group-item"
           :class="{ active: nowPage === '訂單管理' }"
           @click="changeNowPage('訂單管理')"
           :to="{ name: 'adminOrders' }"
