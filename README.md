@@ -67,6 +67,10 @@
 ![訂單搜尋](https://i.imgur.com/wvRRiDU.gif)
 ### 庫存限制
 ![庫存限制](https://i.imgur.com/PFdMd5Y.gif)
+### 保存收件資料，直到關閉頁面 
+1. 使用 sessionStorage 保存收件資料，除非關閉頁面否則填寫完資料後還是可以自由切換頁面
+
+![保存收件資料](https://i.imgur.com/7gaFHbW.gif)
 
 ## 後台介紹
 
