@@ -1,6 +1,6 @@
 ![封面GLOW](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1709994083234.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=LXePjMmbqjo5tPzywIn0NUyf%2Fd8SsFnL4OlfSwoSD2ZJRuZgqfjtq%2FgqzlhfdHXE12kD5w%2Fbqd6mMtjR4TUYRRpshrYwBkD7GsTk0i%2Bjozd8VsdfAvnszeOHm4qFJoKQR4jLwiou%2BVXJK6FWqXLZd2aFDsoSOa4lzr5A%2BwM7oIqK%2FfSZCYkTUi6Ma%2FBq0JKYKTr2XzLQCjheEsp%2FU0eZnPUgz8I73K%2F8dSvxfQXnot39AYq4IqTdpAh%2BC7VaVL%2Fj7VpvjoNFv4PV9LTCgjavavvh65AI0VbKID4m7UhfTD8Jmh4VsfkISbHBu7qU1sHRVsF%2Bx5mZJqQcgS321J543g%3D%3D)
 # 光輝時刻｜GLOW CANDLE
-> 香氛蠟燭電商網站
+> 香氛蠟燭電商網站，[點我前往網站](https://yijing0502.github.io/glow-candle/#/)
 ## 作品簡介
 ### 創作動機
 在大一的時候，我曾親手製作石頭造型的蠟燭為材料作為作品，並對蠟燭材料感到熟悉，以此作為電商販售的主要產品。
@@ -55,7 +55,7 @@
 ![導覽列往下滑時消失、往上滑時出現](https://i.imgur.com/rIrEIXu.gif)
 
 ### 中小型螢幕尺寸使用者，提供固定底部的便捷選單
-![截圖 2024-03-09 20.33.34](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1709994827639.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=nV1RRtiTnB7XMYlmCevjYXquuTETBbKTUFSanE4TPJmV040l3iTNylCQUlIIhMyS3%2FDTeWYgg0AlNHR35W%2BT9ULm%2BJfXK3Gm3XXRlqGAIdYpRIYvzt3hOCg9%2B0%2FgxnXx%2BmKb2ji4s8bYhUTwgmPMMbEhRWDUZjk8blNAGpfxZtAMQ2ld6CzkxyjVELedMjg7msbPC0hyL4%2FkHgKsdvz8XvTZ1yXzgT3yAkMXkgzjjJ0P1eRQaN5AX%2F87bE88d0tP%2Bf%2B5TDW5cb%2BniD7M0sYoJIm4X%2FuEo2kkd5EmhMKlnI3KAF8JFkWiih00wnhuavq87Oaxzo1loSiKou4EfBSqfw%3D%3D)
+![中小型螢幕尺寸使用者，提供固定底部的便捷選單](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1709994827639.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=nV1RRtiTnB7XMYlmCevjYXquuTETBbKTUFSanE4TPJmV040l3iTNylCQUlIIhMyS3%2FDTeWYgg0AlNHR35W%2BT9ULm%2BJfXK3Gm3XXRlqGAIdYpRIYvzt3hOCg9%2B0%2FgxnXx%2BmKb2ji4s8bYhUTwgmPMMbEhRWDUZjk8blNAGpfxZtAMQ2ld6CzkxyjVELedMjg7msbPC0hyL4%2FkHgKsdvz8XvTZ1yXzgT3yAkMXkgzjjJ0P1eRQaN5AX%2F87bE88d0tP%2Bf%2B5TDW5cb%2BniD7M0sYoJIm4X%2FuEo2kkd5EmhMKlnI3KAF8JFkWiih00wnhuavq87Oaxzo1loSiKou4EfBSqfw%3D%3D)
 
 ### 頁面Loading動畫
 ![頁面Loading動畫](https://i.imgur.com/Xvz3RKS.gif)
