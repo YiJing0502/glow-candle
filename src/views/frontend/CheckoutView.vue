@@ -160,7 +160,8 @@
                 <!-- 總付款金額 -->
                 <div class="d-flex justify-content-between" v-if="!allCartsData.useCoupon">
                   <p>總付款金額</p>
-                  <h4 class="text-end text-main-spec">NT$
+                  <h4 class="text-end text-main-spec">
+                    NT$
                     <strong class="fs-3">{{ parseInt(allCartsData.total) }}</strong>
                   </h4>
                 </div>
