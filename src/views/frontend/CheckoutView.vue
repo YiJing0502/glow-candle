@@ -160,7 +160,9 @@
                 <!-- 總付款金額 -->
                 <div class="d-flex justify-content-between" v-if="!allCartsData.useCoupon">
                   <p>總付款金額</p>
-                  <h4 class="text-end">NT$ {{ parseInt(allCartsData.total) }}</h4>
+                  <h4 class="text-end text-main-spec">NT$
+                    <strong class="fs-3">{{ parseInt(allCartsData.total) }}</strong>
+                  </h4>
                 </div>
                 <!-- 總付款金額2 -->
                 <div class="" v-else-if="allCartsData.useCoupon">
@@ -170,7 +172,10 @@
                       NT$ {{ parseInt(allCartsData.total) }}
                     </h5>
                   </div>
-                  <h4 class="text-end">NT$ {{ parseInt(allCartsData.final_total) }}</h4>
+                  <h4 class="text-end text-main-spec">
+                    NT$
+                    <strong class="fs-3">{{ parseInt(allCartsData.final_total) }}</strong>
+                  </h4>
                 </div>
               </template>
             </BasicCollapse>
