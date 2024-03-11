@@ -62,6 +62,8 @@
 ### 產品搜尋
 ![產品搜尋](https://i.imgur.com/76NkcSY.gif)
 ### 訂單搜尋（按下enter也可以開始搜尋）
+1. 下訂單之後，如果想要修改品項，可以聯絡管理者修改訂單，爾後使用者查詢訂單後進行付款
+
 ![訂單搜尋](https://i.imgur.com/wvRRiDU.gif)
 ### 庫存限制
 ![庫存限制](https://i.imgur.com/PFdMd5Y.gif)
@@ -72,11 +74,13 @@
 ### 觀看狀態
 ![訂單管理觀看狀態](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031316801.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=DzonSBP0YJh0gRuKcWLFpDRcQX143xAFe%2BmSNx5bkb2f2PxVKPd0gkIQejMU2R%2FfGL4g32o0KUjOlt5%2BmuoBD%2FcISc4TlsNoC%2B1fbH%2FxZJCflotcjGAaUQwPZr8HEnXm3Pe3DGgyUN6ywtS88ra80UCI3Iq%2BLkrAAVCt0ZQUnXTsM4Pu1CpIlaTEseauvhQptqETa%2FMyZJb9Ee%2Byko3henuRkBkE7ZshwqE9WzSEwRXe5qY%2FlemuB1HfGzl5j0ju97Aizg1AjZ2hR0MGi%2BTKuYABNC3OQKqtcnWg5oYvZD2cBBhI5uH5x2%2BBVB9MFKAQBTj7Zw9kYc4gitJxdAKTZQ%3D%3D)
 ### 編輯狀態
-![訂單管理編輯狀態](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031369281.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=aBlIjLNe18rbr0hc0tad%2Bs7wFfv3M%2FrlsO1ivcPqr%2FqssO5TbhVjiomujcVImcuK53TxFTSd%2FNH2JpVNNaJqzZRpA%2BHiGmPlsKhMRbSJGJreoIuFjzZY6B1mx6B%2FqGphOedTvJJ1hILRLNby2yxs%2FDzMqzBmx2bcMIoFJuB0GBed%2BMxDjqRukQw4WlCODI4DKMVifjAF8neJOc6kz7DgY3W4VkxCR44UgBHx61bX6dPmkGW0%2F%2F1n1b%2Bk4Nriogg9OI1AoyTW3U3W1t2QvMNV0m2ltUjYCL8xRXek7mNHqORnkA5JQDfBlEa%2BNVGIeQhDhALmzyrc%2FDplVQB%2B95WVYw%3D%3D)
-
 1. 管理者可以打勾更新付款狀態，如果打勾已付款，更新後會標註為當天日期
 2. 管理者可以修正訂單中的產品數量、訂單資訊
 3. 提供基本的表單驗證，使管理者可接收到錯誤訊息
+
+![訂單管理編輯狀態](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031369281.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=aBlIjLNe18rbr0hc0tad%2Bs7wFfv3M%2FrlsO1ivcPqr%2FqssO5TbhVjiomujcVImcuK53TxFTSd%2FNH2JpVNNaJqzZRpA%2BHiGmPlsKhMRbSJGJreoIuFjzZY6B1mx6B%2FqGphOedTvJJ1hILRLNby2yxs%2FDzMqzBmx2bcMIoFJuB0GBed%2BMxDjqRukQw4WlCODI4DKMVifjAF8neJOc6kz7DgY3W4VkxCR44UgBHx61bX6dPmkGW0%2F%2F1n1b%2Bk4Nriogg9OI1AoyTW3U3W1t2QvMNV0m2ltUjYCL8xRXek7mNHqORnkA5JQDfBlEa%2BNVGIeQhDhALmzyrc%2FDplVQB%2B95WVYw%3D%3D)
+
+
 
 ## 產品管理
 ### 產品列表
@@ -84,6 +88,7 @@
 2. 管理者可以搜尋產品
 
 ![產品管理產品列表](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031437507.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=QW9bcVTHgfVvtkTbHrq27T1zXtDGYOK8xrD4oqVKwNjmtyYEhOW2PQL2xhs9Pwk%2B9fojvL5xdc0L4Z33LX%2BBt4bojzRYQ2Jv11R18m9SvmWmosWC4YR7a15MHUG6aCPG4H%2BB1tSVHQbwLngXjT1v%2FQjBlIDiUIdI12c9scqkXKMKGxnfSTv9TazzUvJdtOY4ye5JfY25laA7PdYchTkV7GgXJCt8h5X7hpWjVvCzdvR5%2FBLe%2BuNVhqcGxC4GSwmYXpKm%2BAxd9cHMJVxztwBOlyClwN6LGLPrEjrPyV3VFCoArvzUKAx8tX%2BFZqKt5iAavT2Tb%2FcWKS%2BjJHesu0H63A%3D%3D)
+
 ### 單一產品內容
 ![產品管理產品內容](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031475512.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=gMNYFOm%2BxKcJwp3bOhUSClV%2BjuFNdpIC1KVjOAqFpuJoqtKuITUWw%2BAmEUmiTaj9wWprP0K7EpW0ZYQdAI7OkV%2Fu0%2BQ1rlj3KNl4HpFoWVVG%2FokQJNP%2FkwVk7wGiYsJEprq0%2FzEdoWj3JAHu0GrFYbDBv1i6NI6%2Bo9lcN8v8xIuAuDwLSYadfK2EAZyeFUtwBlNxYTedYSzMp%2BQuWkJ8YVZiwjupZqxuFwWdQVfxu73i2A2Y%2BkCQ%2FeBLsoEPdEfhUAlZ103FMRPkBiGpXx4Y8QnTKeeB1wZpFiqI%2B7CmhV4KzVCmHnsHpSIgQvirKr1FHsUccStO9COk%2B5dO3b7Y4Q%3D%3D)
 ### 單一產品圖片
@@ -93,11 +98,14 @@
 
 ![產品管理產品圖片](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031516806.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=o2wnjbPekIILAehEI6JStBdF7oz9HKAIQbE7%2FIJVXhzvzvrtvzeB%2BGbo9fnM8gPV1t2ME8%2BMvS5wDKNsvfprUdPlHmfnf7s0p5dz9KLY9X6d9R%2BKOdog2e1v%2FdpTtZ%2FLqyKJSdtWymMfTxMFbb34oPfp5Clu5wbYPhY5qer8tJrn52sh9wkDvKWKpoQqYJ3KynIWfNiLanTPCWOaLPI05SOKT7WfNVEHsGY7Jslh%2FY5vKYkZJKlKdPNE5nEOoNN2xFT3urItCYTTT6LAggpNSzb8e55dkrULKYLMbTdxLj%2F%2FiA0O7PxHC3iV8bvdpQIxvM%2BHbRelPo4Cj59dF1YkcQ%3D%3D)
 
+
 ## 優惠券管理
 ### 優惠券列表
 1. 管理者可以接收優惠券到期提醒
 
 ![優惠券管理優惠券列表](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031568356.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=VjqlQztzM%2BsHBV2cQJQSs58zRc4K1GfrW2XvNLcQz%2B2gb%2BH782OsBKZgQSuQ%2FLsllEVur9qc%2FVzmeUiKBYB0V%2Fa5rDx6RMJT5IlOQBoeNHq1%2BuJ2DAhdctsga3GTQzgkL7%2BeaVxs4oXnooYgUGp4%2Brra2SoyBXsDAc51hVNnRxqDkVZqSQR18CiICGb8tpCtrauKWBkXKOdkwHrNHxwiZBrvpuXgtTEALxqAZbC9UU42A8m5%2Bk%2BzykfGiq%2F1MMlObTRU2pEMmvRhJFNXdnZ%2BmJqr9zDQW5Wt8Wqj0u7dsGdnQO8aE%2BeD88p9RjP%2FCEwvdyFLjLqW36qdxyD%2FPIiYEQ%3D%3D)
+
+
 ### 單一優惠券編輯狀態
 1. 提供基本的表單驗證，使管理者可接收到錯誤訊息
 2. 到期日不可選填過去之日期
@@ -110,5 +118,6 @@
 2. 提供基本的表單驗證，使管理者可接收到錯誤訊息
 
 ![文章管理文章資料](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031655211.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=jXHRTUFsk%2Fi3ymdy5wCpsYmuhn9eYFHufLyhwXvBNr7%2FpzYwXcSYaeGfuxkkmfX0U1bgO5OQAcd%2FIcKc4Km2mxOvmGOQMKLiKSdsGte%2FyCoAGabE5%2BycxDSKU5J%2BnUEXDhf4fCNWCtiDZejvv%2FFWGsnC7e6blWUquX%2Fq8QZdTzZT3%2BFln%2BZjLdeicpckTPb%2F0LzTWgqdFMRzFNbaRPMQOt%2F2XFJTs3J%2BxZ0G%2FarycV54M1%2BiQvhz5z3aWtF4lp5P8m0jInKpfJapI7fBKMHYcWwhspibrlSncb5e1eO7BuzTroI94V%2BjaZSjGuFY7qF824YwmWS3IzsEs3dDB8oOCg%3D%3D)
+
 ### 單一文章內容
 ![文章管理文章內容](https://storage.googleapis.com/vue-course-api.appspot.com/orli-hexschool/1710031683843.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=X29WaysCjig1%2Bp0JyXmYQekXWoxJ6MGkghew9o%2BCRK0Hhe0YMy5HNonJJ2TZyCweysKCx7NTcC8WoL%2F%2FUp3PVpmbvutNHrL5xax9kjTJf0XGllYU%2BvsW%2BdgAfp3%2FBnvbKsPx%2BaccCsQoKjokRCcuW5R1hAyUoTpcyS6fivUNijjmcrPqzmcJXpMoSsdbq%2BcHI6AECtOzQmH9XLEwKnge2WW2el1jeS9U1BGEgjxa8oDVYRtk%2BFhWWr5aqvHMz9HxoOKqekSIRUX0PKrUclpUjOglHDVOvE%2B3BN1S0zJkRkycEm52Megfa20sX2Xe2UcizqsBBJelcMaUWZ69Ce4KVg%3D%3D)
