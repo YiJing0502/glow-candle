@@ -424,6 +424,10 @@ export default {
       }
     },
     async goToPostCoupon() {
+      if (this.couponCode === '') {
+        this.showAlertMessage(false, '請填寫優惠券代碼');
+        return;
+      }
       try {
         const res = await this.postCoupon(this.couponCode);
         await this.goToGetCart(false);
