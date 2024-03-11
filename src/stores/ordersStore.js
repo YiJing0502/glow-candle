@@ -84,7 +84,9 @@ export default defineStore('ordersStore', {
       // 將數字時間轉譯日期
       const { timestamp10CodeToDay } = timeStore();
       this.showData.create_at = timestamp10CodeToDay(create_at);
-      this.showData.paid_date = timestamp10CodeToDay(paid_date);
+      if (this.showData.paid_date !== undefined) {
+        this.showData.paid_date = timestamp10CodeToDay(paid_date);
+      }
       // 重新整理訂單備註
       if (this.showData.message !== undefined) {
         const { splitStringByNewline } = stringStore();
