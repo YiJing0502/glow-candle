@@ -15,6 +15,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.1.0",
     "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "@emailjs/browser": "^4.3.3",
     "@vee-validate/i18n": "^4.12.5",
     "@vee-validate/rules": "^4.12.5",
     "animate.css": "^4.1.1",

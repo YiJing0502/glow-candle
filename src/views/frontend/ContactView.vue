@@ -6,7 +6,7 @@
       <button class="btn btn-solid-dpgray" type="button">LINE@ 官方客服</button>
     </div>
     <div v-if="!isSent" class="container message py-5">
-      <vee-form ref="form" @submit="goToPostMessage" v-slot="{ errors }">
+      <vee-form id="myForm" ref="form" @submit="goToPostMessage" v-slot="{ errors }">
         <h2 class="mb-3">聯繫我們</h2>
         <p>謝謝您的主動聯絡，請留下要諮詢的問題，我們會用以下資訊進行回覆。</p>
         <div class="mb-3">
@@ -16,7 +16,7 @@
             type="email"
             class="form-control"
             :class="{ 'is-invalid': errors['電子信箱'] }"
-            v-model="messageData.email"
+            v-model="userEmail"
             rules="required|email"
             id="exampleFormControlInput1"
             placeholder="輸入您的電子信箱"
@@ -30,7 +30,7 @@
             name="留言"
             :class="{ 'is-invalid': errors['留言'] }"
             rules="max:800|required"
-            v-model="messageData.message"
+            v-model="userMessage"
             placeholder="輸入您的訊息。若是詢問店內特定商品，請留下商品名稱，也歡迎您留下電子信箱以外的聯絡方式，謝謝！"
             class="form-control"
             id="exampleFormControlTextarea1"
@@ -43,8 +43,9 @@
     </div>
     <div
       v-if="isSent"
-      class="container message py-5 my-5 text-center bg-main-spec container-rounded text-main-light"
+      class="container message py-5 my-5 text-center bg-main-spec container-rounded text-main-light wow animate__animated animate__fadeIn"
     >
+      <span class="material-icons-outlined front-icon-xl">mark_email_read</span>
       <h2 class="mb-3">已傳送您的留言</h2>
       <h5 class="mb-3">我們將儘速回覆您</h5>
       <RouterLink
@@ -79,14 +80,16 @@
 import emailjs from '@emailjs/browser';
 import { mapActions, mapState } from 'pinia';
 import pageStore from '../../stores/pageStore';
+import alertStore from '../../stores/alertStore';
+
+const { VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID_CONTACT_US, VITE_EMAILJS_PUBLIC_KEY } =
+  import.meta.env;
 
 export default {
   data() {
     return {
-      messageData: {
-        email: '',
-        message: '',
-      },
+      userEmail: '',
+      userMessage: '',
       isSent: false,
     };
   },
@@ -95,24 +98,27 @@ export default {
   },
   methods: {
     goToPostMessage() {
+      const publicKey = `${VITE_EMAILJS_PUBLIC_KEY}`;
+      const serviceId = `${VITE_EMAILJS_SERVICE_ID}`;
+      const templateId = `${VITE_EMAILJS_TEMPLATE_ID_CONTACT_US}`;
       // send email
       emailjs
-        .sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this.$refs.form, {
-          publicKey: 'YOUR_PUBLIC_KEY',
+        .sendForm(serviceId, templateId, '#myForm', {
+          publicKey,
         })
         .then(
           () => {
-            console.log('SUCCESS!');
+            this.isSent = true;
+            // 使用 ref 來獲取表單引用並重置表單
+            this.$refs.form.resetForm();
           },
-          (error) => {
-            console.log('FAILED...', error.text);
+          (err) => {
+            this.showAlertMessage(false, err);
           },
         );
-      this.isSent = true;
-      // 使用 ref 來獲取表單引用並重置表單
-      this.$refs.form.resetForm();
     },
     ...mapActions(pageStore, ['changeNowPage']),
+    ...mapActions(alertStore, ['showAlertMessage']),
   },
 };
 </script>
