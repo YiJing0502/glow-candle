@@ -21,13 +21,27 @@
         <div class="form-floating mb-3">
           <input
             v-model="password"
-            type="password"
+            :type="passwordType"
             class="form-control text-deep-gray"
             id="password"
             placeholder="password"
             required
           />
           <label for="password" class="text-deep-gray"> 輸入您的密碼 </label>
+          <span
+            v-if="!isPasswordVisible"
+            role="button"
+            @click="isPasswordVisible = !isPasswordVisible"
+            class="material-icons position-absolute top-50 checkEye"
+            >remove_red_eye</span
+          >
+          <span
+            v-else
+            role="button"
+            @click="isPasswordVisible = !isPasswordVisible"
+            class="material-icons position-absolute top-50 checkEye"
+            >disabled_visible</span
+          >
         </div>
         <div class="d-flex">
           <RouterLink
@@ -54,7 +68,13 @@ export default {
     return {
       email: '',
       password: '',
+      isPasswordVisible: false,
     };
+  },
+  computed: {
+    passwordType() {
+      return this.isPasswordVisible ? 'text' : 'password';
+    },
   },
   methods: {
     postAdminSignin() {
@@ -91,3 +111,9 @@ export default {
   mounted() {},
 };
 </script>
+<style lang="scss" scoped>
+.checkEye {
+  right: 10px;
+  transform: translateY(-50%);
+}
+</style>
