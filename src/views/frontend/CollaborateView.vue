@@ -5,7 +5,7 @@
     <p class="mb-3">
       謝謝您的喜歡與支持，若您對 光輝時刻有限公司相關產品 有企業採購 /
       異業合作之相關需求，誠摯邀請各界品牌、廠商、實體門市合作， 歡迎來信至
-      <a class="text-main-light" href="mailto:glow.2023@gmail.com">glow.2023@gmail.com</a>
+      <a class="text-main-light" href="mailto:glow.candle.tw@gmail.com">glow.candle.tw@gmail.com</a>
       ，或前往「聯絡我們」填寫表單，我們將會有專門窗口與您聯繫。
     </p>
     <RouterLink

@@ -63,7 +63,9 @@
       <p>統一編號：08765445</p>
       <p>
         聯絡信箱：
-        <a class="text-deep-gray" href="mailto:glow.2023@gmail.com">glow.2023@gmail.com</a>
+        <a class="text-deep-gray" href="mailto:glow.candle.tw@gmail.com">
+          glow.candle.tw@gmail.com
+        </a>
       </p>
       <p>
         聯絡電話：
@@ -74,6 +76,7 @@
   </div>
 </template>
 <script>
+import emailjs from '@emailjs/browser';
 import { mapActions, mapState } from 'pinia';
 import pageStore from '../../stores/pageStore';
 
@@ -92,6 +95,19 @@ export default {
   },
   methods: {
     goToPostMessage() {
+      // send email
+      emailjs
+        .sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this.$refs.form, {
+          publicKey: 'YOUR_PUBLIC_KEY',
+        })
+        .then(
+          () => {
+            console.log('SUCCESS!');
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+          },
+        );
       this.isSent = true;
       // 使用 ref 來獲取表單引用並重置表單
       this.$refs.form.resetForm();
