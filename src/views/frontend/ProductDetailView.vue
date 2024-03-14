@@ -6,7 +6,7 @@
       class="container bg-main-medium container-rounded my-5 py-7r px-lg-5 px-md-4 px-sm-3"
     >
       <div class="row row-cols-1 row-cols-lg-2">
-        <div class="col">
+        <div class="col" :class="{ 'sticky-box': stickyBox === 'leftBar' }">
           <swiper
             v-if="!isBootstrapLarge"
             :navigation="true"
@@ -32,7 +32,7 @@
             />
           </div>
         </div>
-        <div class="col">
+        <div class="col" :class="{ 'sticky-box': stickyBox === 'rightBar' }">
           <!-- 產品分類與單位 -->
           <div class="d-flex justify-content-between">
             <h6
@@ -118,6 +118,19 @@
                 </p>
               </template>
             </BasicCollapse>
+            <!-- 送貨方式與出貨時程 -->
+            <BasicCollapse :uniqueId="'DeliverySection'" :open="true">
+              <template v-slot:header> 送貨方式與出貨時程 </template>
+              <template v-slot:body>
+                <p>
+                  全館免運費，採用線上付款、宅配到府的方式
+                  <br />
+                  下單付款完成後，約 3 - 7 個工作天不含假日及國定假日安排出貨。
+                  <br />
+                  如有現貨，將會在3日內出貨，急件者可以先諮詢我們的客服貨物狀況。
+                </p>
+              </template>
+            </BasicCollapse>
           </div>
         </div>
       </div>
@@ -160,6 +173,8 @@ export default {
       modules: [Pagination, Navigation],
       viewportWidth: window.innerWidth,
       isBootstrapLarge: false,
+      stickyBox: '',
+      haveImagesUrl: false,
     };
   },
   components: {
@@ -168,6 +183,15 @@ export default {
     ProductCard,
     DotLoading,
     BasicCollapse,
+  },
+  watch: {
+    $route(to) {
+      this.$router.push(to.path);
+    },
+    showData() {
+      this.haveImagesUrl = !!this.showData.imagesUrl;
+      this.handleStickyBox();
+    },
   },
   computed: {
     ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),
@@ -305,6 +329,15 @@ export default {
         this.showAlertMessage(false, err.error.message);
       }
     },
+    handleStickyBox() {
+      if (this.isBootstrapLarge && this.haveImagesUrl) {
+        this.stickyBox = 'rightBar';
+      } else if (this.isBootstrapLarge && !this.haveImagesUrl) {
+        this.stickyBox = 'leftBar';
+      } else {
+        this.stickyBox = '';
+      }
+    },
     handleResize() {
       this.viewportWidth = window.innerWidth;
       this.isBootstrapLarge = this.viewportWidth > 992;
@@ -319,17 +352,13 @@ export default {
     ...mapActions(alertStore, ['showAlertMessage']),
     ...mapActions(pageStore, ['changeNowPage']),
   },
-  watch: {
-    $route(to) {
-      this.$router.push(to.path);
-    },
-  },
   mounted() {
     this.getProduct();
     this.goToGetCart(false);
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
     this.goToGetRecommendations(this.$route.params.id);
+    this.handleStickyBox();
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize);
@@ -348,5 +377,13 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+.sticky-box {
+  /* for Safari. */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 50px;
+  height: 100%;
 }
 </style>
