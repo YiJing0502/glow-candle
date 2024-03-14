@@ -1,1 +1,0 @@
-import{K as t}from"./index-vqMCxPcU.js";const o=t("pageStore",{state:()=>({nowPage:localStorage.getItem("currentPage")||""}),actions:{changeNowPage(e){this.nowPage=e,localStorage.setItem("currentPage",e)}}});export{o as p};

@@ -1,1 +1,0 @@
-import{_ as e,a as o,c as t,o as s,b as a}from"./index-vqMCxPcU.js";import{p as c}from"./pageStore-WDAUXcEC.js";const n={methods:{...o(c,["changeNowPage"])},mounted(){this.changeNowPage("後台管理")}},r={class:"container py-5"},_=a("h2",null,"歡迎回來",-1),i=[_];function p(d,m,h,f,l,u){return s(),t("div",r,i)}const w=e(n,[["render",p]]);export{w as default};
