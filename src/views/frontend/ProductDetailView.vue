@@ -108,35 +108,16 @@
           <!-- 手風琴組 -->
           <div class="accordion">
             <!-- 產品內容 -->
-            <div class="accordion-item">
-              <!-- ProductContentSection -->
-              <h2 class="accordion-header" id="ProductContentSection">
-                <button
-                  class="accordion-button collapsed fs-5 fw-semibold"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#ProductContentDetails"
-                  aria-expanded="false"
-                  aria-controls="ProductContentDetails"
-                >
-                  內容
-                </button>
-              </h2>
-              <!-- ProductContentDetails -->
-              <div
-                id="ProductContentDetails"
-                class="accordion-collapse collapse show"
-                aria-labelledby="ProductContentSection"
-              >
-                <div class="accordion-body">
-                  <p>
-                    <span v-for="(item, index) in showData.content" :key="index"
-                      >{{ item }}<br
-                    /></span>
-                  </p>
-                </div>
-              </div>
-            </div>
+            <BasicCollapse :uniqueId="'ProductContentSection'" :open="true">
+              <template v-slot:header> 產品內容 </template>
+              <template v-slot:body>
+                <p>
+                  <span v-for="(item, index) in showData.content" :key="index"
+                    >{{ item }}<br
+                  /></span>
+                </p>
+              </template>
+            </BasicCollapse>
           </div>
         </div>
       </div>
@@ -166,6 +147,7 @@ import pageStore from '../../stores/pageStore';
 
 import ProductCard from '../../components/frontend/ProductCard.vue';
 import DotLoading from '../../components/DotLoading.vue';
+import BasicCollapse from '../../components/frontend/BasicCollapse.vue';
 
 const { VITE_BASE_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -185,6 +167,7 @@ export default {
     SwiperSlide,
     ProductCard,
     DotLoading,
+    BasicCollapse,
   },
   computed: {
     ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),
