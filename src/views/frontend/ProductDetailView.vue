@@ -192,6 +192,9 @@ export default {
       this.haveImagesUrl = !!this.showData.imagesUrl;
       this.handleStickyBox();
     },
+    isBootstrapLarge() {
+      this.handleStickyBox();
+    },
   },
   computed: {
     ...mapState(cartsStore, ['cartsData', 'isSmLoading', 'storeMessage']),
